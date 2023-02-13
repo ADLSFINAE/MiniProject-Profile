@@ -1,10 +1,12 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "winnerwidget.h"
 #include <QWidget>
 #include <QPushButton>
 #include <QDebug>
 #include <QString>
+#include <QLabel>
 
 class Widget : public QWidget
 {
@@ -12,17 +14,20 @@ class Widget : public QWidget
 
 public:
   Widget(QWidget *parent = nullptr);
-  QString getBoard(int version);
+  void getBoard();
   ~Widget();
-  void algorithm(QString string);
 
 public slots:
   void changeName();
   void resetGame();
+  void blockForNewGame();
 signals:
+  void signalForBlock();
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton;
   int count = 0;
+  WinnerWidget* winnerWidget;
+
 };
 #endif // WIDGET_H
