@@ -12,6 +12,7 @@ Widget::Widget(QWidget *parent)
           button[i][j] = new QPushButton(this);
           button[i][j]->resize(100, 100);
           button[i][j]->move(i * 100, j * 100);
+          button[i][j]->setFont(QFont("Arial", 50));
           connect(button[i][j], &QPushButton::clicked, this, &Widget::changeName);
         }
     }
