@@ -8,8 +8,7 @@ class WinnerWidget : public QWidget
 {
   Q_OBJECT
 public:
-  WinnerWidget(QWidget *parent = nullptr);
-  WinnerWidget(QString string);
+  WinnerWidget(QString string,QWidget *parent = nullptr);
 private:
   QLabel* label;
   QString string;
