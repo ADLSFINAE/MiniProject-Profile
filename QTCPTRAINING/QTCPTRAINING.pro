@@ -12,11 +12,13 @@ CONFIG += c++17
 SOURCES += \
     client.cpp \
     main.cpp \
-    server.cpp
+    server.cpp \
+    servergui.cpp
 
 HEADERS += \
     client.h \
-    server.h
+    server.h \
+    servergui.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

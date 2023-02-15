@@ -7,25 +7,24 @@
 #include <QLabel>
 #include <QByteArray>
 #include <QDataStream>
-#include <QString>.
+#include <QString>
 
-class Server : public QWidget
+class Server : public QTcpServer
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  Server(QWidget* parent = nullptr);
-  void messageToClient(QString str);
+    Server();
+    void messageToClient(QString str);
 
 public slots:
-  void slotReadyRead();
-  void incomingConnection(qintptr socketDescriptor);
+    void slotReadyRead();
+    void incomingConnection(qintptr socketDescriptor);
+
+signals:
+    void dataReceived(const QString& data);
 
 private:
-  QByteArray arr;
-  QTcpServer* server;
-  QTcpSocket* socket;
-  QLabel* label;
-  QTextEdit* textEdit;
+    QTcpSocket* socket;
 };
 
 #endif // SERVER_H
