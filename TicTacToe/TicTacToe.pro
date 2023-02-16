@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    showgamers.cpp \
     widget.cpp \
     winnerwidget.cpp
 
 HEADERS += \
+    showgamers.h \
     widget.h \
     winnerwidget.h
 
@@ -21,3 +23,6 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Images.qrc

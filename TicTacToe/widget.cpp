@@ -1,17 +1,19 @@
 #include "widget.h"
+#include "showgamers.h"
 #include <QtAlgorithms>
 #include <algorithm>
+#include <QFileDialog>
 
 Widget::Widget(QWidget *parent)
   : QWidget(parent)
 {
-  this->setFixedSize(300, 360);
+  this->setFixedSize(420, 360);
   this->setWindowTitle("TicTacToe");
   for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
           button[i][j] = new QPushButton(this);
           button[i][j]->resize(100, 100);
-          button[i][j]->move(i * 100, j * 100);
+          button[i][j]->move((i * 100) + 60, j * 100);
           button[i][j]->setFont(QFont("Arial", 50));
           connect(button[i][j], &QPushButton::clicked, this, &Widget::changeName);
         }
@@ -19,9 +21,8 @@ Widget::Widget(QWidget *parent)
 
   resetButton = new QPushButton(this);
   resetButton->resize(300, 60);
-  resetButton->move(0, 300);
+  resetButton->move(60, 300);
   resetButton->setText("Reset Game");
-
   connect(resetButton, &QPushButton::clicked, this, &Widget::resetGame);
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
 
@@ -75,8 +76,37 @@ void Widget::getBoard()
     }
 }
 
+void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
+{
+  QWidget* playerIcon = new QWidget(this);
+  playerIcon->resize(60, 80);
+  QPushButton* changeIcon = new QPushButton(playerIcon);
+  changeIcon->setText(QString("ICON"));
+  changeIcon->resize(60, 20);
+  connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+
+  if(!secondPlayer)
+    playerIcon->move(0, 0);
+  else
+    playerIcon->move(360, 0);
+
+  playerLayout = new QVBoxLayout;
+  playerLayout->addWidget(view, 1);
+  playerLayout->addWidget(changeIcon, 2);
+  playerLayout->setMargin(0);
+
+  playerIcon->setLayout(playerLayout);
+}
+
 Widget::~Widget()
 {
+}
+
+void Widget::openFolder()
+{
+  QString string = QFileDialog::getOpenFileName(this, "Open File", "C://");
+  qDebug()<<string;
+  emit givePixmap(string);
 }
 
 void Widget::changeName()
