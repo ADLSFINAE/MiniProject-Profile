@@ -2,7 +2,7 @@
 
 Server::Server()
 {
-    if (not listen(QHostAddress::Any, 2323))
+    if (!listen(QHostAddress::Any, 2323))
     {
         qDebug() << "Not working";
     }

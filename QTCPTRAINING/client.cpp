@@ -5,6 +5,7 @@ Client::Client(QWidget *parent) : QWidget(parent)
 {
     this->setFixedSize(200, 420);
     socket = new QTcpSocket(this);
+    socket->connectToHost(QHostAddress::LocalHost, 2323);
 
     textEdit = new QTextEdit(this);
     textEdit->setReadOnly(true);
@@ -24,10 +25,10 @@ Client::Client(QWidget *parent) : QWidget(parent)
     button->resize(80, 20);
     button->move(120, 400);
     button->setFont(QFont("Arial", 10));
+
     connect(socket, &QTcpSocket::readyRead, this, &Client::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
     connect(button, &QPushButton::clicked, this, &Client::clickedOnButton);
-    socket->connectToHost(QHostAddress::LocalHost, 2323);
 }
 
 void Client::sendToServer(QString str)

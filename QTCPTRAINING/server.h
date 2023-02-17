@@ -24,7 +24,7 @@ signals:
     void dataReceived(const QString& data);
 
 private:
-    QTcpSocket* socket;
+    QTcpSocket* socket{nullptr};
 };
 
 #endif // SERVER_H

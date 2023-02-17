@@ -11,11 +11,13 @@ int main(int argc, char *argv[])
     ServerGui gui;
 
     Client client;
+    Client client2;
 
     QObject::connect(&server, &Server::dataReceived, &gui, &ServerGui::addData);
 
     gui.show();
     client.show();
+    client2.show();
 
     return a.exec();
 }

@@ -18,14 +18,13 @@ public:
 public slots:
   void clickedOnButton();
   void slotReadyRead();
-  //void newConnection(quint16 descriptor);
 private:
-  QTcpSocket* socket;
+  QTcpSocket* socket{nullptr};
   QByteArray arr;
-  QLabel* label;
-  QTextEdit* textEdit;
-  QLineEdit* lineEdit;
-  QPushButton* button;
+  QLabel* label{nullptr};
+  QTextEdit* textEdit{nullptr};
+  QLineEdit* lineEdit{nullptr};
+  QPushButton* button{nullptr};
 };
 
 #endif // CLIENT_H
