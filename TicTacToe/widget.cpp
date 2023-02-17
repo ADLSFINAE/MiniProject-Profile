@@ -80,48 +80,45 @@ void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
 {
   QWidget* playerIcon = new QWidget(this);
   playerIcon->resize(60, 80);
-  /*QPushButton* changeIcon = new QPushButton(playerIcon);
-  changeIcon->setText(QString("ICON"));
-  changeIcon->resize(60, 20);*/
+
   if(!secondPlayer){
-      QPushButton* changeIcon = new QPushButton(playerIcon);
-      changeIcon->setText(QString("ICON"));
-      changeIcon->resize(60, 20);
-      connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+      users[0] = dynamic_cast<ShowGamers*>(view);
+      QWidget* playerIcon = new QWidget(this);
+      playerIcon->resize(60, 80);
+      playerIcon->move(0, 0);
+
+      changeIcon1 = new QPushButton(playerIcon);
+      changeIcon1->setText(QString("ICON"));
+      changeIcon1->resize(60, 20);
+
+      connect(changeIcon1, &QPushButton::clicked, this, &Widget::openFolder);
 
       playerLayout = new QVBoxLayout;
       playerLayout->addWidget(view, 1);
-      playerLayout->addWidget(changeIcon, 2);
+      playerLayout->addWidget(changeIcon1, 2);
       playerLayout->setMargin(0);
 
       playerIcon->setLayout(playerLayout);
     }
   else{
-      QPushButton* changeIcon = new QPushButton(playerIcon);
-      changeIcon->setText(QString("ICON"));
-      changeIcon->resize(60, 20);
-      connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+      users[1] = dynamic_cast<ShowGamers*>(view);
+      QWidget* playerIcon = new QWidget(this);
+      playerIcon->resize(60, 80);
+      playerIcon->move(360, 0);
+
+      changeIcon2 = new QPushButton(playerIcon);
+      changeIcon2->setText(QString("ICON"));
+      changeIcon2->resize(60, 20);
+
+      connect(changeIcon2, &QPushButton::clicked, this, &Widget::openFolder);
 
       playerLayout = new QVBoxLayout;
       playerLayout->addWidget(view, 1);
-      playerLayout->addWidget(changeIcon, 2);
+      playerLayout->addWidget(changeIcon2, 2);
       playerLayout->setMargin(0);
 
       playerIcon->setLayout(playerLayout);
     }
-  //connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
-
-  if(!secondPlayer)
-    playerIcon->move(0, 0);
-  else
-    playerIcon->move(360, 0);
-
-  /*playerLayout = new QVBoxLayout;
-  playerLayout->addWidget(view, 1);
-  playerLayout->addWidget(changeIcon, 2);
-  playerLayout->setMargin(0);*/
-
-  //playerIcon->setLayout(playerLayout);
 }
 
 Widget::~Widget()
@@ -132,7 +129,12 @@ void Widget::openFolder()
 {
   QString string = QFileDialog::getOpenFileName(this, "Open File", "C://");
   qDebug()<<string;
-  emit givePixmap(string);
+  if(dynamic_cast<QPushButton*>(QObject::sender()) == changeIcon1){
+      emit givePixmap(string, users[0]);
+    }
+  else{
+      emit givePixmap(string, users[1]);
+    }
 }
 
 void Widget::changeName()

@@ -21,9 +21,9 @@ void ShowGamers::changePixmap(QPixmap pixmap)
   m_pixmap->setPixmap(pixmap);
 }
 
-void ShowGamers::changePixmapForPlayer(QString string)
+void ShowGamers::changePixmapForPlayer(QString string, ShowGamers* view)
 {
   QPixmap pixmap = (QPixmap(string));
   pixmap = pixmap.scaled(60, 60,Qt::IgnoreAspectRatio);
-  m_pixmap->setPixmap(pixmap);
+  view->m_pixmap->setPixmap(pixmap);
 }

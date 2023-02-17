@@ -14,7 +14,7 @@ public:
   ShowGamers();
   void changePixmap(QPixmap pixmap);
 public slots:
-  void changePixmapForPlayer(QString string);
+  void changePixmapForPlayer(QString string, ShowGamers* view);
 private:
   QGraphicsScene* scene{nullptr};
   QGraphicsPixmapItem* m_pixmap{nullptr};

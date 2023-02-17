@@ -29,13 +29,16 @@ public slots:
   void blockForNewGame();
 signals:
   void signalForBlock();
-  void givePixmap(QString string);
+  void givePixmap(QString string, ShowGamers* view);
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton;
   int count = 0;
   WinnerWidget* winnerWidget;
   QVBoxLayout* playerLayout;
+  ShowGamers* users[2];
+  QPushButton* changeIcon1;
+  QPushButton* changeIcon2;
 
 };
 #endif // WIDGET_H
