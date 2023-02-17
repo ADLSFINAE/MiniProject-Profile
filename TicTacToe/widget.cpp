@@ -9,6 +9,7 @@ Widget::Widget(QWidget *parent)
 {
   this->setFixedSize(420, 360);
   this->setWindowTitle("TicTacToe");
+
   for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
           button[i][j] = new QPushButton(this);
@@ -23,9 +24,9 @@ Widget::Widget(QWidget *parent)
   resetButton->resize(300, 60);
   resetButton->move(60, 300);
   resetButton->setText("Reset Game");
+
   connect(resetButton, &QPushButton::clicked, this, &Widget::resetGame);
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
-
 }
 
 void Widget::getBoard()
@@ -128,20 +129,20 @@ Widget::~Widget()
 void Widget::openFolder()
 {
   QString string = QFileDialog::getOpenFileName(this, "Open File", "C://");
-  qDebug()<<string;
-  if(dynamic_cast<QPushButton*>(QObject::sender()) == changeIcon1){
+
+  if(dynamic_cast<QPushButton*>(QObject::sender()) == changeIcon1)
       emit givePixmap(string, users[0]);
-    }
-  else{
+  else
       emit givePixmap(string, users[1]);
-    }
 }
 
 void Widget::changeName()
 {
   QObject* sender = QObject::sender();
   QPushButton* clickedButton = dynamic_cast<QPushButton*>(sender);
+
   count++;
+
   if(count % 2 == 0){
       clickedButton->setText(QString("o"));
       clickedButton->setEnabled(false);

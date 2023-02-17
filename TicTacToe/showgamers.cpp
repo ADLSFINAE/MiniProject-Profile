@@ -2,13 +2,15 @@
 #include <QPixmap>
 ShowGamers::ShowGamers()
 {
-  scene = new QGraphicsScene;
-  this->setScene(scene);
   m_pixmap = new QGraphicsPixmapItem();
-  scene->setSceneRect(0, 0, 60, 60);
-  scene->addItem(m_pixmap);
   m_pixmap->setPixmap(QPixmap(":/player.png"));
   m_pixmap->setPos(0, 0);
+
+  scene = new QGraphicsScene;
+  scene->setSceneRect(0, 0, 60, 60);
+  scene->addItem(m_pixmap);
+
+  this->setScene(scene);
   this->setSceneRect(0, 0, 60, 60);
   this->setStyleSheet("QScrollBar {height:0px;}");
   this->setStyleSheet("QScrollBar {width:0px;}");

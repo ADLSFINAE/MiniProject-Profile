@@ -23,22 +23,23 @@ public:
 
 public slots:
   void openFolder();
-
   void changeName();
   void resetGame();
   void blockForNewGame();
+
 signals:
   void signalForBlock();
   void givePixmap(QString string, ShowGamers* view);
+
 private:
   QPushButton* button[3][3];
-  QPushButton* resetButton;
+  QPushButton* resetButton{nullptr};
   int count = 0;
-  WinnerWidget* winnerWidget;
-  QVBoxLayout* playerLayout;
+  WinnerWidget* winnerWidget{nullptr};
+  QVBoxLayout* playerLayout{nullptr};
   ShowGamers* users[2];
-  QPushButton* changeIcon1;
-  QPushButton* changeIcon2;
+  QPushButton* changeIcon1{nullptr};
+  QPushButton* changeIcon2{nullptr};
 
 };
 #endif // WIDGET_H

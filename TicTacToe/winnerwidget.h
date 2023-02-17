@@ -10,7 +10,7 @@ class WinnerWidget : public QWidget
 public:
   WinnerWidget(QString string,QWidget *parent = nullptr);
 private:
-  QLabel* label;
+  QLabel* label{nullptr};
   QString string;
 };
 
