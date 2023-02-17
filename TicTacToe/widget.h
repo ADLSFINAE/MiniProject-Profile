@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGraphicsView>
+#include "showgamers.h"
 
 class Widget : public QWidget
 {

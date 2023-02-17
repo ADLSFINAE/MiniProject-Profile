@@ -1,5 +1,5 @@
 #include "showgamers.h"
-
+#include <QPixmap>
 ShowGamers::ShowGamers()
 {
   scene = new QGraphicsScene;
@@ -17,10 +17,13 @@ ShowGamers::ShowGamers()
 
 void ShowGamers::changePixmap(QPixmap pixmap)
 {
+  pixmap = pixmap.scaled(60, 60,Qt::IgnoreAspectRatio);
   m_pixmap->setPixmap(pixmap);
 }
 
 void ShowGamers::changePixmapForPlayer(QString string)
 {
-  m_pixmap->setPixmap(QPixmap(string));
+  QPixmap pixmap = (QPixmap(string));
+  pixmap = pixmap.scaled(60, 60,Qt::IgnoreAspectRatio);
+  m_pixmap->setPixmap(pixmap);
 }

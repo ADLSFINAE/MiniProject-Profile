@@ -80,22 +80,48 @@ void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
 {
   QWidget* playerIcon = new QWidget(this);
   playerIcon->resize(60, 80);
-  QPushButton* changeIcon = new QPushButton(playerIcon);
+  /*QPushButton* changeIcon = new QPushButton(playerIcon);
   changeIcon->setText(QString("ICON"));
-  changeIcon->resize(60, 20);
-  connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+  changeIcon->resize(60, 20);*/
+  if(!secondPlayer){
+      QPushButton* changeIcon = new QPushButton(playerIcon);
+      changeIcon->setText(QString("ICON"));
+      changeIcon->resize(60, 20);
+      connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+
+      playerLayout = new QVBoxLayout;
+      playerLayout->addWidget(view, 1);
+      playerLayout->addWidget(changeIcon, 2);
+      playerLayout->setMargin(0);
+
+      playerIcon->setLayout(playerLayout);
+    }
+  else{
+      QPushButton* changeIcon = new QPushButton(playerIcon);
+      changeIcon->setText(QString("ICON"));
+      changeIcon->resize(60, 20);
+      connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
+
+      playerLayout = new QVBoxLayout;
+      playerLayout->addWidget(view, 1);
+      playerLayout->addWidget(changeIcon, 2);
+      playerLayout->setMargin(0);
+
+      playerIcon->setLayout(playerLayout);
+    }
+  //connect(changeIcon, &QPushButton::clicked, this, &Widget::openFolder);
 
   if(!secondPlayer)
     playerIcon->move(0, 0);
   else
     playerIcon->move(360, 0);
 
-  playerLayout = new QVBoxLayout;
+  /*playerLayout = new QVBoxLayout;
   playerLayout->addWidget(view, 1);
   playerLayout->addWidget(changeIcon, 2);
-  playerLayout->setMargin(0);
+  playerLayout->setMargin(0);*/
 
-  playerIcon->setLayout(playerLayout);
+  //playerIcon->setLayout(playerLayout);
 }
 
 Widget::~Widget()

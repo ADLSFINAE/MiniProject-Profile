@@ -13,5 +13,6 @@ int main(int argc, char *argv[])
   w.madeIcon(player2, false);
   w.show();
   QObject::connect(&w, &Widget::givePixmap, player1, &ShowGamers::changePixmapForPlayer);
+  QObject::connect(&w, &Widget::givePixmap, player2, &ShowGamers::changePixmapForPlayer);
   return a.exec();
 }
