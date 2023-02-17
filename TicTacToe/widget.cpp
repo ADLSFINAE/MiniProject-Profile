@@ -31,14 +31,17 @@ Widget::Widget(QWidget *parent)
 
 void Widget::getBoard()
 {
+  //0
   QString perfocard1;
   QString perfocard2;
   QString perfocard3;
 
+  //+90
   QString perfocard1i;
   QString perfocard2i;
   QString perfocard3i;
 
+  //diagonals
   QString diagonal1;
   QString diagonal2;
   int assistant = 2;
@@ -149,7 +152,6 @@ void Widget::changeName()
       getBoard();
     }
   else{
-      qDebug()<<button[1][1]->text();
       clickedButton->setText(QString("x"));
       clickedButton->setEnabled(false);
       getBoard();
