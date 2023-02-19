@@ -17,6 +17,7 @@ Widget::Widget(QWidget *parent)
           button[i][j]->move((i * 100) + 60, j * 100);
           button[i][j]->setFont(QFont("Arial", 50));
           connect(button[i][j], &QPushButton::clicked, this, &Widget::changeName);
+          connect(button[i][j], &QPushButton::clicked, this, &Widget::getMessageFromBoard);
         }
     }
 
@@ -176,4 +177,20 @@ void Widget::blockForNewGame()
         }
     }
 }
+
+void Widget::getMessageFromBoard()
+{
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+          if(button[i][j]->text() != "")
+            emit sendToClient(button[i][j]->text().at(0), i, j);
+          else
+            emit sendToClient('_', i, j);
+          if(button[i][j]->text() == "o")
+            qDebug()<<"GOVNO O"<<i<<j;
+        }
+    }
+  emit sendBoardToServer();
+}
+
 

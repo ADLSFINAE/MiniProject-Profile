@@ -1,4 +1,4 @@
-#include "Internet/server.h"
+#include "server.h"
 
 Server::Server()
 {
@@ -21,7 +21,7 @@ void Server::slotReadyRead()
 {
     QString data = socket->readAll();
     qDebug()<<data;
-    messageToClient(data);
+    //messageToClient(data);
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)

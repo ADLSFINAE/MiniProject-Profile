@@ -9,16 +9,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Internet/client.cpp \
-    Internet/server.cpp \
+    client.cpp \
     main.cpp \
     showgamers.cpp \
     widget.cpp \
     winnerwidget.cpp
 
 HEADERS += \
-    Internet/client.h \
-    Internet/server.h \
+    client.h \
     showgamers.h \
     widget.h \
     winnerwidget.h

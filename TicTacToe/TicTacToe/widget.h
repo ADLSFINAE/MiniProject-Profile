@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QGraphicsView>
+#include <QTextStream>
 #include "showgamers.h"
 
 class Widget : public QWidget
@@ -26,10 +27,13 @@ public slots:
   void changeName();
   void resetGame();
   void blockForNewGame();
+  void getMessageFromBoard();
 
 signals:
   void signalForBlock();
   void givePixmap(QString string, ShowGamers* view);
+  void sendToClient(QChar value, int i , int j);
+  void sendBoardToServer();
 
 private:
   QPushButton* button[3][3];
