@@ -9,5 +9,5 @@ WinnerWidget::WinnerWidget(QString string, QWidget *parent)
   label->setAlignment(Qt::AlignCenter);
   label->resize(300, 100);
   label->setText(string);
-  label->setFont(QFont("Arial", 50));
+  label->setFont(QFont("Arial", 24));
 }

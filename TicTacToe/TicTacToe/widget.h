@@ -18,9 +18,18 @@ class Widget : public QWidget
 
 public:
   Widget(QWidget *parent = nullptr);
-  void getBoard();
   void madeIcon(QGraphicsView *view, bool secondPlayer);
   ~Widget();
+private:
+
+  //logic to check winner (START)
+  void checkOnTheWin();
+  void vertical();
+  void horizontal();
+  void diagonal();
+  bool getInfo(const QString& str);
+  void showWinner(QString winnerShape);
+  //logic to check winner (END)
 
 public slots:
   void openFolder();
@@ -38,7 +47,7 @@ signals:
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton{nullptr};
-  int count = 0;
+  bool checkStep = true;
   WinnerWidget* winnerWidget{nullptr};
   QVBoxLayout* playerLayout{nullptr};
   ShowGamers* users[2];
