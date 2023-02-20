@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
   Client client;
   QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
   QObject::connect(&w, &Widget::sendBoardToServer, &client, &Client::sendToServer);
+  QObject::connect(&client, &Client::sendAWinnerOnWidget, &w, &Widget::showWinner);
 
   w.show();
 

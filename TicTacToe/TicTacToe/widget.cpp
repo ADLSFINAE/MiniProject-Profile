@@ -33,13 +33,6 @@ Widget::Widget(QWidget *parent)
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
 }
 
-void Widget::checkOnTheWin()
-{
-  this->vertical();
-  this->horizontal();
-  this->diagonal();
-}
-
 void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
 {
   QWidget* playerIcon = new QWidget(this);
@@ -89,68 +82,6 @@ Widget::~Widget()
 {
 }
 
-void  Widget::vertical()
-{
-  QString firstLine;
-  QString secondLine;
-  QString thristLine;
-
-  for(int i = 0; i < 3; i++){
-      firstLine = firstLine + button[0][i]->text();
-      secondLine = secondLine + button[1][i]->text();;
-      thristLine = thristLine + button[2][i]->text();
-    }
-
-  this->getInfo(firstLine);
-  this->getInfo(secondLine);
-  this->getInfo(thristLine);
-}
-
-void  Widget::horizontal()
-{
-  QString firstLine;
-  QString secondLine;
-  QString thristLine;
-
-  for(int i = 0; i < 3; i++){
-      firstLine = firstLine + button[i][0]->text();
-      secondLine = secondLine + button[i][1]->text();;
-      thristLine = thristLine + button[i][2]->text();
-    }
-  this->getInfo(firstLine);
-  this->getInfo(secondLine);
-  this->getInfo(thristLine);
-}
-
-void Widget::diagonal()
-{
-  QString firstDiagonal;
-  QString secondDiagonal;
-  int assistant = 2;
-  for(int i = 0; i < 3; i++){
-      firstDiagonal = firstDiagonal + button[i][i]->text();
-      secondDiagonal = secondDiagonal+ button[i][assistant]->text();
-      assistant--;
-    }
-
-  this->getInfo(firstDiagonal);
-  this->getInfo(secondDiagonal);
-}
-
-bool Widget::getInfo(const QString& str)
-{
-  if(str == XXX){
-      this->showWinner(XXX);
-      return true;
-    }
-  else if(str == OOO){
-      this->showWinner(OOO);
-    return true;
-  }
-  else
-    return false;
-}
-
 void Widget::showWinner(QString winnerShape)
 {
   winnerWidget = new WinnerWidget(winnerShape + " :Win the Game");
@@ -176,13 +107,11 @@ void Widget::changeName()
   if(checkStep){
       clickedButton->setText(QString("o"));
       clickedButton->setEnabled(false);
-      checkOnTheWin();
       checkStep = false;
     }
   else{
       clickedButton->setText(QString("x"));
       clickedButton->setEnabled(false);
-      checkOnTheWin();
       checkStep = true;
     }
 }

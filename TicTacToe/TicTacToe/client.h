@@ -16,6 +16,8 @@ public slots:
   void slotReadyRead();
   void sendToServer();
   void getBoardOnClient(QChar value, int i , int j);
+signals:
+  void sendAWinnerOnWidget(QString string);
 private:
   QByteArray arr;
   QChar array[3][3];

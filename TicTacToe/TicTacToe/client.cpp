@@ -24,6 +24,10 @@ void Client::slotReadyRead()
 {
     QObject* sender = QObject::sender();
     QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender);
+
+    QString string = socket->readAll();
+    emit sendAWinnerOnWidget(string);
+    qDebug()<<"SLOT READY READ ON CLIENT TAKE A:"<<string;
 }
 
 void Client::getBoardOnClient(QChar value, int i , int j)

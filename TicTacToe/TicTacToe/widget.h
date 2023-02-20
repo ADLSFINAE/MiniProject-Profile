@@ -23,15 +23,10 @@ public:
 private:
 
   //logic to check winner (START)
-  void checkOnTheWin();
-  void vertical();
-  void horizontal();
-  void diagonal();
-  bool getInfo(const QString& str);
-  void showWinner(QString winnerShape);
   //logic to check winner (END)
 
 public slots:
+  void showWinner(QString winnerShape);
   void openFolder();
   void changeName();
   void resetGame();
