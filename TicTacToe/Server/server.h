@@ -17,6 +17,14 @@ class Server : public QTcpServer
 public:
     Server();
     void messageToClient(QString str);
+private:
+    void madeMatrix(QString data);
+
+    void checkOnTheWin();
+    void vertical();
+    void horizontal();
+    void diagonal();
+    bool getInfo(const QString& str);
 
 public slots:
     void slotReadyRead();
@@ -24,6 +32,7 @@ public slots:
 
 private:
     QTcpSocket* socket{nullptr};
+    QChar matrix[3][3];
 };
 
 #endif // SERVER_H
