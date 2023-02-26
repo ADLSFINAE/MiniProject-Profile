@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <QFileDialog>
 
-const QString XXX = "xxx";
-const QString OOO = "ooo";
+static const QString XXX = "xxx";
+static const QString OOO = "ooo";
 
 Widget::Widget(QWidget *parent)
   : QWidget(parent)
@@ -139,14 +139,10 @@ void Widget::getMessageFromBoard()
 {
   for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
-
           if(button[i][j]->text() != "")
             emit sendToClient(button[i][j]->text().at(0), i, j);
           else
             emit sendToClient('_', i, j);
-
-          if(button[i][j]->text() == "o")
-            qDebug()<<"GOVNO O"<<i<<j;
         }
     }
   emit sendBoardToServer();

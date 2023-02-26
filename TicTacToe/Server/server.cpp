@@ -1,7 +1,7 @@
 #include "server.h"
 
-const QString XXX = "xxx";
-const QString OOO = "ooo";
+static const QString XXX = "xxx";
+static const QString OOO = "ooo";
 
 Server::Server()
 {
@@ -13,30 +13,74 @@ Server::Server()
     {
         qDebug() << "Working";
     }
+    this->startInizialization();
+}
+
+void Server::startInizialization()
+{
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+          matrix[i][j] = '_';
+          matrix1[i][j] = '_';
+          matrix2[i][j] = '_';
+        }
+    }
 }
 
 void Server::messageToClient(QString str)
 {
-  socket->write(str.toUtf8());
+  for(int i = 0; i < listOfClients.size(); i++){
+      listOfClients.at(i)->write(str.toUtf8());
+    }
 }
 
-void Server::madeMatrix(QString data)
+void Server::madeMatrix(QString data, bool secondPlayer)
 {
+  qDebug()<<data;
   int size = 0;
-  for(int i = 0; i < 3; i++){
-      for(int j = 0; j < 3; j++){
-          matrix[i][j] = data.at(size);
-          size++;
+  if(!secondPlayer){
+      qDebug()<<"Data for the first player is: "<<data;
+      for(int i = 0; i < 3; i++){
+          for(int j = 0; j < 3; j++){
+              matrix1[i][j] = data[size];
+              size++;
+            }
         }
     }
-  size = 0;
+  else{
+      qDebug()<<"Data for the second player is: "<<data;
+      for(int i = 0; i < 3; i++){
+          for(int j = 0; j < 3; j++){
+              matrix2[i][j] = data[size];
+              size++;
+            }
+        }
+    }
+}
+
+void Server::checkOnEqualOfMatrix()
+{
   for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
-          qDebug().nospace()<<matrix[i][j];
+          if(matrix1[i][j] == matrix2[i][j]){
+              matrix[i][j] = '_';
+            }
+          else{
+              if(matrix1[i][j] == 'x') matrix[i][j] = 'x';
+              if(matrix1[i][j] == 'o') matrix[i][j] = 'o';
+              if(matrix2[i][j] == 'x') matrix[i][j] = 'x';
+              if(matrix2[i][j] == 'o') matrix[i][j] = 'o';
+            }
+        }
+    }
+
+  qDebug()<<"GENERAL MATRIX";
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+          qDebug().nospace()<<matrix[i][j]<<" ";
         }
       qDebug()<<Qt::endl;
     }
-  checkOnTheWin();
 }
 
 void Server::checkOnTheWin()
@@ -109,16 +153,26 @@ bool Server::getInfo(const QString &str)
 
 void Server::slotReadyRead()
 {
-    QString data = socket->readAll();
-    this->madeMatrix(data);
-    qDebug()<<"SLOT READY READ WAS CALLING"<<data;
+  dataForTheFirstPlayer = listOfClients.at(0)->readAll();
+  dataForTheSecondPlayer = listOfClients.at(1)->readAll();
+  qDebug()<<"SERVER GET INFO:"<<dataForTheFirstPlayer;
+  qDebug()<<"SERVER GET INFO:"<<dataForTheSecondPlayer;
+  this->madeMatrix(dataForTheFirstPlayer, true);
+  this->madeMatrix(dataForTheSecondPlayer, false);
+  dataForTheFirstPlayer.clear();
+  dataForTheSecondPlayer.clear();
+  checkOnEqualOfMatrix();
+  checkOnTheWin();
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
 {
-    socket = new QTcpSocket(this);
+    QTcpSocket* socket = new QTcpSocket;
     socket->setSocketDescriptor(socketDescriptor);
+    qDebug()<<"SOCKET IS OPEN OR WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT"<<socket->isOpen();
+    listOfClients.append(socket);
 
     connect(socket, &QTcpSocket::readyRead, this, &Server::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 }
+

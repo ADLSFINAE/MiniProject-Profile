@@ -38,7 +38,9 @@ signals:
   void givePixmap(QString string, ShowGamers* view);
   void sendToClient(QChar value, int i , int j);
   void sendBoardToServer();
-
+public:
+  QPushButton* changeIcon1{nullptr};
+  QPushButton* changeIcon2{nullptr};
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton{nullptr};
@@ -46,8 +48,6 @@ private:
   WinnerWidget* winnerWidget{nullptr};
   QVBoxLayout* playerLayout{nullptr};
   ShowGamers* users[2];
-  QPushButton* changeIcon1{nullptr};
-  QPushButton* changeIcon2{nullptr};
 
 };
 #endif // WIDGET_H
