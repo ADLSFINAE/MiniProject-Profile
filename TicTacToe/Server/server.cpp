@@ -165,8 +165,17 @@ void Server::slotReadyRead()
   checkOnTheWin();
 }
 
+
+
 void Server::incomingConnection(qintptr socketDescriptor)
 {
+  //Send general matrix on client
+    getGeneralMatrixSocket = new QTcpSocket;
+    getGeneralMatrixSocket->setSocketDescriptor(socketDescriptor);
+    //connect(getGeneralMatrixSocket, &QTcpSocket::readyRead, this, &Server::);
+    connect(getGeneralMatrixSocket, &QTcpSocket::disconnected, getGeneralMatrixSocket, &QTcpSocket::deleteLater);
+
+    //Getting matrix on Server
     QTcpSocket* socket = new QTcpSocket;
     socket->setSocketDescriptor(socketDescriptor);
     qDebug()<<"SOCKET IS OPEN OR WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT"<<socket->isOpen();
