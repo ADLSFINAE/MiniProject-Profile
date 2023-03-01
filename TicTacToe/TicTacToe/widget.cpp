@@ -31,6 +31,7 @@ Widget::Widget(QWidget *parent)
 
   connect(resetButton, &QPushButton::clicked, this, &Widget::resetGame);
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
+  connect(this, &Widget::resetFor2Gamers, this, &Widget::resetGame);
 }
 
 void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
@@ -81,6 +82,40 @@ void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
 Widget::~Widget()
 {
 }
+//////////////////////////////////////////////////////////
+void Widget::blockButton(int i, int j, QChar name)
+{
+  button[i][j]->setText(name);
+  button[i][j]->setEnabled(false);
+}
+
+void Widget::resetGamePlayers()
+{
+  emit resetFor2Gamers();
+}
+
+void Widget::getMatrixFromServer(QString fromServer)
+{
+  int size = 0;
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+          if(fromServer[size] == "_"){
+
+            }
+          else{
+              emit signalBlockButton(i, j, fromServer.at(size));
+            }
+            size++;
+        }
+    }
+}
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////
 
 void Widget::showWinner(QString winnerShape)
 {

@@ -20,10 +20,14 @@ public:
   Widget(QWidget *parent = nullptr);
   void madeIcon(QGraphicsView *view, bool secondPlayer);
   ~Widget();
-private:
+public:
 
-  //logic to check winner (START)
-  //logic to check winner (END)
+public slots:
+  //logic for set a shit with general matrix from Server
+  void blockButton(int i , int j, QChar name);
+  void resetGamePlayers();
+  void getMatrixFromServer(QString fromServer);
+
 
 public slots:
   void showWinner(QString winnerShape);
@@ -38,6 +42,9 @@ signals:
   void givePixmap(QString string, ShowGamers* view);
   void sendToClient(QChar value, int i , int j);
   void sendBoardToServer();
+  void signalBlockButton(int i , int j, QChar name);
+
+  void resetFor2Gamers();
 public:
   QPushButton* changeIcon1{nullptr};
   QPushButton* changeIcon2{nullptr};

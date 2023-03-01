@@ -18,10 +18,12 @@ public slots:
   void getBoardOnClient(QChar value, int i , int j);
 signals:
   void sendAWinnerOnWidget(QString string);
+  void signalGetMatrixFromServer(QString fromServer);
 private:
   QByteArray arr;
   QChar array[3][3];
   QString string;
+  //Нужно чистить, так как если вызывается resetGame он нихуя не пустой
 };
 
 #endif // CLIENT_H

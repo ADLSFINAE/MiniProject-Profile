@@ -1,11 +1,17 @@
 #include "client.h"
 
+const QString XXX = "xxx";
+const QString OOO = "ooo";
+
 Client::Client()
 {
+    //socket for write to server matrix
     this->connectToHost(QHostAddress::LocalHost, 2323);
 
     connect(this, &QTcpSocket::readyRead, this, &Client::slotReadyRead);
     connect(this, &QTcpSocket::disconnected, this, &QTcpSocket::deleteLater);
+
+    //socket from read from server matrix
 }
 
 void Client::sendToServer()
@@ -26,11 +32,22 @@ void Client::slotReadyRead()
     QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender);
 
     QString string = socket->readAll();
-    emit sendAWinnerOnWidget(string);
-    qDebug()<<"SLOT READY READ ON CLIENT TAKE A:"<<string;
+    if(string == XXX || string == OOO){
+        emit sendAWinnerOnWidget(string);
+      }
+    else{
+        qDebug()<<"On general matrix generated cringe by:"<<string;
+        QString support;
+        for(int i = 0; i < 9; i++){
+            support.push_back(string[i]);
+          }
+        emit signalGetMatrixFromServer(support);
+      }
 }
 
 void Client::getBoardOnClient(QChar value, int i , int j)
 {
-    array[i][j] = value;
+  array[i][j] = value;
 }
+
+

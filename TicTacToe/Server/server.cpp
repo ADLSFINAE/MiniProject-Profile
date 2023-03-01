@@ -1,7 +1,11 @@
 #include "server.h"
 
-static const QString XXX = "xxx";
-static const QString OOO = "ooo";
+#include <QString>
+#include <QtAlgorithms>
+#include <QRegExp>
+
+const QString XXX = "xxx";
+const QString OOO = "ooo";
 
 Server::Server()
 {
@@ -14,6 +18,7 @@ Server::Server()
         qDebug() << "Working";
     }
     this->startInizialization();
+    connect(this, &Server::signalToSendGeneralMatrixToAllClients, this, &Server::sendGeneralMatrixFromScene);
 }
 
 void Server::startInizialization()
@@ -71,15 +76,8 @@ void Server::checkOnEqualOfMatrix()
               if(matrix2[i][j] == 'x') matrix[i][j] = 'x';
               if(matrix2[i][j] == 'o') matrix[i][j] = 'o';
             }
+          matrixToSend = matrixToSend + matrix[i][j];
         }
-    }
-
-  qDebug()<<"GENERAL MATRIX";
-  for(int i = 0; i < 3; i++){
-      for(int j = 0; j < 3; j++){
-          qDebug().nospace()<<matrix[i][j]<<" ";
-        }
-      qDebug()<<Qt::endl;
     }
 }
 
@@ -162,26 +160,26 @@ void Server::slotReadyRead()
   dataForTheFirstPlayer.clear();
   dataForTheSecondPlayer.clear();
   checkOnEqualOfMatrix();
+  emit signalToSendGeneralMatrixToAllClients();
   checkOnTheWin();
+}
+
+void Server::sendGeneralMatrixFromScene()
+{
+      qDebug()<<"matrixToSend on Server is: "<<matrixToSend;
+      listOfClients.at(1)->write(matrixToSend.toUtf8());
+      matrixToSend.clear();
 }
 
 
 
 void Server::incomingConnection(qintptr socketDescriptor)
 {
-  //Send general matrix on client
-    getGeneralMatrixSocket = new QTcpSocket;
-    getGeneralMatrixSocket->setSocketDescriptor(socketDescriptor);
-    //connect(getGeneralMatrixSocket, &QTcpSocket::readyRead, this, &Server::);
-    connect(getGeneralMatrixSocket, &QTcpSocket::disconnected, getGeneralMatrixSocket, &QTcpSocket::deleteLater);
-
-    //Getting matrix on Server
-    QTcpSocket* socket = new QTcpSocket;
-    socket->setSocketDescriptor(socketDescriptor);
-    qDebug()<<"SOCKET IS OPEN OR WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT"<<socket->isOpen();
-    listOfClients.append(socket);
-
-    connect(socket, &QTcpSocket::readyRead, this, &Server::slotReadyRead);
-    connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
+  QTcpSocket* socket = new QTcpSocket;
+  socket->setSocketDescriptor(socketDescriptor);
+  listOfClients.append(socket);
+  qDebug()<<"SOCKET IS OPEN OR WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT"<<socket->isOpen()<<listOfClients.size();
+  connect(socket, &QTcpSocket::readyRead, this, &Server::slotReadyRead);
+  connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 }
 

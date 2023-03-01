@@ -36,16 +36,20 @@ public slots:
     void sendGeneralMatrixFromScene();
     void incomingConnection(qintptr socketDescriptor);
 
+signals:
+    void signalToSendGeneralMatrixToAllClients();
+
 private:
     QChar matrix1[3][3];
     QChar matrix2[3][3];
     QChar matrix[3][3];
 
     QList<QTcpSocket*> listOfClients;
-    QTcpSocket* getGeneralMatrixSocket;
+
 
     QString dataForTheFirstPlayer;
     QString dataForTheSecondPlayer;
+    QString matrixToSend;
 };
 
 #endif // SERVER_H
