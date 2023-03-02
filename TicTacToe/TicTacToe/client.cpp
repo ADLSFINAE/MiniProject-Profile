@@ -32,15 +32,18 @@ void Client::slotReadyRead()
     QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender);
 
     QString string = socket->readAll();
+    if(string == "WINNER EVENT"){
+        emit signalToBlockAllUsersButtons();
+      }
     if(string == XXX || string == OOO){
         emit sendAWinnerOnWidget(string);
       }
     else{
-        qDebug()<<"On general matrix generated cringe by:"<<string;
         QString support;
         for(int i = 0; i < 9; i++){
             support.push_back(string[i]);
           }
+       qDebug()<<"On general matrix generated cringe by:"<<support;
         emit signalGetMatrixFromServer(support);
       }
 }

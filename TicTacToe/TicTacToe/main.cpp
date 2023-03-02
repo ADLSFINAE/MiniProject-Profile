@@ -53,6 +53,15 @@ int main(int argc, char *argv[])
   QObject::connect(&client2, &Client::signalGetMatrixFromServer, &w2, &Widget::getMatrixFromServer);
   QObject::connect(&w2, &Widget::signalBlockButton, &w, &Widget::blockButton);
 
+ QObject::connect(&w, &Widget::resetFor2Gamers, &w, &Widget::resetGame);
+ QObject::connect(&w, &Widget::resetFor2Gamers, &w2, &Widget::resetGame);
+
+ QObject::connect(&w2, &Widget::resetFor2Gamers, &w, &Widget::resetGame);
+ QObject::connect(&w2, &Widget::resetFor2Gamers, &w2, &Widget::resetGame);
+
+ QObject::connect(&client, &Client::signalToBlockAllUsersButtons, &w2, &Widget::blockForNewGame);
+ QObject::connect(&client2, &Client::signalToBlockAllUsersButtons, &w, &Widget::blockForNewGame);
+
   w2.show();
 
   return a.exec();

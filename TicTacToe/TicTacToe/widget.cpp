@@ -29,9 +29,9 @@ Widget::Widget(QWidget *parent)
   resetButton->move(60, 300);
   resetButton->setText("Reset Game");
 
-  connect(resetButton, &QPushButton::clicked, this, &Widget::resetGame);
+  connect(resetButton, &QPushButton::clicked, this, &Widget::resetGamePlayers);
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
-  connect(this, &Widget::resetFor2Gamers, this, &Widget::resetGame);
+  //connect(this, &Widget::resetFor2Gamers, this, &Widget::resetGame);
 }
 
 void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)

@@ -44,6 +44,8 @@ signals:
   void sendBoardToServer();
   void signalBlockButton(int i , int j, QChar name);
 
+  void signalToClientReset();
+
   void resetFor2Gamers();
 public:
   QPushButton* changeIcon1{nullptr};

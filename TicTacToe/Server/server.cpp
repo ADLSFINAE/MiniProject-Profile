@@ -41,13 +41,18 @@ void Server::messageToClient(QString str)
 
 void Server::madeMatrix(QString data, bool secondPlayer)
 {
-  qDebug()<<data;
   int size = 0;
+  if(data.size() == 0){
+      for(int i = 0; i < 9; i++){
+          data.push_back('_');
+        }
+    }
+
   if(!secondPlayer){
       qDebug()<<"Data for the first player is: "<<data;
       for(int i = 0; i < 3; i++){
           for(int j = 0; j < 3; j++){
-              matrix1[i][j] = data[size];
+              matrix1[i][j] = data.at(size);
               size++;
             }
         }
@@ -56,7 +61,7 @@ void Server::madeMatrix(QString data, bool secondPlayer)
       qDebug()<<"Data for the second player is: "<<data;
       for(int i = 0; i < 3; i++){
           for(int j = 0; j < 3; j++){
-              matrix2[i][j] = data[size];
+              matrix2[i][j] = data.at(size);
               size++;
             }
         }
@@ -139,10 +144,12 @@ bool Server::getInfo(const QString &str)
 {
   if(str == XXX){
       messageToClient(XXX);
+      messageToClient("WINNER EVENT");
       return true;
     }
   else if(str == OOO){
     messageToClient(OOO);
+    messageToClient("WINNER EVENT");
     return true;
   }
   else
