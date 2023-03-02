@@ -144,12 +144,10 @@ bool Server::getInfo(const QString &str)
 {
   if(str == XXX){
       messageToClient(XXX);
-      messageToClient("WINNER EVENT");
       return true;
     }
   else if(str == OOO){
     messageToClient(OOO);
-    messageToClient("WINNER EVENT");
     return true;
   }
   else

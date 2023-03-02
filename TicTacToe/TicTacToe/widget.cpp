@@ -138,17 +138,8 @@ void Widget::changeName()
 {
   QObject* sender = QObject::sender();
   QPushButton* clickedButton = dynamic_cast<QPushButton*>(sender);
-
-  if(checkStep){
-      clickedButton->setText(QString("o"));
-      clickedButton->setEnabled(false);
-      checkStep = false;
-    }
-  else{
-      clickedButton->setText(QString("x"));
-      clickedButton->setEnabled(false);
-      checkStep = true;
-    }
+  clickedButton->setText(QString(defaultLetter));
+  clickedButton->setEnabled(false);
 }
 
 void Widget::resetGame()

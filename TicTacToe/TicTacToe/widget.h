@@ -50,6 +50,7 @@ signals:
 public:
   QPushButton* changeIcon1{nullptr};
   QPushButton* changeIcon2{nullptr};
+  QChar defaultLetter;
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton{nullptr};

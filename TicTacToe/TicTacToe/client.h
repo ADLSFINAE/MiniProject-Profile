@@ -21,6 +21,7 @@ signals:
   void signalGetMatrixFromServer(QString fromServer);
 
   void signalToBlockAllUsersButtons();
+
 private:
   QByteArray arr;
   QChar array[3][3];

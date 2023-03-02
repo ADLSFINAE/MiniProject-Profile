@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 //FIRST CLIENT
   Widget w;
+  w.defaultLetter = 'x';
   w.setWindowTitle("FIRST PLAYER");
 
   ShowGamers* player1ForW = new ShowGamers;
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
   w.show();
 //SECOND CLIENT
   Widget w2;
+  w2.defaultLetter = 'o';
   w2.setWindowTitle("SECOND PLAYER");
 
   ShowGamers* player1ForW2 = new ShowGamers;

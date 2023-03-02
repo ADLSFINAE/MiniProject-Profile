@@ -10,8 +10,6 @@ Client::Client()
 
     connect(this, &QTcpSocket::readyRead, this, &Client::slotReadyRead);
     connect(this, &QTcpSocket::disconnected, this, &QTcpSocket::deleteLater);
-
-    //socket from read from server matrix
 }
 
 void Client::sendToServer()
@@ -32,11 +30,9 @@ void Client::slotReadyRead()
     QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender);
 
     QString string = socket->readAll();
-    if(string == "WINNER EVENT"){
-        emit signalToBlockAllUsersButtons();
-      }
     if(string == XXX || string == OOO){
         emit sendAWinnerOnWidget(string);
+        emit signalToBlockAllUsersButtons();
       }
     else{
         QString support;
