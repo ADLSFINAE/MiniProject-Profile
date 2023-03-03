@@ -19,8 +19,12 @@ class Widget : public QWidget
 public:
   Widget(QWidget *parent = nullptr);
   void madeIcon(QGraphicsView *view, bool secondPlayer);
+  bool isFirst;
   ~Widget();
 public:
+  QPushButton* changeIcon1{nullptr};
+  QPushButton* changeIcon2{nullptr};
+  QChar defaultLetter;
 
 public slots:
   //logic for set a shit with general matrix from Server
@@ -30,27 +34,36 @@ public slots:
 
 
 public slots:
-  void showWinner(QString winnerShape);
-  void openFolder();
-  void changeName();
-  void resetGame();
-  void blockForNewGame();
-  void getMessageFromBoard();
+  void showWinner(QString winnerShape); //Показ победителя
+  void openFolder();  //Вызов панели для выставления картинки
+  void changeName();  //Изменение пустого поля на кнопке после хода
+  void resetGame(); //Обнуление доски
+  void blockForNewGame(); //Если выигрывает кто-либо, то обе доски блокируются полностью
+  void getMessageFromBoard(); //Собирательная модель работы между клиентом и виджетом
 
+public slots:
+  //Сигналы для блокировки досок, которые сходили и разблокировка той, которая должна ходить первой
+  void slotBlockButtons();
+  void slotUnblockButtons();
 signals:
+  //Общая система сигналов для работы с виджетом
   void signalForBlock();
   void givePixmap(QString string, ShowGamers* view);
   void sendToClient(QChar value, int i , int j);
   void sendBoardToServer();
   void signalBlockButton(int i , int j, QChar name);
 
+signals:
+  //Здесь сигналы на блокировку кнопок
   void signalToClientReset();
-
   void resetFor2Gamers();
-public:
-  QPushButton* changeIcon1{nullptr};
-  QPushButton* changeIcon2{nullptr};
-  QChar defaultLetter;
+
+signals:
+  //Здесь сигналы на блокировку кнопок во время хода
+  void signalBlockButtons();
+  void signalUnblockButtons1();
+  void signalUnblockButtons2();
+
 private:
   QPushButton* button[3][3];
   QPushButton* resetButton{nullptr};

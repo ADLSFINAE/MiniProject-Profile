@@ -21,6 +21,7 @@ Widget::Widget(QWidget *parent)
           button[i][j]->setFont(QFont("Arial", 50));
           connect(button[i][j], &QPushButton::clicked, this, &Widget::changeName);
           connect(button[i][j], &QPushButton::clicked, this, &Widget::getMessageFromBoard);
+          connect(button[i][j], &QPushButton::clicked, this, &Widget::slotBlockButtons);
         }
     }
 
@@ -31,7 +32,6 @@ Widget::Widget(QWidget *parent)
 
   connect(resetButton, &QPushButton::clicked, this, &Widget::resetGamePlayers);
   connect(this, &Widget::signalForBlock, this, &Widget::blockForNewGame);
-  //connect(this, &Widget::resetFor2Gamers, this, &Widget::resetGame);
 }
 
 void Widget::madeIcon(QGraphicsView *view, bool secondPlayer)
@@ -140,6 +140,13 @@ void Widget::changeName()
   QPushButton* clickedButton = dynamic_cast<QPushButton*>(sender);
   clickedButton->setText(QString(defaultLetter));
   clickedButton->setEnabled(false);
+  qDebug()<<isFirst<<"TRUE OR FALSE";
+  if(isFirst){
+      emit signalUnblockButtons1();
+    }
+  else{
+      emit signalUnblockButtons2();
+    }
 }
 
 void Widget::resetGame()
@@ -172,6 +179,25 @@ void Widget::getMessageFromBoard()
         }
     }
   emit sendBoardToServer();
+}
+
+void Widget::slotBlockButtons()
+{
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+              button[i][j]->setEnabled(false);
+        }
+    }
+}
+
+void Widget::slotUnblockButtons()
+{
+  for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+          if(button[i][j]->text() == "")
+              button[i][j]->setEnabled(true);
+        }
+    }
 }
 
 

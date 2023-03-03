@@ -9,8 +9,9 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 //FIRST CLIENT
   Widget w;
+  w.isFirst = true;
   w.defaultLetter = 'x';
-  w.setWindowTitle("FIRST PLAYER");
+  w.setWindowTitle("X");
 
   ShowGamers* player1ForW = new ShowGamers;
   w.madeIcon(player1ForW, true);
@@ -29,8 +30,9 @@ int main(int argc, char *argv[])
   w.show();
 //SECOND CLIENT
   Widget w2;
+  w2.isFirst = false;
   w2.defaultLetter = 'o';
-  w2.setWindowTitle("SECOND PLAYER");
+  w2.setWindowTitle("O");
 
   ShowGamers* player1ForW2 = new ShowGamers;
   w2.madeIcon(player1ForW2, true);
@@ -64,6 +66,8 @@ int main(int argc, char *argv[])
  QObject::connect(&client, &Client::signalToBlockAllUsersButtons, &w2, &Widget::blockForNewGame);
  QObject::connect(&client2, &Client::signalToBlockAllUsersButtons, &w, &Widget::blockForNewGame);
 
+ QObject::connect(&w, &Widget::signalUnblockButtons1, &w2, &Widget::slotUnblockButtons);
+ QObject::connect(&w2, &Widget::signalUnblockButtons2, &w, &Widget::slotUnblockButtons);
   w2.show();
 
   return a.exec();
