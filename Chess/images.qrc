@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>chesscom/bB.png</file>
+        <file>chesscom/bK.png</file>
+        <file>chesscom/bN.png</file>
+        <file>chesscom/bP.png</file>
+        <file>chesscom/bQ.png</file>
+        <file>chesscom/bR.png</file>
+        <file>chesscom/wB.png</file>
+        <file>chesscom/wK.png</file>
+        <file>chesscom/wN.png</file>
+        <file>chesscom/wP.png</file>
+        <file>chesscom/wQ.png</file>
+        <file>chesscom/wR.png</file>
+    </qresource>
+</RCC>
