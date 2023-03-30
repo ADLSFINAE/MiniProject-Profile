@@ -1,18 +1,23 @@
 #include "board.h"
-#include "paramsNdefines.h"
-using namespace bigDick;
 
 Board::Board(QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
 {
+
+    arrOfBlocks.resize(bigDick::LONGOFMYPENISX);
+
+    for (int i = 0; i < bigDick::LONGOFMYPENISY; ++i) {
+        arrOfBlocks[i].resize(bigDick::LONGOFMYPENISY);
+    }
+
     this->setRect(0, 0, bigDick::GENX * bigDick::LONGOFMYPENISX, bigDick::GENY * bigDick::LONGOFMYPENISY);
 }
 
 void Board::inizialization(QGraphicsScene *scene)
 {
     scene->addItem(this);
-    for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
+    for(int i = 0; i < bigDick::LONGOFMYPENISX; i++){
+        for(int j = 0; j < bigDick::LONGOFMYPENISY; j++){
             if(check4Color(i, j))
                 buildingBlock(Qt::gray, i, j, scene);
             else
@@ -23,13 +28,13 @@ void Board::inizialization(QGraphicsScene *scene)
 
 void Board::buildingBlock(QBrush brush, int i, int j, QGraphicsScene* scene)
 {
-    blockArray[i][j] = new Block();
-    scene->addItem(blockArray[i][j]);
+    arrOfBlocks[i][j] = new Block();
+    scene->addItem(arrOfBlocks[i][j]);
 
-    blockArray[i][j]->setRect(0, 0, bigDick::GENX, bigDick::GENY);
-    blockArray[i][j]->setPos(i * bigDick::GENX, j * bigDick::GENY);
-    blockArray[i][j]->setDefPen();
-    blockArray[i][j]->changeColor(brush);
+    arrOfBlocks[i][j]->setRect(0, 0, bigDick::GENX, bigDick::GENY);
+    arrOfBlocks[i][j]->setPos(i * bigDick::GENX, j * bigDick::GENY);
+    arrOfBlocks[i][j]->setDefPen();
+    arrOfBlocks[i][j]->changeColor(brush);
 }
 
 

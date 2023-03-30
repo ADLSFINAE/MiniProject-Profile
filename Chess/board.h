@@ -3,6 +3,9 @@
 #include "block.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
+#include <QVector>
+#include "paramsNdefines.h"
+using namespace bigDick;
 
 class Board : public QObject, public QGraphicsRectItem
 {
@@ -13,8 +16,7 @@ public:
     void buildingBlock(QBrush brush, int i, int j, QGraphicsScene* scene);
 private:
     bool check4Color(int rows, int cols) const;
-
-    Block* blockArray[8][8];
+    QVector< QVector<Block*> > arrOfBlocks;
 };
 
 #endif // BOARD_H
