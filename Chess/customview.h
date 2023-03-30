@@ -4,11 +4,13 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QGraphicsScene>
+#include "paramsNdefines.h"
+using namespace GlobVal;
 
 class CustomView : public QGraphicsView
 {
 public:
-    CustomView(QGraphicsScene* scene);
+    CustomView(QGraphicsScene* scene, QGraphicsView* view = nullptr);
     void mousePressEvent(QMouseEvent* event);
 };
 

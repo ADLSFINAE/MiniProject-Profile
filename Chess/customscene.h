@@ -2,6 +2,8 @@
 #define CUSTOMSCENE_H
 #include <QGraphicsScene>
 #include "board.h"
+#include "paramsNdefines.h"
+using namespace GlobVal;
 
 class CustomScene : public QGraphicsScene
 {

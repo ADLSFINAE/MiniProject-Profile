@@ -6,8 +6,13 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     //initialization of my array, it's not seems like in pure c++, but it's QVector
     // and i used resize method for it
     this->initVectorOfBlocks();
-    this->setRect(0, 0, GlobVal::GlobX * GlobVal::LongByX, GlobVal::GlobY * GlobVal::LongByY);
     this->inizialization(scene);
+    this->ensureVisible(this->boundingRect(), 100, 100);
+}
+
+QRectF Board::boundingRect() const
+{
+    return QRectF(0, 0, GlobX * LongByX, GlobY * LongByY);
 }
 
 void Board::inizialization(QGraphicsScene *scene)
@@ -19,9 +24,9 @@ void Board::inizialization(QGraphicsScene *scene)
     * 2) in buildingBlock() function we set what our blocks have parent and it our BOARD; *
     * 3) cause we addItem() -> board, all items what have parent board adding with him like they are blocks; *
     */
-    for(int i = 0; i < GlobVal::LongByX; i++){
-        for(int j = 0; j < GlobVal::LongByY; j++){
-            if(check4Color(i, j))
+    for(int i = 0; i < LongByX; i++){
+        for(int j = 0; j < LongByY; j++){
+            if(neededColorChecker(i, j))
                 buildingBlock(Qt::gray, i, j);
             else
                 buildingBlock(Qt::black, i, j);
@@ -29,27 +34,28 @@ void Board::inizialization(QGraphicsScene *scene)
     }
 }
 
-void Board::buildingBlock(QBrush brush, int i, int j)
+void Board::buildingBlock(QBrush brush, int rows, int cols)
 {
-    arrOfBlocks[i][j] = new Block();
-    arrOfBlocks[i][j]->setParentItem(this);
+    arrOfBlocks[rows][cols] = new Block();
+    arrOfBlocks[rows][cols]->setParentItem(this);
 
-    arrOfBlocks[i][j]->setRect(0, 0, GlobVal::GlobX, GlobVal::GlobY);
-    arrOfBlocks[i][j]->setPos(i * GlobVal::GlobX, j * GlobVal::GlobY);
-    arrOfBlocks[i][j]->setDefPen();
-    arrOfBlocks[i][j]->changeColor(brush);
+    arrOfBlocks[rows][cols]->setRect(0, 0, GlobX, GlobY);
+    arrOfBlocks[rows][cols]->setPos(rows * GlobX, cols * GlobY);
+    arrOfBlocks[rows][cols]->setDefPen();
+    arrOfBlocks[rows][cols]->changeColor(brush);
 }
 
 void Board::initVectorOfBlocks()
 {
-    arrOfBlocks.resize(GlobVal::LongByX);
+    arrOfBlocks.resize(LongByX);
 
-    for (int i = 0; i < GlobVal::LongByY; i++) {
-        arrOfBlocks[i].resize(GlobVal::LongByY);
+    for (int i = 0; i < LongByY; i++) {
+        arrOfBlocks[i].resize(LongByY);
     }
 }
 
-bool Board::check4Color(int rows, int cols) const
+
+bool Board::neededColorChecker(int rows, int cols) const
 {
     if((rows + cols) % 2 == 0)
         return true;

@@ -11,12 +11,14 @@ class Board : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
+    Board() = default;
     Board(QGraphicsScene *scene, QGraphicsRectItem* parent = nullptr);
-    void inizialization(QGraphicsScene* scene);
-    void buildingBlock(QBrush brush, int i, int j);
+    QRectF boundingRect() const override;
 private:
+    void buildingBlock(QBrush brush, int rows, int cols);
+    void inizialization(QGraphicsScene* scene);
     void initVectorOfBlocks();
-    bool check4Color(int rows, int cols) const;
+    bool neededColorChecker(int rows, int cols) const;
     QVector< QVector<Block*> > arrOfBlocks;
 };
 

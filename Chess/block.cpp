@@ -1,9 +1,5 @@
 #include "block.h"
 
-Block::Block()
-{
-}
-
 void Block::changeColor(QBrush brush)
 {
     this->setBrush(brush);
@@ -24,7 +20,7 @@ void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 QRectF Block::boundingRect() const
 {
-    return QRectF(0, 0, 80, 80);
+    return QRectF(0, 0, GlobX, GlobY);
 }
 
 
