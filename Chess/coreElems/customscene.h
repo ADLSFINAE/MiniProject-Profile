@@ -1,7 +1,7 @@
 #ifndef CUSTOMSCENE_H
 #define CUSTOMSCENE_H
 #include <QGraphicsScene>
-#include "board.h"
+#include "boardElems/board.h"
 #include "paramsNdefines.h"
 using namespace GlobVal;
 

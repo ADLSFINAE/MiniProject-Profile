@@ -1,4 +1,4 @@
-#include "block.h"
+#include "boardElems/block.h"
 
 void Block::changeColor(QBrush brush)
 {

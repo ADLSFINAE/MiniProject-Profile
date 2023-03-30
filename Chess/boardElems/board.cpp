@@ -1,4 +1,4 @@
-#include "board.h"
+#include "boardElems/board.h"
 
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
@@ -43,8 +43,6 @@ void Board::buildingBlock(QBrush brush, int rows, int cols)
     arrOfBlocks[rows][cols]->setPos(rows * GlobX, cols * GlobY);
     arrOfBlocks[rows][cols]->setDefPen();
     arrOfBlocks[rows][cols]->changeColor(brush);
-
-    qDebug()<<"Block"<<rows<<cols<<" size is:"<<arrOfBlocks[rows][cols]->x()<<arrOfBlocks[rows][cols]->y();
 }
 
 void Board::initVectorOfBlocks()

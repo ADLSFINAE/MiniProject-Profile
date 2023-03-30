@@ -9,10 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    block.cpp \
-    board.cpp \
-    customscene.cpp \
-    customview.cpp \
+    boardElems/block.cpp \
+    boardElems/board.cpp \
+    coreElems/customscene.cpp \
+    coreElems/customview.cpp \
     figures/figures.cpp \
     figures/horse.cpp \
     figures/king.cpp \
@@ -22,10 +22,10 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
-    block.h \
-    board.h \
-    customscene.h \
-    customview.h \
+    boardElems/block.h \
+    boardElems/board.h \
+    coreElems/customscene.h \
+    coreElems/customview.h \
     figures/figures.h \
     figures/horse.h \
     figures/king.h \

@@ -1,6 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "block.h"
+#include "boardElems/block.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QVector>

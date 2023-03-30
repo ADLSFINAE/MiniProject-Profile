@@ -1,4 +1,4 @@
-#include "customview.h"
+#include "coreElems/customview.h"
 
 CustomView::CustomView(QGraphicsScene* scene, QGraphicsView* view)
     :QGraphicsView(view)
