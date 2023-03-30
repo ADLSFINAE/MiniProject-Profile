@@ -5,16 +5,17 @@
 #include <QGraphicsScene>
 #include <QVector>
 #include "paramsNdefines.h"
-using namespace bigDick;
+using namespace GlobVal;
 
 class Board : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Board(QGraphicsRectItem* parent = nullptr);
+    Board(QGraphicsScene *scene, QGraphicsRectItem* parent = nullptr);
     void inizialization(QGraphicsScene* scene);
-    void buildingBlock(QBrush brush, int i, int j, QGraphicsScene* scene);
+    void buildingBlock(QBrush brush, int i, int j);
 private:
+    void initVectorOfBlocks();
     bool check4Color(int rows, int cols) const;
     QVector< QVector<Block*> > arrOfBlocks;
 };
