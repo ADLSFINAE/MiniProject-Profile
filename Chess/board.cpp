@@ -7,7 +7,6 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     // and i used resize method for it
     this->initVectorOfBlocks();
     this->inizialization(scene);
-    this->ensureVisible(this->boundingRect(), 100, 100);
 }
 
 QRectF Board::boundingRect() const
@@ -39,10 +38,13 @@ void Board::buildingBlock(QBrush brush, int rows, int cols)
     arrOfBlocks[rows][cols] = new Block();
     arrOfBlocks[rows][cols]->setParentItem(this);
 
+    arrOfBlocks[rows][cols]->ensureVisible(arrOfBlocks[rows][cols]->boundingRect(), 100, 100);
     arrOfBlocks[rows][cols]->setRect(0, 0, GlobX, GlobY);
     arrOfBlocks[rows][cols]->setPos(rows * GlobX, cols * GlobY);
     arrOfBlocks[rows][cols]->setDefPen();
     arrOfBlocks[rows][cols]->changeColor(brush);
+
+    qDebug()<<"Block"<<rows<<cols<<" size is:"<<arrOfBlocks[rows][cols]->x()<<arrOfBlocks[rows][cols]->y();
 }
 
 void Board::initVectorOfBlocks()

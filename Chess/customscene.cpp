@@ -5,4 +5,5 @@ CustomScene::CustomScene(QGraphicsScene *scene)
 {
     this->setSceneRect(0, 0, GlobX * LongByX, GlobY * LongByY);
     board = new Board(this);
+    qDebug()<<"Board size is:"<<board->x()<<board->y();
 }

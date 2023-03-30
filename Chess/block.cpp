@@ -7,9 +7,7 @@ void Block::changeColor(QBrush brush)
 
 void Block::setDefPen()
 {
-    QPen pen;
-    pen.setWidth(0);
-    this->setPen(pen);
+    this->setPen(Qt::NoPen);
 }
 
 void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -14,10 +14,12 @@ class Block : public QObject, public QGraphicsRectItem
     Q_OBJECT
 public:
     Block() = default;
+    QRectF boundingRect() const override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
     void changeColor(QBrush brush);
     void setDefPen();
-    QRectF boundingRect() const override;
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 };
 
 #endif // BLOCK_H
