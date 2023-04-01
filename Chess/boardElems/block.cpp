@@ -13,7 +13,7 @@ void Block::setDefPen()
 void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsRectItem::mousePressEvent(event);
-    qDebug()<<"Block was clicked";
+    qDebug()<<"Block was clicked"<<x() / 80<<y()/80;
 }
 
 QRectF Block::boundingRect() const
