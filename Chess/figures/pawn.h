@@ -1,8 +1,8 @@
 #ifndef PAWN_H
 #define PAWN_H
-#include "figures/figures.h"
+#include "figures/figure.h"
 
-class Pawn : public Figures
+class Pawn : public Figure
 {
 public:
     Pawn(int x, int y, bool isWhite);

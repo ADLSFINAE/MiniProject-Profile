@@ -1,8 +1,8 @@
 #ifndef HORSE_H
 #define HORSE_H
-#include "figures/figures.h"
+#include "figures/figure.h"
 
-class Horse : public Figures
+class Horse : public Figure
 {
 public:
     Horse(int x, int y, bool isWhite);

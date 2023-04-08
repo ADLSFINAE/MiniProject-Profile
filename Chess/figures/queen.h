@@ -1,8 +1,8 @@
 #ifndef QUEEN_H
 #define QUEEN_H
-#include "figures/figures.h"
+#include "figures/figure.h"
 
-class Queen : public Figures
+class Queen : public Figure
 {
 public:
     Queen(int x, int y, bool isWhite);

@@ -1,6 +1,6 @@
 #include "figures/horse.h"
 
-Horse::Horse(int x, int y, bool isWhite) : Figures(x, y, isWhite)
+Horse::Horse(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
 
 }

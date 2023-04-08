@@ -1,6 +1,6 @@
 #include "figures/pawn.h"
 
-Pawn::Pawn(int x, int y, bool isWhite) : Figures(x, y, isWhite)
+Pawn::Pawn(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
 
 }

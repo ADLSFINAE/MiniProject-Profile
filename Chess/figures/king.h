@@ -1,8 +1,9 @@
 #ifndef KING_H
 #define KING_H
-#include "figures/figures.h"
+#include "figures/figure.h"
+#include <QPixmap>
 
-class King : public Figures
+class King : public Figure
 {
     Q_OBJECT
 public:

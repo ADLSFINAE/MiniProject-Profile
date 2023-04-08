@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/blackFigures">
-        <file>chesscom/blackFigures/bB.png</file>
         <file>chesscom/blackFigures/bK.png</file>
         <file>chesscom/blackFigures/bN.png</file>
         <file>chesscom/blackFigures/bP.png</file>
         <file>chesscom/blackFigures/bQ.png</file>
         <file>chesscom/blackFigures/bR.png</file>
+        <file>chesscom/blackFigures/bB.png</file>
     </qresource>
     <qresource prefix="/whiteFigures">
         <file>chesscom/whiteFigures/wB.png</file>

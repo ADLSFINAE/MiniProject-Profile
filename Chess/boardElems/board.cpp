@@ -1,4 +1,5 @@
 #include "boardElems/board.h"
+#include "figures/king.h"
 
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
@@ -7,11 +8,17 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     // and i used resize method for it
     this->initVectorOfBlocks();
     this->inizialization(scene);
+
 }
 
 QRectF Board::boundingRect() const
 {
     return QRectF(0, 0, GlobX * LongByX, GlobY * LongByY);
+}
+
+QVector<QVector<Block *> > Board::getBoard()
+{
+    return arrOfBlocks;
 }
 
 void Board::inizialization(QGraphicsScene *scene)
@@ -31,6 +38,15 @@ void Board::inizialization(QGraphicsScene *scene)
                 buildingBlock(Qt::black, i, j);
         }
     }
+
+    King* king = new King(5,5, true);
+    //king.setParent(board);
+    king->setZValue(1000);
+    king->setVisible(true);
+    king->setBoard(this->getBoard());
+    scene->addItem(king);
+    king->setPixmap(QPixmap(":/whiteFigures/chesscom/whiteFigures/wK.png"));
+
 }
 
 void Board::buildingBlock(QBrush brush, int rows, int cols)
@@ -38,7 +54,6 @@ void Board::buildingBlock(QBrush brush, int rows, int cols)
     arrOfBlocks[rows][cols] = new Block();
     arrOfBlocks[rows][cols]->setParentItem(this);
 
-    arrOfBlocks[rows][cols]->ensureVisible(arrOfBlocks[rows][cols]->boundingRect(), 100, 100);
     arrOfBlocks[rows][cols]->setRect(0, 0, GlobX, GlobY);
     arrOfBlocks[rows][cols]->setPos(rows * GlobX, cols * GlobY);
     arrOfBlocks[rows][cols]->setDefPen();

@@ -13,7 +13,7 @@ SOURCES += \
     boardElems/board.cpp \
     coreElems/customscene.cpp \
     coreElems/customview.cpp \
-    figures/figures.cpp \
+    figures/figure.cpp \
     figures/horse.cpp \
     figures/king.cpp \
     figures/pawn.cpp \
@@ -26,7 +26,7 @@ HEADERS += \
     boardElems/board.h \
     coreElems/customscene.h \
     coreElems/customview.h \
-    figures/figures.h \
+    figures/figure.h \
     figures/horse.h \
     figures/king.h \
     figures/pawn.h \

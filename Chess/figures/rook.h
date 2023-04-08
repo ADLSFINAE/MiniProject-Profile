@@ -1,8 +1,8 @@
 #ifndef ROOK_H
 #define ROOK_H
-#include "figures/figures.h"
+#include "figures/figure.h"
 
-class Rook : public Figures
+class Rook : public Figure
 {
 public:
     Rook(int x, int y, bool isWhite);

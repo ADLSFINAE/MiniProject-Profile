@@ -9,16 +9,17 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
 
-class Figures : public QObject, public QGraphicsPixmapItem{
+class Figure : public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
 public:
-    Figures(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
+    Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
 
 public:
     void setPosition(int x, int y);
     QPoint getPosition() const;
     bool getColor();
-
+    QVector< QVector<Block*> > arrWithBoard;
+    void setBoard(QVector< QVector<Block*> > arrWithBoard);
 public:
     virtual QVector<QPointF> getValidNeighbourPositions() = 0;
 
