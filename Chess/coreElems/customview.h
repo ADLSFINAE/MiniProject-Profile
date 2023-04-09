@@ -9,6 +9,7 @@ using namespace GlobVal;
 
 class CustomView : public QGraphicsView
 {
+    Q_OBJECT
 public:
     CustomView(QGraphicsScene* scene, QGraphicsView* view = nullptr);
 

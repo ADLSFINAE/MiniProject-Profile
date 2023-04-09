@@ -1,12 +1,12 @@
-#ifndef HORSE_H
-#define HORSE_H
+#ifndef ELEPHANT_H
+#define ELEPHANT_H
 #include "figures/figure.h"
 
-class Horse : public Figure
+class Elephant : public Figure
 {
     Q_OBJECT
 public:
-    Horse(int x, int y, bool isWhite);
+    Elephant(int x, int y, bool isWhite);
     QVector<QPointF> getValidNeighbourPositions() override;
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
@@ -14,4 +14,4 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 };
 
-#endif // HORSE_H
+#endif // ELEPHANT_H

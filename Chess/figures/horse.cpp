@@ -2,7 +2,10 @@
 
 Horse::Horse(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
-
+    if(isWhite)
+        this->setPixmap(QPixmap(pngWhiteHorse));
+    else
+        this->setPixmap(QPixmap(pngBlackHorse));
 }
 
 QVector<QPointF> Horse::getValidNeighbourPositions()

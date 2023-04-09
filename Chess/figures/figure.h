@@ -1,5 +1,5 @@
-#ifndef FIGURES_H
-#define FIGURES_H
+#ifndef FIGURE_H
+#define FIGURE_H
 
 #include "boardElems/block.h"
 #include "paramsNdefines.h"
@@ -8,16 +8,18 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QPair>
+using namespace GlobVal;
 
 class Figure : public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
 public:
     Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
-
 public:
     void setPosition(int x, int y);
     QPoint getPosition() const;
     bool getColor();
+    void sayHi();
     QVector< QVector<Block*> > arrWithBoard;
     void setBoard(QVector< QVector<Block*> > arrWithBoard);
 public:
@@ -29,4 +31,4 @@ private:
     int y;
 };
 
-#endif // FIGURES_H
+#endif // FIGURE_H

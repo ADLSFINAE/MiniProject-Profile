@@ -2,7 +2,10 @@
 
 Queen::Queen(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
-
+    if(isWhite)
+        this->setPixmap(QPixmap(pngWhiteQueen));
+    else
+        this->setPixmap(QPixmap(pngBlackQueen));
 }
 
 QVector<QPointF> Queen::getValidNeighbourPositions()

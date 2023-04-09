@@ -1,5 +1,12 @@
 #include "boardElems/board.h"
+#include "figures/figure.h"
+
 #include "figures/king.h"
+#include "figures/horse.h"
+#include "figures/queen.h"
+#include "figures/elephant.h"
+#include "figures/pawn.h"
+#include "figures/rook.h"
 
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
@@ -8,7 +15,9 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     // and i used resize method for it
     this->initVectorOfBlocks();
     this->inizialization(scene);
-
+    game = new Game();
+    this->figuresPlacing(scene, true);
+    this->figuresPlacing(scene, false);
 }
 
 QRectF Board::boundingRect() const
@@ -19,6 +28,34 @@ QRectF Board::boundingRect() const
 QVector<QVector<Block *> > Board::getBoard()
 {
     return arrOfBlocks;
+}
+
+void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
+{
+    int cols, pawnCols;
+    isWhite ? ({cols = 7; pawnCols = 6;}) : ({cols = 0; pawnCols = 1;});
+
+    QVector<Figure*> figures = {
+        new King(4, cols, isWhite),
+        new Queen(3, cols, isWhite),
+        new Horse(1, cols, isWhite),
+        new Horse(6, cols, isWhite),
+        new Elephant(2, cols, isWhite),
+        new Elephant(2, cols, isWhite),
+        new Rook(0, cols, isWhite),
+        new Rook(7, cols, isWhite),
+    };
+
+    for(int rows = 0; rows < LongByX; rows++)
+        figures.push_back(new Pawn(rows, pawnCols, isWhite));
+
+    for (const auto& figure : figures) {
+        scene->addItem(figure);
+        game->initOfVecs(figure, isWhite);
+    }
+
+    qDebug()<<game->vecOfWhiteFigures.size()<<"DSADASDASDAS";
+    qDebug()<<game->vecOfBlackFigures.size()<<"DSADASDASDAS";
 }
 
 void Board::inizialization(QGraphicsScene *scene)
@@ -38,14 +75,6 @@ void Board::inizialization(QGraphicsScene *scene)
                 buildingBlock(Qt::black, i, j);
         }
     }
-
-    King* king = new King(5,5, true);
-    //king.setParent(board);
-    king->setZValue(1000);
-    king->setVisible(true);
-    king->setBoard(this->getBoard());
-    scene->addItem(king);
-    king->setPixmap(QPixmap(":/whiteFigures/chesscom/whiteFigures/wK.png"));
 
 }
 

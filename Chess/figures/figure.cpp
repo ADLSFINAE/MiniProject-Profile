@@ -26,6 +26,11 @@ QPoint Figure::getPosition() const
     return QPoint(x, y);
 }
 
+void Figure::sayHi()
+{
+    qDebug()<<"Hi";
+}
+
 void Figure::setBoard(QVector< QVector<Block*> > arrWithBoard)
 {
     for(int i = 0; i < LongByX; i++){

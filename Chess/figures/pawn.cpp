@@ -2,7 +2,10 @@
 
 Pawn::Pawn(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
-
+    if(isWhite)
+        this->setPixmap(QPixmap(pngWhitePawn));
+    else
+        this->setPixmap(QPixmap(pngBlackPawn));
 }
 
 QVector<QPointF> Pawn::getValidNeighbourPositions()

@@ -13,12 +13,14 @@ SOURCES += \
     boardElems/board.cpp \
     coreElems/customscene.cpp \
     coreElems/customview.cpp \
+    figures/elephant.cpp \
     figures/figure.cpp \
     figures/horse.cpp \
     figures/king.cpp \
     figures/pawn.cpp \
     figures/queen.cpp \
     figures/rook.cpp \
+    game.cpp \
     main.cpp
 
 HEADERS += \
@@ -26,12 +28,14 @@ HEADERS += \
     boardElems/board.h \
     coreElems/customscene.h \
     coreElems/customview.h \
+    figures/elephant.h \
     figures/figure.h \
     figures/horse.h \
     figures/king.h \
     figures/pawn.h \
     figures/queen.h \
     figures/rook.h \
+    game.h \
     paramsNdefines.h
 
 # Default rules for deployment.
