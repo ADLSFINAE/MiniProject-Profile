@@ -8,7 +8,7 @@ Rook::Rook(int x, int y, bool isWhite) : Figure(x, y, isWhite)
         this->setPixmap(QPixmap(pngBlackRook));
 }
 
-QVector<QPointF> Rook::getValidNeighbourPositions()
+QVector<Block*> Rook::getValidNeighbourPositions()
 {
 
 }

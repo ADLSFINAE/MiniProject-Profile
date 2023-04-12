@@ -3,12 +3,19 @@
 void Block::changeColor(QBrush brush)
 {
     this->setBrush(brush);
+    this->brush = brush;
 }
 
 void Block::setDefPen()
 {
     this->setPen(Qt::NoPen);
 }
+
+QBrush Block::getDefColor()
+{
+    return brush;
+}
+
 
 void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -18,7 +25,7 @@ void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 QRectF Block::boundingRect() const
 {
-    return QRectF(0, 0, GlobX, GlobY);
+    return blockSizeRect;
 }
 
 

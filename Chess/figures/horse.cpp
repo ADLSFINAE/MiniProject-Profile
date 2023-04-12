@@ -8,7 +8,7 @@ Horse::Horse(int x, int y, bool isWhite) : Figure(x, y, isWhite)
         this->setPixmap(QPixmap(pngBlackHorse));
 }
 
-QVector<QPointF> Horse::getValidNeighbourPositions()
+QVector<Block*> Horse::getValidNeighbourPositions()
 {
 
 }

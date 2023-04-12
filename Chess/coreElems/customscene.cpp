@@ -1,9 +1,10 @@
 #include "coreElems/customscene.h"
 #include "figures/king.cpp"
+
 CustomScene::CustomScene(QGraphicsScene *scene)
     :QGraphicsScene(scene)
 {
-    this->setSceneRect(0, 0, GlobX * LongByX, GlobY * LongByY);
+    this->setSceneRect(sceneSizeRect);
     board = new Board(this);
 }
 

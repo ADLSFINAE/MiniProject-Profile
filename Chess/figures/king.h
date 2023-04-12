@@ -8,8 +8,9 @@ class King : public Figure
     Q_OBJECT
 public:
     King(int x, int y, bool isWhite);
-    QVector<QPointF> getValidNeighbourPositions() override;
+    QVector<Block*> getValidNeighbourPositions() override;
 
+protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;

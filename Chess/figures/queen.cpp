@@ -8,7 +8,7 @@ Queen::Queen(int x, int y, bool isWhite) : Figure(x, y, isWhite)
         this->setPixmap(QPixmap(pngBlackQueen));
 }
 
-QVector<QPointF> Queen::getValidNeighbourPositions()
+QVector<Block*> Queen::getValidNeighbourPositions()
 {
 
 }

@@ -1,12 +1,30 @@
 #ifndef PARAMSNDEFINES_H
 #define PARAMSNDEFINES_H
 #include <QString>
+#include <QRectF>
+#include <QSize>
 
 namespace GlobVal{
 const static int GlobX = 80;
 const static int GlobY = 80;
+
 const static int LongByX = 8;
 const static int LongByY = 8;
+
+const static int FigureCenterX = GlobX / 2;
+const static int FigureCenterY = GlobY / 2;
+
+const static int SceneLongX = GlobX * LongByX;
+const static int SceneLongY = GlobY * LongByY;
+
+const static int ViewLongX = SceneLongX + LongByX;
+const static int ViewLongY = SceneLongY + LongByY;
+
+const static QRectF blockSizeRect(0, 0, GlobX, GlobY);
+const static QRectF figureSizeRect(0, 0, GlobX, GlobY);
+const static QSize viewSizeSquare(ViewLongX, ViewLongY);
+const static QRectF sceneSizeRect(0, 0, SceneLongX, SceneLongY);
+const static QRectF boardSizeRect(0, 0, SceneLongX, SceneLongY);
 
 //black figures .png defs and way
 const QString pngBlackKing = ":/blackFigures/chesscom/blackFigures/bK.png";

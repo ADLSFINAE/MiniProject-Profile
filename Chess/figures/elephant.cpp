@@ -8,7 +8,7 @@ Elephant::Elephant(int x, int y, bool isWhite) : Figure(x, y, isWhite)
         this->setPixmap(QPixmap(pngBlackElephant));
 }
 
-QVector<QPointF> Elephant::getValidNeighbourPositions()
+QVector<Block*> Elephant::getValidNeighbourPositions()
 {
 
 }

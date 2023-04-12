@@ -6,8 +6,8 @@ class Rook : public Figure
 {
 public:
     Rook(int x, int y, bool isWhite);
-    QVector<QPointF> getValidNeighbourPositions() override;
-
+    QVector<Block*> getValidNeighbourPositions() override;
+protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;

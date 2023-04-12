@@ -20,6 +20,10 @@ public:
 
     void changeColor(QBrush brush);
     void setDefPen();
+
+    QBrush getDefColor();
+private:
+    QBrush brush;
 };
 
 #endif // BLOCK_H

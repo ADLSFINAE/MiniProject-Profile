@@ -22,7 +22,7 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
 
 QRectF Board::boundingRect() const
 {
-    return QRectF(0, 0, GlobX * LongByX, GlobY * LongByY);
+    return boardSizeRect;
 }
 
 QVector<QVector<Block *> > Board::getBoard()
@@ -41,7 +41,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
         new Horse(1, cols, isWhite),
         new Horse(6, cols, isWhite),
         new Elephant(2, cols, isWhite),
-        new Elephant(2, cols, isWhite),
+        new Elephant(5, cols, isWhite),
         new Rook(0, cols, isWhite),
         new Rook(7, cols, isWhite),
     };
@@ -52,6 +52,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     for (const auto& figure : figures) {
         scene->addItem(figure);
         game->initOfVecs(figure, isWhite);
+        figure->setBoard(arrOfBlocks);
     }
 
     qDebug()<<game->vecOfWhiteFigures.size()<<"DSADASDASDAS";

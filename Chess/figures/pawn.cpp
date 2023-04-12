@@ -8,7 +8,7 @@ Pawn::Pawn(int x, int y, bool isWhite) : Figure(x, y, isWhite)
         this->setPixmap(QPixmap(pngBlackPawn));
 }
 
-QVector<QPointF> Pawn::getValidNeighbourPositions()
+QVector<Block*> Pawn::getValidNeighbourPositions()
 {
 
 }
