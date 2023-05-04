@@ -40,7 +40,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
         new Queen(3, cols, isWhite),
         new Horse(1, cols, isWhite),
         new Horse(6, cols, isWhite),
-        new Elephant(2, cols, isWhite),
+        new Elephant(3, 3, isWhite),
         new Elephant(5, cols, isWhite),
         new Rook(0, cols, isWhite),
         new Rook(7, cols, isWhite),

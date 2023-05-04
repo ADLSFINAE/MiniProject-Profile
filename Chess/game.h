@@ -12,6 +12,7 @@ public:
     Game();
     void initOfVecs(Figure* figure, bool isWhite);
     void giveInfo();
+    void logicLoverBoy(bool isWhite, Figure* figure);
     QVector< QPair <Figure*, QPointF> > vecOfBlackFigures;
     QVector< QPair <Figure*, QPointF> > vecOfWhiteFigures;
 };

@@ -49,8 +49,14 @@ bool Figure::checkOnOut(int rows, int cols) const
     else if(((this->getPosition().x() + rows) >= 0) && ((this->getPosition().x() + rows) <= 7)
             && ((this->getPosition().y() + cols) >= 0) && ((this->getPosition().y() + cols) <= 7))
             return true;
+
     else
         return false;
+}
+
+bool Figure::getColor()
+{
+    return isWhite;
 }
 
 QVector<QVector<Block *> > Figure::getBoard()

@@ -20,3 +20,14 @@ void Game::giveInfo()
         qDebug()<<elem.second.x()<<elem.second.y();
     }
 }
+
+void Game::logicLoverBoy(bool isWhite, Figure *figure)
+{
+    /*int countOfBlocks = figure->getValidNeighbourPositions().size();
+    QVector<Block*>vec = figure->getValidNeighbourPositions();
+    if(isWhite){
+        for(int i = 0; i < countOfBlocks; i++){
+            if(vec[i]->pos() == )
+        }
+    }*/
+}

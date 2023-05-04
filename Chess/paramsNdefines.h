@@ -28,7 +28,7 @@ const static QRectF boardSizeRect(0, 0, SceneLongX, SceneLongY);
 
 //black figures .png defs and way
 const QString pngBlackKing = ":/blackFigures/chesscom/blackFigures/bK.png";
-const QString pngBlackQueen = ":/blackFigures/chesscom/blackFigures/bP.png";
+const QString pngBlackQueen = ":/blackFigures/chesscom/blackFigures/bQ.png";
 const QString pngBlackRook = ":/blackFigures/chesscom/blackFigures/bR.png";
 const QString pngBlackHorse = ":/blackFigures/chesscom/blackFigures/bN.png";
 const QString pngBlackElephant = ":/blackFigures/chesscom/blackFigures/bB.png";
