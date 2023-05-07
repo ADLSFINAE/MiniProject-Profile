@@ -41,6 +41,7 @@ const QString pngWhiteRook = ":/whiteFigures/chesscom/whiteFigures/wR.png";
 const QString pngWhiteHorse = ":/whiteFigures/chesscom/whiteFigures/wN.png";
 const QString pngWhiteElephant = ":/whiteFigures/chesscom/whiteFigures/wB.png";
 const QString pngWhitePawn = ":/whiteFigures/chesscom/whiteFigures/wP.png";
+
 };
 
 #endif // PARAMSNDEFINES_H

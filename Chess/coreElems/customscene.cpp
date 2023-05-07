@@ -1,5 +1,4 @@
 #include "coreElems/customscene.h"
-#include "figures/king.cpp"
 
 CustomScene::CustomScene(QGraphicsScene *scene)
     :QGraphicsScene(scene)

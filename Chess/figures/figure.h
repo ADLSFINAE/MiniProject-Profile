@@ -10,6 +10,9 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPair>
 #include <QList>
+#include <QtMath>
+#include <QVector>
+#include <QList>
 using namespace GlobVal;
 
 class Figure : public QObject, public QGraphicsPixmapItem{
@@ -17,7 +20,7 @@ class Figure : public QObject, public QGraphicsPixmapItem{
 public:
     Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
     QRectF boundingRect()const override;
-public:
+
     //for set position
     void setPosition(int x, int y);
     QPoint getPosition() const;
@@ -25,14 +28,22 @@ public:
     //get position for mouse events
     void setOldPosition(int start_x, int start_y);
     QPair<int, int> getOldPosition() const;
-    bool checkOnOut(int rows, int cols) const;
 
+    //bool checkers
+    bool checkOnOut(int rows, int cols) const;
+    bool checkForStep(QVector<Block*> block_vector, QVector<Figure*> fig_vector);
     bool getColor();
+
+    //other logic
     QVector< QVector<Block*> > getBoard();
     void setBoard(QVector< QVector<Block*> > arrWithBoard);
+    double calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y);
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 public:
     virtual QVector<Block*> getValidNeighbourPositions() = 0;
-
 private:
     QVector< QVector<Block*> > arrWithBoard;
     bool isWhite;

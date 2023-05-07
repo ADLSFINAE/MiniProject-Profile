@@ -32,23 +32,16 @@ QVector<Block*> Elephant::getValidNeighbourPositions()
 
 void Elephant::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setOldPosition(this->pos().x(), this->pos().y());
-    for(auto& block : getValidNeighbourPositions()){
-        block->setBrush(Qt::yellow);
-    }
+    Figure::mousePressEvent(event);
 }
 
 void Elephant::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setPos(this->getOldPosition().first, this->getOldPosition().second);
-    for(auto& block : getValidNeighbourPositions()){
-        block->setBrush(block->getDefColor());
-    }
+    Figure::mouseReleaseEvent(event);
 }
 
 void Elephant::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug()<<event->pos();
-    this->setPos(mapToScene(event->pos()));
+    Figure::mouseMoveEvent(event);
 }
 

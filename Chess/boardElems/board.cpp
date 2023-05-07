@@ -39,15 +39,15 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
         new King(4, cols, isWhite),
         new Queen(3, cols, isWhite),
         new Horse(1, cols, isWhite),
-        new Horse(6, cols, isWhite),
-        new Elephant(3, 3, isWhite),
+        new Horse(6, 4, isWhite),
+        new Elephant(2, cols, isWhite),
         new Elephant(5, cols, isWhite),
         new Rook(0, cols, isWhite),
         new Rook(7, cols, isWhite),
     };
 
-    for(int rows = 0; rows < LongByX; rows++)
-        figures.push_back(new Pawn(rows, pawnCols, isWhite));
+    //for(int rows = 0; rows < LongByX; rows++)
+        //figures.push_back(new Pawn(rows, pawnCols, isWhite));
 
     for (const auto& figure : figures) {
         scene->addItem(figure);
@@ -84,6 +84,7 @@ void Board::buildingBlock(QBrush brush, int rows, int cols)
     arrOfBlocks[rows][cols] = new Block();
     arrOfBlocks[rows][cols]->setParentItem(this);
 
+    arrOfBlocks[rows][cols]->setBlockPos(rows, cols);
     arrOfBlocks[rows][cols]->setRect(0, 0, GlobX, GlobY);
     arrOfBlocks[rows][cols]->setPos(rows * GlobX, cols * GlobY);
     arrOfBlocks[rows][cols]->setDefPen();

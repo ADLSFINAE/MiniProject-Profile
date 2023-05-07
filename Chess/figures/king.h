@@ -9,7 +9,7 @@ class King : public Figure
 public:
     King(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;
-
+    void logicForRelease();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

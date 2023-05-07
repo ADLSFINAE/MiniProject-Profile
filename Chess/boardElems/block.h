@@ -20,10 +20,13 @@ public:
 
     void changeColor(QBrush brush);
     void setDefPen();
-
-    QBrush getDefColor();
+    void setBlockPos(int x, int y);
+    QPoint getBlockPos() const;
+    QBrush getDefColor() const;
+    bool colorWasChanged = false;
 private:
     QBrush brush;
+    int x, y;
 };
 
 #endif // BLOCK_H

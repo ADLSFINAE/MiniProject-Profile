@@ -11,7 +11,18 @@ void Block::setDefPen()
     this->setPen(Qt::NoPen);
 }
 
-QBrush Block::getDefColor()
+void Block::setBlockPos(int x, int y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+QPoint Block::getBlockPos() const
+{
+    return QPoint(x, y);
+}
+
+QBrush Block::getDefColor() const
 {
     return brush;
 }
@@ -20,7 +31,6 @@ QBrush Block::getDefColor()
 void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsRectItem::mousePressEvent(event);
-    qDebug()<<"Block was clicked"<<x() / 80<<y()/80;
 }
 
 QRectF Block::boundingRect() const
