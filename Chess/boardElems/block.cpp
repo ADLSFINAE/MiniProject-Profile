@@ -27,7 +27,6 @@ QBrush Block::getDefColor() const
     return brush;
 }
 
-
 void Block::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsRectItem::mousePressEvent(event);

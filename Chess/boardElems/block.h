@@ -15,15 +15,14 @@ class Block : public QObject, public QGraphicsRectItem
 public:
     Block() = default;
     QRectF boundingRect() const override;
-
-    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-
     void changeColor(QBrush brush);
     void setDefPen();
     void setBlockPos(int x, int y);
     QPoint getBlockPos() const;
     QBrush getDefColor() const;
     bool colorWasChanged = false;
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 private:
     QBrush brush;
     int x, y;

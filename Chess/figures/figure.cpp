@@ -97,6 +97,21 @@ void Figure::setBoard(QVector< QVector<Block*> > arrWithBoard)
     }
 }
 
+bool Figure::get_permission_to_move(Block* block)
+{
+    QVector<Figure*>vec_of_collidingItems;
+    for(auto& elem : block->collidingItems()){
+        Figure* item = dynamic_cast<Figure*>(elem);
+        if(item != nullptr)
+            vec_of_collidingItems.push_back(item);
+    }
+    qDebug()<<"Size of vec_of_collidingItems"<<vec_of_collidingItems.size();
+    if(vec_of_collidingItems.size() == 2)
+        return false;
+    else
+        return true;
+}
+
 double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y)
 {
     return qSqrt(qPow((event_figure_x - block_x), 2) + qPow((event_figure_y - block_y), 2));
@@ -194,7 +209,12 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                     }
 
                 }
-                this->setPosition(findMe->getBlockPos().x(), findMe->getBlockPos().y());
+                if(get_permission_to_move(findMe)){
+                    this->setPosition(findMe->getBlockPos().x(), findMe->getBlockPos().y());
+                }
+                else{
+                    this->setPos(this->getOldPosition().first, this->getOldPosition().second);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
+
 #include "boardElems/block.h"
 #include "paramsNdefines.h"
 
@@ -32,6 +33,7 @@ public:
     //bool checkers
     bool checkOnOut(int rows, int cols) const;
     bool checkForStep(QVector<Block*> block_vector, QVector<Figure*> fig_vector);
+    bool get_permission_to_move(Block* block);
     bool getColor();
 
     //other logic
