@@ -13,34 +13,41 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
     QVector<Block*> positions;
     for(int i = 1; i < 3; i++){
         if(getColor()){
-            positions.push_back(getBoard()[getPosition().x()][getPosition().y() - i]);
+            if((this->getPosition().y() - i >= 0) && (this->getPosition().y() - i <= 7)){
+                positions.push_back(getBoard()[getPosition().x()][getPosition().y() - i]);
+                if((getPosition().x() - 1 >= 0) && (getPosition().x() - 1 <= 7))
+                    positions.push_back(getBoard()[getPosition().x() - 1][getPosition().y() - 1]);
+                if((getPosition().x() + 1 >= 0) && (getPosition().x() + 1 <= 7))
+                    positions.push_back(getBoard()[getPosition().x() + 1][getPosition().y() - 1]);
+            }
         }
         else{
-            positions.push_back(getBoard()[getPosition().x()][getPosition().y() + i]);
+            if((this->getPosition().y() + i >= 0) && (this->getPosition().y() + i <= 7)){
+                positions.push_back(getBoard()[getPosition().x()][getPosition().y() + i]);
+                if((getPosition().x() - 1 >= 0) && (getPosition().x() - 1 <= 7))
+                    positions.push_back(getBoard()[getPosition().x() - 1][getPosition().y() + 1]);
+                if((getPosition().x() + 1 >= 0) && (getPosition().x() + 1 <= 7))
+                    positions.push_back(getBoard()[getPosition().x() + 1][getPosition().y() + 1]);
+            }
         }
     }
+
 
     return positions;
 }
 
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setOldPosition(this->pos().x(), this->pos().y());
-    for(auto& block : getValidNeighbourPositions()){
-        block->setBrush(Qt::yellow);
-    }
+    Figure::mousePressEvent(event);
 }
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setPos(this->getOldPosition().first, this->getOldPosition().second);
-    for(auto& block : getValidNeighbourPositions()){
-        block->setBrush(block->getDefColor());
-    }
+    Figure::mouseReleaseEvent(event);
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug()<<event->pos();
-    this->setPos(mapToScene(event->pos()));
+    Figure::mouseMoveEvent(event);
 }
+

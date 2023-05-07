@@ -46,8 +46,8 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
         new Rook(7, cols, isWhite),
     };
 
-    //for(int rows = 0; rows < LongByX; rows++)
-        //figures.push_back(new Pawn(rows, pawnCols, isWhite));
+    for(int rows = 0; rows < LongByX; rows++)
+        figures.push_back(new Pawn(rows, pawnCols, isWhite));
 
     for (const auto& figure : figures) {
         scene->addItem(figure);

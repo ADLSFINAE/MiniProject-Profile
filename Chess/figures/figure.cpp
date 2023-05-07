@@ -106,10 +106,26 @@ bool Figure::get_permission_to_move(Block* block)
             vec_of_collidingItems.push_back(item);
     }
     qDebug()<<"Size of vec_of_collidingItems"<<vec_of_collidingItems.size();
-    if(vec_of_collidingItems.size() == 2)
+    if(vec_of_collidingItems.size() == 2){
         return false;
-    else
+    }
+
+    if(vec_of_collidingItems.size() == 1){
+        if(vec_of_collidingItems[0]->getColor() && this->getColor()){
+            return false;
+        }
+        else if(!vec_of_collidingItems[0]->getColor() && !this->getColor()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    else{
         return true;
+    }
+
 }
 
 double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y)
@@ -143,7 +159,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 
     if(figure_list.size() == 1){ // Если фигура, с которой пересекается удерживаемая всего одна
-
         if(this->getColor() && !figure_list[0]->getColor()//Белый цвет нашей фигуры и Черный цвет атакуемой
                 && checkForStep(getValidNeighbourPositions(), figure_list)){
 
@@ -171,11 +186,14 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
 
         //АЛГОРИТМ K-БЛИЖАЙШИХ СОСЕДЕЙ
-        if(block_list.size() == 1)//Если фигура касается только одной клетки
-            this->setPosition(block_list[0]->getBlockPos().x(), block_list[0]->getBlockPos().y());
+        if(block_list.size() == 1){//Если фигура касается только одной клетки
+            if(get_permission_to_move(block_list[0]))
+                this->setPosition(block_list[0]->getBlockPos().x(), block_list[0]->getBlockPos().y());
+            else
+                this->setPos(this->getOldPosition().first, this->getOldPosition().second);
+        }
 
         else{
-
             QVector<QPair<Block*, double> > valid_blocks_list;
             for(auto& elem_of_block_list : block_list){
                 if(mapToScene(elem_of_block_list->pos()) != mapToScene(this->pos()))
@@ -200,7 +218,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             else{
                 Block* findMe = nullptr;
                 double checker = 1000;
-
                 for(auto& elem : updated_valid_block_list){
                     qDebug()<<"PEN IS"<<elem.second;
                     if(checker > elem.second){
@@ -209,6 +226,7 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                     }
 
                 }
+
                 if(get_permission_to_move(findMe)){
                     this->setPosition(findMe->getBlockPos().x(), findMe->getBlockPos().y());
                 }

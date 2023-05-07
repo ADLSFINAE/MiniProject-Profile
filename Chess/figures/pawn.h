@@ -7,6 +7,7 @@ class Pawn : public Figure
 public:
     Pawn(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;
+    bool checkOnOutForPawn(int i);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
