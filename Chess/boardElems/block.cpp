@@ -8,7 +8,7 @@ void Block::changeColor(QBrush brush)
 
 void Block::setDefPen()
 {
-    this->setPen(Qt::NoPen);
+    this->setPen(Qt::SolidLine);
 }
 
 void Block::setBlockPos(int x, int y)

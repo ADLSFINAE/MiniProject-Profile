@@ -35,6 +35,7 @@ public:
     bool checkForStep(QVector<Block*> block_vector, QVector<Figure*> fig_vector);
     bool get_permission_to_move(Block* block);
     bool getColor();
+    bool lastCheck(Block* block);
 
     //other logic
     QVector< QVector<Block*> > getBoard();

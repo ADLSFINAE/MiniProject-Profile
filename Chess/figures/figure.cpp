@@ -107,10 +107,42 @@ bool Figure::get_permission_to_move(Block* block)
     }
     qDebug()<<"Size of vec_of_collidingItems"<<vec_of_collidingItems.size();
     if(vec_of_collidingItems.size() == 2){
-        return false;
+        if(vec_of_collidingItems[0]->getColor() && vec_of_collidingItems[1]->getColor()){
+            return false;
+        }
+        else if(!vec_of_collidingItems[0]->getColor() && !vec_of_collidingItems[1]->getColor()){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
-    if(vec_of_collidingItems.size() == 1){
+    if(vec_of_collidingItems.size() == 1 && vec_of_collidingItems[0] == this){
+        qDebug()<<"SAY HI LITTLE BITCH, AND SUCK MY FUCKING DICK 1 ";
+    }
+
+    if(vec_of_collidingItems.size() == 1 && vec_of_collidingItems[0] != this){
+        qDebug()<<"SAY HI LITTLE BITCH, AND SUCK MY FUCKING DICK 2 ";
+        return true;
+    }
+
+    else{
+        return true;
+    }
+
+}
+
+bool Figure::lastCheck(Block *block)
+{
+    QVector<Figure*>vec_of_collidingItems;
+    for(auto& elem : block->collidingItems()){
+        Figure* item = dynamic_cast<Figure*>(elem);
+        if(item != nullptr)
+            vec_of_collidingItems.push_back(item);
+    }
+    qDebug()<<"Size of vec_of_collidingItems"<<vec_of_collidingItems.size();
+    qDebug()<<vec_of_collidingItems[0]->getColor();
         if(vec_of_collidingItems[0]->getColor() && this->getColor()){
             return false;
         }
@@ -120,12 +152,6 @@ bool Figure::get_permission_to_move(Block* block)
         else{
             return true;
         }
-    }
-
-    else{
-        return true;
-    }
-
 }
 
 double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y)
@@ -186,14 +212,16 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
 
         //АЛГОРИТМ K-БЛИЖАЙШИХ СОСЕДЕЙ
-        if(block_list.size() == 1){//Если фигура касается только одной клетки
-            if(get_permission_to_move(block_list[0]))
+
+
+        /*if(block_list.size() == 1){//Если фигура касается только одной клетки
+            if(lastCheck(block_list[0]))
                 this->setPosition(block_list[0]->getBlockPos().x(), block_list[0]->getBlockPos().y());
             else
                 this->setPos(this->getOldPosition().first, this->getOldPosition().second);
-        }
+        }*/
 
-        else{
+        //else{
             QVector<QPair<Block*, double> > valid_blocks_list;
             for(auto& elem_of_block_list : block_list){
                 if(mapToScene(elem_of_block_list->pos()) != mapToScene(this->pos()))
@@ -235,7 +263,7 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 }
             }
         }
-    }
+    //}
 
     else
         this->setPos(this->getOldPosition().first, this->getOldPosition().second);

@@ -12,50 +12,22 @@ Horse::Horse(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 QVector<Block*> Horse::getValidNeighbourPositions()
 {
     QVector<Block*> positions;
-    QVector<Block*> flashback;
-    QVector<Block*> last;
+    QVector<QPair<int, int> > bloody;
+    bloody.push_back({getPosition().x() + 1, getPosition().y() + 2});
+    bloody.push_back({getPosition().x() + 1, getPosition().y() + 2});
+    bloody.push_back({getPosition().x() + 2, getPosition().y() + 1});
+    bloody.push_back({getPosition().x() + 2, getPosition().y() - 1});
+    bloody.push_back({getPosition().x() + 1, getPosition().y() - 2});
+    bloody.push_back({getPosition().x() - 1, getPosition().y() - 2});
+    bloody.push_back({getPosition().x() - 2, getPosition().y() - 1});
+    bloody.push_back({getPosition().x() - 2, getPosition().y() + 1});
+    bloody.push_back({getPosition().x() - 1, getPosition().y() + 2});
 
-    for (int i = -2; i <= 2; i++){
-        for (int j = -2; j <= 2; j++){
-            if(checkOnOut(i, j))
-                positions.push_back(getBoard()[getPosition().x() + i][getPosition().y() + j]);
+    for(auto& elem : bloody){
+        if(elem.first >= 0 && elem.first <= 7 && elem.second >= 0 && elem.second <= 7){
+            positions.push_back(getBoard()[elem.first][elem.second]);
         }
     }
-
-    for (int i = -1; i <= 1; i++){
-        for (int j = -1; j <= 1; j++){
-            if(checkOnOut(i, j))
-                flashback.push_back(getBoard()[getPosition().x() + i][getPosition().y() + j]);
-        }
-    }
-
-    for(int i = 0; i < positions.size(); i++){
-        for(int j = 0; j < flashback.size(); j++){
-            if(positions[i] == flashback[j]){
-                positions.remove(i);
-            }
-        }
-    }
-
-    for(int i = 0; i < positions.size(); i++){
-        if(getBoard()[getPosition().x()][getPosition().y()]->getDefColor() == QColor(Qt::gray)){
-            if(positions[i]->getDefColor() == QColor(Qt::gray))
-                positions.remove(i);
-        }
-        else{
-            if(positions[i]->getDefColor() == Qt::black)
-                positions.remove(i);
-        }
-
-        //qDebug()<<positions[i]->getDefColor() << positions[i]->pos().y() / 80;
-    }
-
-    for(auto& pos : positions){
-
-    }
-
-
-
 
     return positions;
 }
