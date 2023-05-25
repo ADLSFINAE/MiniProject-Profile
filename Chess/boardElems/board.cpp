@@ -39,7 +39,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
         new King(4, cols, isWhite),
         new Queen(3, cols, isWhite),
         new Horse(1, cols, isWhite),
-        new Horse(6, 4, isWhite),
+        new Horse(6, cols, isWhite),
         new Elephant(2, cols, isWhite),
         new Elephant(5, cols, isWhite),
         new Rook(0, cols, isWhite),
@@ -47,7 +47,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     };
 
     for(int rows = 0; rows < LongByX; rows++)
-        figures.push_back(new Pawn(rows, pawnCols, isWhite));
+        figures.push_back(new Pawn(2, pawnCols, isWhite));
 
     for (const auto& figure : figures) {
         scene->addItem(figure);

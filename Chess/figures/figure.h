@@ -22,6 +22,10 @@ public:
     Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
     QRectF boundingRect()const override;
 
+    void set_def_color_for_all_board();
+    bool check_on_valid_block(Block* block);
+    bool working_with_colliding_vec_from_block(Block* block);
+
     //for set position
     void setPosition(int x, int y);
     QPoint getPosition() const;
@@ -33,9 +37,10 @@ public:
     //bool checkers
     bool checkOnOut(int rows, int cols) const;
     bool checkForStep(QVector<Block*> block_vector, QVector<Figure*> fig_vector);
-    bool get_permission_to_move(Block* block);
     bool getColor();
-    bool lastCheck(Block* block);
+
+    QPair<Figure*, double> find_min_dist_for_figures(QVector<QPair<Figure*, double>> vec);
+    QPair<Block*, double> find_min_dist_for_blocks(QVector<QPair<Block*, double>> vec);
 
     //other logic
     QVector< QVector<Block*> > getBoard();
