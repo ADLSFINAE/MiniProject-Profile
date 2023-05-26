@@ -39,9 +39,8 @@ public:
     bool checkForStep(QVector<Block*> block_vector, QVector<Figure*> fig_vector);
     bool getColor();
 
-    QPair<Figure*, double> find_min_dist_for_figures(QVector<QPair<Figure*, double>> vec, QVector<QPair<Block *, double> > block_vec);
+    //проверка на возможность хода и его реализация
     QPair<Block*, double> find_min_dist_for_blocks(QVector<QPair<Block*, double>> vec);
-
     void find_valid_positions(QVector<QPair<Block*, double>> block_vec);
 
     //other logic

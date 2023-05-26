@@ -128,32 +128,6 @@ void Figure::setBoard(QVector< QVector<Block*> > arrWithBoard)
     }
 }
 
-QPair<Figure*, double> Figure::find_min_dist_for_figures(QVector<QPair<Figure *, double> > vec,
-                                                         QVector<QPair<Block *, double> > block_vec)
-{
-    QPair<Figure*, double> pull_up;
-    if(vec.size() == 0){
-        find_min_dist_for_blocks(block_vec);
-    }
-    if(vec.size() > 0){
-        Figure* minElem = nullptr;
-        double checker = 1000;//если выставить vec[0].second,
-        //то при размере массива в единицу присваивание minElem не сработает
-        for(auto& elem : vec){
-            if(checker > elem.second){
-                minElem = elem.first;
-                checker = elem.second;
-            }
-        }
-        if(minElem != nullptr){
-            this->setPosition(minElem->getPosition().x(), minElem->getPosition().y());
-            emit vahue(minElem);
-        }
-        pull_up.first = minElem;
-        pull_up.second = checker;
-    }
-    return pull_up;
-}
 
 QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, double> > vec)
 {
@@ -244,7 +218,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     qDebug()<<"FIGURES"<<figure_list.size();
     qDebug()<<"BLOCKSSS"<<block_list.size();
     find_valid_positions(block_list);
-    //find_min_dist_for_figures(figure_list, block_list);
     set_def_color_for_all_board();
 
 
