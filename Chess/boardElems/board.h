@@ -6,6 +6,7 @@
 #include <QVector>
 #include "paramsNdefines.h"
 #include "game.h"
+#include "figures/figure.h"
 using namespace GlobVal;
 
 class Board : public QObject, public QGraphicsRectItem
@@ -16,6 +17,10 @@ public:
     Board(QGraphicsScene *scene, QGraphicsRectItem* parent = nullptr);
     QRectF boundingRect() const override;
     QVector< QVector<Block*> > getBoard();
+    QGraphicsScene* pointer_to_scene = nullptr;
+    QVector<Figure*> figures;
+public slots:
+    void remove_from_scene(Figure* figure);
 private:
     void figuresPlacing(QGraphicsScene* scene, bool isWhite);
     void buildingBlock(QBrush brush, int rows, int cols);

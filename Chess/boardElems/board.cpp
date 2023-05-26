@@ -1,5 +1,4 @@
 #include "boardElems/board.h"
-#include "figures/figure.h"
 
 #include "figures/king.h"
 #include "figures/horse.h"
@@ -18,6 +17,13 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     game = new Game();
     this->figuresPlacing(scene, true);
     this->figuresPlacing(scene, false);
+    pointer_to_scene = scene;
+
+    for(auto& elem : figures){
+        QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
+    }
+    //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
+    //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
 }
 
 QRectF Board::boundingRect() const
@@ -30,12 +36,17 @@ QVector<QVector<Block *> > Board::getBoard()
     return arrOfBlocks;
 }
 
+void Board::remove_from_scene(Figure *figure)
+{
+    pointer_to_scene->removeItem(figure);
+}
+
 void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
 {
     int cols, pawnCols;
     isWhite ? ({cols = 7; pawnCols = 6;}) : ({cols = 0; pawnCols = 1;});
 
-    QVector<Figure*> figures = {
+    figures = {
         new King(4, cols, isWhite),
         new Queen(3, cols, isWhite),
         new Horse(1, cols, isWhite),

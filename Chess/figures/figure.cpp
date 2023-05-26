@@ -141,7 +141,8 @@ QPair<Figure*, double> Figure::find_min_dist_for_figures(QVector<QPair<Figure *,
     QPair<Figure*, double> pull_up;
     if(vec.size() > 0){
         Figure* minElem = nullptr;
-        double checker = 1000;
+        double checker = 1000;//если выставить vec[0].second,
+        //то при размере массива в единицу присваивание minElem не сработает
         for(auto& elem : vec){
             if(checker > elem.second){
                 minElem = elem.first;
@@ -150,7 +151,7 @@ QPair<Figure*, double> Figure::find_min_dist_for_figures(QVector<QPair<Figure *,
         }
         if(minElem != nullptr){
             this->setPosition(minElem->getPosition().x(), minElem->getPosition().y());
-            minElem->setPos(-100, -100);
+            emit vahue(minElem);
         }
         pull_up.first = minElem;
         pull_up.second = checker;
@@ -166,7 +167,8 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
     }
     if(vec.size() > 0){
         Block* minElem = nullptr;
-        double checker = 1000;
+        double checker = 1000;//если выставить vec[0].second,
+        //то при размере массива в единицу присваивание minElem не сработает
         for(auto& elem : vec){
             if(checker > elem.second){
                 minElem = elem.first;
