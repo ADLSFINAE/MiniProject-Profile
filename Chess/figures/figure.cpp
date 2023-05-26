@@ -105,21 +105,13 @@ bool Figure::check_on_valid_block(Block *block)
 
 bool Figure::working_with_colliding_vec_from_block(Block* block)
 {
-    Figure* fig;
     for(auto& elem : block->getCollidingItemsForMouseReleaseEvent(this)){
         Figure* item = dynamic_cast<Figure*>(elem);
         if(item != nullptr){
-            fig = item;
-            break;
+            return true;
         }
     }
-
-    if(fig->getColor() == this->getColor())
-        return false;
-    else
-        return true;
-
-
+    return false;
 }
 
 QPoint Figure::getPosition() const
@@ -136,9 +128,13 @@ void Figure::setBoard(QVector< QVector<Block*> > arrWithBoard)
     }
 }
 
-QPair<Figure*, double> Figure::find_min_dist_for_figures(QVector<QPair<Figure *, double> > vec)
+QPair<Figure*, double> Figure::find_min_dist_for_figures(QVector<QPair<Figure *, double> > vec,
+                                                         QVector<QPair<Block *, double> > block_vec)
 {
     QPair<Figure*, double> pull_up;
+    if(vec.size() == 0){
+        find_min_dist_for_blocks(block_vec);
+    }
     if(vec.size() > 0){
         Figure* minElem = nullptr;
         double checker = 1000;//если выставить vec[0].second,
@@ -177,9 +173,18 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
         }
         pull_up.first = minElem;
         pull_up.second = checker;
-        this->setPosition(minElem->getBlockPos().x(), minElem->getBlockPos().y());
     }
     return pull_up;
+}
+
+void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
+{
+    Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
+    if(block_vec.size() == 0)
+        this->setPosition(this->getPosition().x(), this->getPosition().y());
+    if(block_vec.size() > 0)
+        this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+
 }
 
 double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y)
@@ -236,10 +241,10 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
-    qDebug()<<"FIGURSHICA"<<figure_list.size();
-    qDebug()<<"BLOCKSHICA"<<block_list.size();
-    find_min_dist_for_figures(figure_list);
-    find_min_dist_for_blocks(block_list);
+    qDebug()<<"FIGURES"<<figure_list.size();
+    qDebug()<<"BLOCKSSS"<<block_list.size();
+    find_valid_positions(block_list);
+    //find_min_dist_for_figures(figure_list, block_list);
     set_def_color_for_all_board();
 
 
