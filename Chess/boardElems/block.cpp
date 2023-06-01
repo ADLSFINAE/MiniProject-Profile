@@ -60,7 +60,7 @@ QVector<QGraphicsItem *> Block::getCollidingItemsForMouseReleaseEvent(QGraphicsI
     for(auto& elem : list){
         vec.push_back(elem);
     }
-    vec.push_back(this);
+    vec.push_back(figure);
     qDebug()<<"WALMART"<<vec.size();
     return vec;
 }

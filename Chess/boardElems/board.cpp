@@ -21,6 +21,10 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
 
     for(auto& elem : figures){
         QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
+        Horse* horse = dynamic_cast<Horse*>(elem);
+        if(horse != nullptr){
+            qDebug()<<"HORSE"<<horse->getPosition().x()<<horse->getPosition().y()<<horse->getColor();
+        }
     }
     //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
     //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
@@ -46,7 +50,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     int cols, pawnCols;
     isWhite ? ({cols = 7; pawnCols = 6;}) : ({cols = 0; pawnCols = 1;});
 
-    figures = {
+    QVector<Figure* >figures_50 = {//ЗАПОЛНЕНИЕ ВРЕМЕННОГО
         new King(4, cols, isWhite),
         new Queen(3, cols, isWhite),
         new Horse(1, cols, isWhite),
@@ -58,14 +62,17 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     };
 
     for(int rows = 0; rows < LongByX; rows++)
-        figures.push_back(new Pawn(2, pawnCols, isWhite));
+        figures_50.push_back(new Pawn(2, pawnCols, isWhite));
 
-    for (const auto& figure : figures) {
+    for (const auto& figure : figures_50) {
         scene->addItem(figure);
         game->initOfVecs(figure, isWhite);
         figure->setBoard(arrOfBlocks);
     }
 
+    for(auto& elem: figures_50){//ЗАПОЛНЕНИЕ ОСНОВНОГО
+        figures.push_back(elem);
+    }
     qDebug()<<game->vecOfWhiteFigures.size()<<"DSADASDASDAS";
     qDebug()<<game->vecOfBlackFigures.size()<<"DSADASDASDAS";
 }

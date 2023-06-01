@@ -154,10 +154,62 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
 void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
 {
     Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
-    if(block_vec.size() == 0)
+    if(smoke_it == nullptr){
         this->setPosition(this->getPosition().x(), this->getPosition().y());
-    if(block_vec.size() > 0)
-        this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+        qDebug()<<"MOVIE";
+    }
+    else{
+        if(block_vec.size() > 0){
+            for(auto& elem : smoke_it->getCollidingItemsForMousePressEvent()){
+                Figure* figure = dynamic_cast<Figure*>(elem);
+                if(figure != nullptr && figure != this){
+                    if(figure->getColor() != this->getColor()){
+                        qDebug()<<figure->getPosition().x()<<figure->getPosition().y();
+                        this->setPosition(figure->getPosition().x(),figure->getPosition().y());
+                        emit vahue(figure);
+                        figure->hide();
+                        qDebug()<<"defaultis";
+                        break;
+                    }
+                    else if(figure->getColor() == this->getColor()){
+                        this->setPosition(this->getPosition().x(), this->getPosition().y());
+                        qDebug()<<"equal colors";
+                        break;
+                    }
+                }
+
+                else if(smoke_it->getAnotherBrushColor() == Qt::yellow){
+                    this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+                    qDebug()<<"yellows";
+                    break;
+                }
+
+
+                else if(smoke_it->getAnotherBrushColor() == Qt::blue){
+                    this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+                    emit vahue(figure);
+                    figure->hide();
+                    qDebug()<<"blues";
+                    break;
+                }
+
+                else{
+                    this->setPosition(this->getPosition().x(), this->getPosition().y());
+                    break;
+                }
+
+            }
+        }
+    }
+
+    /*for(auto& elem : smoke_it->getCollidingItemsForMousePressEvent()){
+        Figure* figure = dynamic_cast<Figure*>(elem);
+        if(figure != nullptr && figure != this && figure->getColor() != this->getColor()){
+            qDebug()<<figure->getPosition().x()<<figure->getPosition().y();
+            emit vahue(figure);
+            this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+        }
+    }*/
 
 }
 
@@ -180,9 +232,9 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
             Figure* fig = dynamic_cast<Figure*>(vec_elem);
             if(fig != nullptr){
                 if((this->getColor() && fig->getColor()) || (!this->getColor() && !fig->getColor()))
-                    elem->setBrush(elem->getDefColor());
+                    elem->setAnotherBrushColor(elem->getDefColor());
                 else
-                    elem->setBrush(Qt::blue);
+                    elem->setAnotherBrushColor(Qt::blue);
             }
         }
     }
