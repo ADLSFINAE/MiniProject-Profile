@@ -19,15 +19,8 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     this->figuresPlacing(scene, false);
     pointer_to_scene = scene;
 
-    for(auto& elem : figures){
+    for(auto& elem : figures)
         QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
-        Horse* horse = dynamic_cast<Horse*>(elem);
-        if(horse != nullptr){
-            qDebug()<<"HORSE"<<horse->getPosition().x()<<horse->getPosition().y()<<horse->getColor();
-        }
-    }
-    //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
-    //QObject::connect(&w, &Widget::sendToClient, &client, &Client::getBoardOnClient);
 }
 
 QRectF Board::boundingRect() const

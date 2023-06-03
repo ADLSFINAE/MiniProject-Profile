@@ -1,4 +1,5 @@
 #include "elephant.h"
+#include <QSet>
 
 Elephant::Elephant(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
@@ -16,17 +17,12 @@ QVector<Block*> Elephant::getValidNeighbourPositions()
             if(checkOnOut(i, j) && (i == j))
                 positions.push_back(getBoard()[getPosition().x() + i][getPosition().y() + j]);
 
-            int xs = getPosition().x() + i;
-            int ys = getPosition().y() - i;
-            if(xs >= 0 && ys >= 0 && xs <= 7 && ys <= 7){
-                positions.push_back(getBoard()[xs][ys]);
-            }
+            if(getPosition().x() + i >= 0 && getPosition().y() - i >= 0
+                    && getPosition().x() + i <= 7 && getPosition().y() - i <= 7)
+                positions.push_back(getBoard()[getPosition().x() + i][getPosition().y() - i]);
 
         }
     }
-
-
-
     return positions;
 }
 

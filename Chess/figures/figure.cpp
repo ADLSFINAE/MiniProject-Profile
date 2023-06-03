@@ -18,6 +18,23 @@ Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     }
 }
 
+QVector<Block *> Figure::clean_up(QVector<Block *> vec)
+{
+    QSet<Block*> set_figures;
+    QVector<Block*> vec_figures;
+    for(auto& figures : vec){
+        if(figures->getBlockPos() != this->getPosition())
+            set_figures.insert(figures);
+    }
+
+    for(auto& elem : set_figures){
+        vec_figures.push_back(elem);
+    }
+    qDebug()<<vec_figures.size()<<"VEC FIGURES SIZE FREE RIO";
+    return vec_figures;
+}
+
+
 void Figure::setPosition(int x, int y)
 {
     this->setPos(x * GlobX, y * GlobY);
@@ -94,7 +111,7 @@ void Figure::set_def_color_for_all_board()
 
 bool Figure::check_on_valid_block(Block *block)
 {
-    for(auto& elem : getValidNeighbourPositions()){
+    for(auto& elem : clean_up(getValidNeighbourPositions())){
         if(elem->getBlockPos().x() == block->getBlockPos().x() &&
                 elem->getBlockPos().y() == block->getBlockPos().y()){
             return true;
@@ -180,13 +197,15 @@ double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x,
 
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     this->setOldPosition(this->pos().x(), this->pos().y());
-    for(auto& block : getValidNeighbourPositions()){
+    for(auto& block : clean_up(getValidNeighbourPositions())){
         block->setAnotherBrushColor(Qt::yellow);
         block->colorWasChanged = true;
+        qDebug()<<block->getBlockPos();
     }
 
-    for(auto& elem : getValidNeighbourPositions()){
+    for(auto& elem : clean_up(getValidNeighbourPositions())){
         QVector<QGraphicsItem*> vec = elem->getCollidingItemsForMousePressEvent();
         for(auto& vec_elem : vec){
             Figure* fig = dynamic_cast<Figure*>(vec_elem);
@@ -230,6 +249,7 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     qDebug()<<"BLOCKSSS"<<block_list.size();
     find_valid_positions(block_list);
     set_def_color_for_all_board();
+
 
 
 

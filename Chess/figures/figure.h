@@ -14,6 +14,7 @@
 #include <QtMath>
 #include <QVector>
 #include <QList>
+#include <QSet>
 using namespace GlobVal;
 
 class Figure : public QObject, public QGraphicsPixmapItem{
@@ -25,6 +26,9 @@ public:
     void set_def_color_for_all_board();
     bool check_on_valid_block(Block* block);
     void kill_functionality(Block* block);
+
+    //cleaning for 300$ bucks
+    QVector<Block*> clean_up(QVector<Block*> vec);
 
     //for set position
     void setPosition(int x, int y);
