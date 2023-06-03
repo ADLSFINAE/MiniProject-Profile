@@ -24,7 +24,7 @@ public:
 
     void set_def_color_for_all_board();
     bool check_on_valid_block(Block* block);
-    bool working_with_colliding_vec_from_block(Block* block);
+    void kill_functionality(Block* block);
 
     //for set position
     void setPosition(int x, int y);

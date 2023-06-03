@@ -103,15 +103,16 @@ bool Figure::check_on_valid_block(Block *block)
     return false;
 }
 
-bool Figure::working_with_colliding_vec_from_block(Block* block)
+void Figure::kill_functionality(Block *block)
 {
-    for(auto& elem : block->getCollidingItemsForMouseReleaseEvent(this)){
+    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
         Figure* item = dynamic_cast<Figure*>(elem);
-        if(item != nullptr){
-            return true;
+        if(item != nullptr && item != this){
+            emit vahue(item);
+            item->hide();
+            break;
         }
     }
-    return false;
 }
 
 QPoint Figure::getPosition() const
@@ -154,62 +155,21 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
 void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
 {
     Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
-    if(smoke_it == nullptr){
-        this->setPosition(this->getPosition().x(), this->getPosition().y());
-        qDebug()<<"MOVIE";
-    }
-    else{
-        if(block_vec.size() > 0){
-            for(auto& elem : smoke_it->getCollidingItemsForMousePressEvent()){
-                Figure* figure = dynamic_cast<Figure*>(elem);
-                if(figure != nullptr && figure != this){
-                    if(figure->getColor() != this->getColor()){
-                        qDebug()<<figure->getPosition().x()<<figure->getPosition().y();
-                        this->setPosition(figure->getPosition().x(),figure->getPosition().y());
-                        emit vahue(figure);
-                        figure->hide();
-                        qDebug()<<"defaultis";
-                        break;
-                    }
-                    else if(figure->getColor() == this->getColor()){
-                        this->setPosition(this->getPosition().x(), this->getPosition().y());
-                        qDebug()<<"equal colors";
-                        break;
-                    }
-                }
-
-                else if(smoke_it->getAnotherBrushColor() == Qt::yellow){
-                    this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
-                    qDebug()<<"yellows";
-                    break;
-                }
-
-
-                else if(smoke_it->getAnotherBrushColor() == Qt::blue){
-                    this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
-                    emit vahue(figure);
-                    figure->hide();
-                    qDebug()<<"blues";
-                    break;
-                }
-
-                else{
-                    this->setPosition(this->getPosition().x(), this->getPosition().y());
-                    break;
-                }
-
-            }
-        }
-    }
-
-    /*for(auto& elem : smoke_it->getCollidingItemsForMousePressEvent()){
-        Figure* figure = dynamic_cast<Figure*>(elem);
-        if(figure != nullptr && figure != this && figure->getColor() != this->getColor()){
-            qDebug()<<figure->getPosition().x()<<figure->getPosition().y();
-            emit vahue(figure);
+    if(smoke_it != nullptr){
+        if(smoke_it->getAnotherBrushColor() == Qt::yellow){
+            qDebug()<<"yellows";
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
         }
-    }*/
+        if(smoke_it->getAnotherBrushColor() == Qt::blue){
+            qDebug()<<"blues";
+            this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+            kill_functionality(smoke_it);
+        }
+    }
+    else{
+        qDebug()<<"default color";
+        this->setPosition(this->getPosition().x(), this->getPosition().y());
+    }
 
 }
 
@@ -257,8 +217,7 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
         Block* block = dynamic_cast<Block*>(elem_of_item_list);
         if(block != nullptr && check_on_valid_block(block)
-                && block->check_another_brush_color_on_def_color()
-                && working_with_colliding_vec_from_block(block)){
+                && block->check_another_brush_color_on_def_color()){
             block_list.push_back({block, calculatingDistance(
                                            (int)block->pos().x() + 40,//aviable to delete +40
                                            (int)block->pos().y() + 40,//aviable to delete +40
