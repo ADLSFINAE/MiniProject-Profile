@@ -23,6 +23,11 @@ QVector<Block*> Rook::getValidNeighbourPositions()
     return positions;
 }
 
+void Rook::getKnowledge(QVector<Block *> vec_block)
+{
+
+}
+
 void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mousePressEvent(event);

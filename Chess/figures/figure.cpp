@@ -131,7 +131,7 @@ void Figure::kill_functionality(Block *block)
     }
 }
 
-QVector<Block *> Figure::sort_min_to_max(QVector<Block *> vec_for_sort)
+QVector<Block *> Figure::sort_min_to_max_x(QVector<Block *> vec_for_sort)
 {
     if(vec_for_sort.size() == 0){
         return vec_for_sort;
@@ -141,6 +141,26 @@ QVector<Block *> Figure::sort_min_to_max(QVector<Block *> vec_for_sort)
         for (int i = 0; i < vec_for_sort.size(); i++) {
             for (int j = 0; j < vec_for_sort.size() - 1; j++) {
               if (vec_for_sort[j]->getBlockPos().x() < vec_for_sort[j + 1]->getBlockPos().x()) {
+                auto b = vec_for_sort[j];
+                vec_for_sort[j] = vec_for_sort[j + 1];
+                vec_for_sort[j + 1] = b;
+              }
+            }
+          }
+        return vec_for_sort;
+    }
+}
+
+QVector<Block *> Figure::sort_min_to_max_y(QVector<Block *> vec_for_sort)
+{
+    if(vec_for_sort.size() == 0){
+        return vec_for_sort;
+    }
+
+    else{
+        for (int i = 0; i < vec_for_sort.size(); i++) {
+            for (int j = 0; j < vec_for_sort.size() - 1; j++) {
+              if (vec_for_sort[j]->getBlockPos().y() < vec_for_sort[j + 1]->getBlockPos().y()) {
                 auto b = vec_for_sort[j];
                 vec_for_sort[j] = vec_for_sort[j + 1];
                 vec_for_sort[j + 1] = b;

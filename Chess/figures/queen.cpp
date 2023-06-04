@@ -44,9 +44,90 @@ QVector<Block*> Queen::getValidNeighbourPositions()
     return positions;
 }
 
+void Queen::getKnowledge(QVector<Block *> vec_block)
+{
+    QVector<Block*>forward;
+    QVector<Block*>back;
+    QVector<Block*>upper_left;
+    QVector<Block*>upper_right;
+    QVector<Block*>down_left;
+    QVector<Block*>down_right;
+
+    int current_figure_x = this->getPosition().x();
+    int current_figure_y = this->getPosition().y();
+    for(auto& elem : vec_block){
+#define ELEM_X elem->getBlockPos().x()
+#define ELEM_Y elem->getBlockPos().y()
+        if(ELEM_X == current_figure_x && ELEM_Y >= current_figure_y)
+            forward.push_back(elem);
+        if(ELEM_X == current_figure_x && ELEM_Y <= current_figure_y)
+            back.push_back(elem);
+        if(ELEM_X < current_figure_x && ELEM_Y < current_figure_y)
+            upper_left.push_back(elem);
+        if(ELEM_X > current_figure_x && ELEM_Y < current_figure_y)
+            upper_right.push_back(elem);
+        if(ELEM_X < current_figure_x && ELEM_Y > current_figure_y)
+            down_left.push_back(elem);
+        if(ELEM_X > current_figure_x && ELEM_Y > current_figure_y)
+            down_right.push_back(elem);
+    }
+
+    forward = sort_min_to_max_y(forward);
+    back = sort_min_to_max_y(back);
+    upper_left = sort_min_to_max_x(upper_left);
+    upper_right = sort_min_to_max_x(upper_right);
+    down_left = sort_min_to_max_x(down_left);
+    down_right = sort_min_to_max_x(down_right);
+
+    qDebug()<<forward.size();
+    for(auto& elem : forward){
+        qDebug()<<elem->getBlockPos()<<"FORWARD";
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<back.size();
+    for(auto& elem : back){
+        qDebug()<<elem->getBlockPos()<<"BACK";
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<upper_left.size();
+    for(auto& elem : upper_left){
+        qDebug()<<elem->getBlockPos()<<"UPPER LEFT";
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<upper_right.size();
+    for(auto& elem : upper_right){
+        qDebug()<<elem->getBlockPos()<<"UPPER RIGHT";
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<down_left.size();
+    for(auto& elem : down_left){
+        qDebug()<<elem->getBlockPos()<<"DOWN LEFT";
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<down_right.size();
+    for(auto& elem : down_right){
+        qDebug()<<elem->getBlockPos()<<"DOWN RIGHT";
+    }
+    qDebug()<<Qt::endl;
+
+
+    forward = reverse_vector(forward);
+    upper_right = reverse_vector(upper_right);
+    down_right = reverse_vector(down_right);
+
+    step_length_limiter(forward);
+    step_length_limiter(back);
+    step_length_limiter(upper_left);
+    step_length_limiter(upper_right);
+    step_length_limiter(down_left);
+    step_length_limiter(down_right);
+
+}
+
 void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mousePressEvent(event);
+    getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
 
 void Queen::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
