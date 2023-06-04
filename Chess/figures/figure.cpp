@@ -249,10 +249,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     qDebug()<<"BLOCKSSS"<<block_list.size();
     find_valid_positions(block_list);
     set_def_color_for_all_board();
-
-
-
-
 }
 
 void Figure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

@@ -1,5 +1,4 @@
 #include "elephant.h"
-#include <QSet>
 
 Elephant::Elephant(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
