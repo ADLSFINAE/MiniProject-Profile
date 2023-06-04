@@ -48,6 +48,8 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
 {
     QVector<Block*>forward;
     QVector<Block*>back;
+    QVector<Block*>left;
+    QVector<Block*>right;
     QVector<Block*>upper_left;
     QVector<Block*>upper_right;
     QVector<Block*>down_left;
@@ -62,6 +64,10 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
             forward.push_back(elem);
         if(ELEM_X == current_figure_x && ELEM_Y <= current_figure_y)
             back.push_back(elem);
+        if(ELEM_X < current_figure_x && ELEM_Y == current_figure_y)
+            left.push_back(elem);
+        if(ELEM_X > current_figure_x && ELEM_Y == current_figure_y)
+            right.push_back(elem);
         if(ELEM_X < current_figure_x && ELEM_Y < current_figure_y)
             upper_left.push_back(elem);
         if(ELEM_X > current_figure_x && ELEM_Y < current_figure_y)
@@ -74,54 +80,26 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
 
     forward = sort_min_to_max_y(forward);
     back = sort_min_to_max_y(back);
+    left = sort_min_to_max_x(left);
+    right = sort_min_to_max_x(right);
     upper_left = sort_min_to_max_x(upper_left);
     upper_right = sort_min_to_max_x(upper_right);
     down_left = sort_min_to_max_x(down_left);
     down_right = sort_min_to_max_x(down_right);
 
-    qDebug()<<forward.size();
-    for(auto& elem : forward){
-        qDebug()<<elem->getBlockPos()<<"FORWARD";
-    }
-    qDebug()<<Qt::endl;
-    qDebug()<<back.size();
-    for(auto& elem : back){
-        qDebug()<<elem->getBlockPos()<<"BACK";
-    }
-    qDebug()<<Qt::endl;
-    qDebug()<<upper_left.size();
-    for(auto& elem : upper_left){
-        qDebug()<<elem->getBlockPos()<<"UPPER LEFT";
-    }
-    qDebug()<<Qt::endl;
-    qDebug()<<upper_right.size();
-    for(auto& elem : upper_right){
-        qDebug()<<elem->getBlockPos()<<"UPPER RIGHT";
-    }
-    qDebug()<<Qt::endl;
-    qDebug()<<down_left.size();
-    for(auto& elem : down_left){
-        qDebug()<<elem->getBlockPos()<<"DOWN LEFT";
-    }
-    qDebug()<<Qt::endl;
-    qDebug()<<down_right.size();
-    for(auto& elem : down_right){
-        qDebug()<<elem->getBlockPos()<<"DOWN RIGHT";
-    }
-    qDebug()<<Qt::endl;
-
-
     forward = reverse_vector(forward);
+    right = reverse_vector(right);
     upper_right = reverse_vector(upper_right);
     down_right = reverse_vector(down_right);
 
     step_length_limiter(forward);
     step_length_limiter(back);
+    step_length_limiter(left);
+    step_length_limiter(right);
     step_length_limiter(upper_left);
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
-
 }
 
 void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -25,12 +25,44 @@ QVector<Block*> Rook::getValidNeighbourPositions()
 
 void Rook::getKnowledge(QVector<Block *> vec_block)
 {
+    QVector<Block*>forward;
+    QVector<Block*>back;
+    QVector<Block*>left;
+    QVector<Block*>right;
 
+    int current_figure_x = this->getPosition().x();
+    int current_figure_y = this->getPosition().y();
+    for(auto& elem : vec_block){
+#define ELEM_X elem->getBlockPos().x()
+#define ELEM_Y elem->getBlockPos().y()
+        if(ELEM_X == current_figure_x && ELEM_Y >= current_figure_y)
+            forward.push_back(elem);
+        if(ELEM_X == current_figure_x && ELEM_Y <= current_figure_y)
+            back.push_back(elem);
+        if(ELEM_X < current_figure_x && ELEM_Y == current_figure_y)
+            left.push_back(elem);
+        if(ELEM_X > current_figure_x && ELEM_Y == current_figure_y)
+            right.push_back(elem);
+    }
+
+    forward = sort_min_to_max_y(forward);
+    back = sort_min_to_max_y(back);
+    left = sort_min_to_max_x(left);
+    right = sort_min_to_max_x(right);
+
+    forward = reverse_vector(forward);
+    right = reverse_vector(right);
+
+    step_length_limiter(forward);
+    step_length_limiter(back);
+    step_length_limiter(left);
+    step_length_limiter(right);
 }
 
 void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mousePressEvent(event);
+    getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
 
 void Rook::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
