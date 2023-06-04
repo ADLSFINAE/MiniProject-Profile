@@ -8,6 +8,7 @@ class Elephant : public Figure
 public:
     Elephant(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;
+    void getKnowledge(QVector<Block*> vec_block);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

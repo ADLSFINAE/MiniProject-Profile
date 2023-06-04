@@ -30,7 +30,6 @@ QVector<Block *> Figure::clean_up(QVector<Block *> vec)
     for(auto& elem : set_figures){
         vec_figures.push_back(elem);
     }
-    qDebug()<<vec_figures.size()<<"VEC FIGURES SIZE FREE RIO";
     return vec_figures;
 }
 
@@ -132,6 +131,47 @@ void Figure::kill_functionality(Block *block)
     }
 }
 
+QVector<Block *> Figure::sort_min_to_max(QVector<Block *> vec_for_sort)
+{
+    if(vec_for_sort.size() == 0){
+        return vec_for_sort;
+    }
+
+    else{
+        for (int i = 0; i < vec_for_sort.size(); i++) {
+            for (int j = 0; j < vec_for_sort.size() - 1; j++) {
+              if (vec_for_sort[j]->getBlockPos().x() < vec_for_sort[j + 1]->getBlockPos().x()) {
+                auto b = vec_for_sort[j];
+                vec_for_sort[j] = vec_for_sort[j + 1];
+                vec_for_sort[j + 1] = b;
+              }
+            }
+          }
+        return vec_for_sort;
+    }
+}
+
+QVector<Block *> Figure::reverse_vector(QVector<Block *> vec_for_reverse)
+{
+    QVector<Block*> vec;
+    for(int i = vec_for_reverse.size() - 1; i >= 0; i--)
+        vec.push_back(vec_for_reverse[i]);
+    return vec;
+}
+
+void Figure::step_length_limiter(QVector<Block *> &vec_block)
+{
+    for(int i = 0; i < vec_block.size(); i++){
+        if(vec_block[i]->getAnotherBrushColor() == Qt::green
+                || vec_block[i]->getAnotherBrushColor() == Qt::blue){
+            for(int j = i + 1; j < vec_block.size(); j++){
+                vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
+            }
+            break;
+        }
+    }
+}
+
 QPoint Figure::getPosition() const
 {
     return QPoint(x, y);
@@ -182,6 +222,10 @@ void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
             kill_functionality(smoke_it);
         }
+        if(smoke_it->getAnotherBrushColor() == Qt::green){
+            qDebug()<<"green";
+            this->setPosition(this->getPosition().x(), this->getPosition().y());
+        }
     }
     else{
         qDebug()<<"default color";
@@ -211,7 +255,7 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
             Figure* fig = dynamic_cast<Figure*>(vec_elem);
             if(fig != nullptr){
                 if((this->getColor() && fig->getColor()) || (!this->getColor() && !fig->getColor()))
-                    elem->setAnotherBrushColor(elem->getDefColor());
+                    elem->setAnotherBrushColor(Qt::green);
                 else
                     elem->setAnotherBrushColor(Qt::blue);
             }
@@ -244,9 +288,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                            (int)mapToScene(event->pos()).y() + 40)});
         }
     }
-
-    qDebug()<<"FIGURES"<<figure_list.size();
-    qDebug()<<"BLOCKSSS"<<block_list.size();
     find_valid_positions(block_list);
     set_def_color_for_all_board();
 }

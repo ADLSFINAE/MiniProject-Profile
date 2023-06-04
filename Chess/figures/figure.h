@@ -27,6 +27,11 @@ public:
     bool check_on_valid_block(Block* block);
     void kill_functionality(Block* block);
 
+    //step length limiter logic
+    QVector<Block*> sort_min_to_max(QVector<Block*> vec_for_sort);
+    QVector<Block*> reverse_vector(QVector<Block *> vec_for_reverse);
+    void step_length_limiter(QVector<Block*>& vec_block);
+
     //cleaning for 300$ bucks
     QVector<Block*> clean_up(QVector<Block*> vec);
 

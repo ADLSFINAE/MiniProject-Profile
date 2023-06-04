@@ -25,9 +25,47 @@ QVector<Block*> Elephant::getValidNeighbourPositions()
     return positions;
 }
 
+void Elephant::getKnowledge(QVector<Block *> vec_block)
+{
+    QVector<Block*>upper_left;
+    QVector<Block*>upper_right;
+    QVector<Block*>down_left;
+    QVector<Block*>down_right;
+
+    int current_figure_x = this->getPosition().x();
+    int current_figure_y = this->getPosition().y();
+    for(auto& elem : vec_block){
+#define ELEM_X elem->getBlockPos().x()
+#define ELEM_Y elem->getBlockPos().y()
+        if(ELEM_X <= current_figure_x && ELEM_Y <= current_figure_y)
+            upper_left.push_back(elem);
+        if(ELEM_X >= current_figure_x && ELEM_Y <= current_figure_y)
+            upper_right.push_back(elem);
+        if(ELEM_X <= current_figure_x && ELEM_Y >= current_figure_y)
+            down_left.push_back(elem);
+        if(ELEM_X >= current_figure_x && ELEM_Y >= current_figure_y)
+            down_right.push_back(elem);
+    }
+
+    upper_left = sort_min_to_max(upper_left);
+    upper_right = sort_min_to_max(upper_right);
+    down_left = sort_min_to_max(down_left);
+    down_right = sort_min_to_max(down_right);
+
+    upper_right = reverse_vector(upper_right);
+    down_right = reverse_vector(down_right);
+
+    step_length_limiter(upper_left);
+    step_length_limiter(upper_right);
+    step_length_limiter(down_left);
+    step_length_limiter(down_right);
+
+}
+
 void Elephant::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mousePressEvent(event);
+    getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
 
 void Elephant::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
