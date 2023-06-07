@@ -55,7 +55,7 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     };
 
     for(int rows = 0; rows < LongByX; rows++)
-        figures_50.push_back(new Pawn(2, pawnCols, isWhite));
+        figures_50.push_back(new Pawn(rows, pawnCols, isWhite));
 
     for (const auto& figure : figures_50) {
         scene->addItem(figure);
