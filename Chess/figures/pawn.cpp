@@ -25,6 +25,25 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
     return positions;
 }
 
+void Pawn::forward_step(QVector<Block*>& positions, int offset)
+{
+    if(this->getColor()){
+        if(((getPosition().x() - offset >= 0) && (getPosition().x() - offset <= 7))
+                || ((getPosition().y() - offset >= 0) && (getPosition().y() - offset <= 7))){
+            positions.push_back(getBoard()[getPosition().x()][getPosition().y() - offset]);
+        }
+    }
+
+    if(!this->getColor()){
+        if(((getPosition().x() - offset >= 0) && (getPosition().x() - offset <= 7))
+                || ((getPosition().y() + offset >= 0) && (getPosition().y() + offset <= 7))){
+            positions.push_back(getBoard()[getPosition().x()][getPosition().y() + offset]);
+        }
+    }
+
+    qDebug()<<positions.size()<<"POS SIZESS";
+}
+
 bool Pawn::leave_from_start_position()
 {
     if((this->start_pos_x != this->getPosition().x()) || (this->start_pos_y != this->getPosition().y()))
@@ -50,23 +69,6 @@ void Pawn::step_length_limiter_for_pawn(QVector<Block *> vec_block)
                 }
                 break;
             }
-        }
-    }
-}
-
-void Pawn::forward_step(QVector<Block*>& positions, int offset)
-{
-    if(this->getColor()){
-        if((getPosition().x() - offset >= 0) && (getPosition().x() - offset <= 7)
-                && (getPosition().y() - offset >= 0) && (getPosition().y() - offset <= 7)){
-            positions.push_back(getBoard()[getPosition().x()][getPosition().y() - offset]);
-        }
-    }
-
-    if(!this->getColor()){
-        if((getPosition().x() - offset >= 0) && (getPosition().x() - offset <= 7)
-                && (getPosition().y() + offset >= 0) && (getPosition().y() + offset <= 7)){
-            positions.push_back(getBoard()[getPosition().x()][getPosition().y() + offset]);
         }
     }
 }
