@@ -10,7 +10,7 @@ public:
     bool checkOnOutForPawn(int i);
     bool leave_from_start_position();
     void step_length_limiter_for_pawn(QVector<Block *> vec_block);
-    void getKnowledge(QVector<Block*> vec_block);
+    QVector<Block *> getKnowledge();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
@@ -18,7 +18,7 @@ protected:
 private:
     void forward_step(QVector<Block*>& positions, int offset);
     int start_pos_x, start_pos_y;
-    QVector<Block*> left_right;
+    bool isMovedFromStart;
 };
 
 #endif // PAWN_H

@@ -106,6 +106,7 @@ void Figure::set_def_color_for_all_board()
             arrWithBoard[i][j]->setDefColor();
         }
     }
+    qDebug()<<"ALL OKAY? YES";
 }
 
 bool Figure::check_on_valid_block(Block *block)
@@ -263,11 +264,8 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
     this->setOldPosition(this->pos().x(), this->pos().y());
-    for(auto& block : clean_up(getValidNeighbourPositions())){
+    for(auto& block : clean_up(getValidNeighbourPositions()))
         block->setAnotherBrushColor(Qt::yellow);
-        block->colorWasChanged = true;
-        qDebug()<<block->getBlockPos();
-    }
 
     for(auto& elem : clean_up(getValidNeighbourPositions())){
         QVector<QGraphicsItem*> vec = elem->getCollidingItemsForMousePressEvent();

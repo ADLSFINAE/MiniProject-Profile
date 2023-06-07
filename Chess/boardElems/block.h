@@ -23,7 +23,6 @@ public:
     QBrush getAnotherBrushColor() const;
     QPoint getBlockPos() const;
     QBrush getDefColor() const;
-    bool colorWasChanged = false;
 
     QVector<QGraphicsItem*> getCollidingItemsForMousePressEvent();
     QVector<QGraphicsItem*> getCollidingItemsForMouseReleaseEvent(QGraphicsItem* figure);
