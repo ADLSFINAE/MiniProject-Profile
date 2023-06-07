@@ -21,6 +21,8 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
         for(int i = 1; i < 2; i++)
             forward_step(positions, i);
     }
+
+
     return positions;
 }
 
@@ -45,23 +47,6 @@ void Pawn::step_length_limiter_for_pawn(QVector<Block *> vec_block)
     }
 }
 
-void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    Figure::mousePressEvent(event);
-
-    step_length_limiter_for_pawn(getValidNeighbourPositions());
-}
-
-void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    Figure::mouseReleaseEvent(event);
-}
-
-void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    Figure::mouseMoveEvent(event);
-}
-
 void Pawn::forward_step(QVector<Block*>& positions, int offset)
 {
     if(this->getColor()){
@@ -74,5 +59,85 @@ void Pawn::forward_step(QVector<Block*>& positions, int offset)
             positions.push_back(getBoard()[getPosition().x()][getPosition().y() + offset]);
         }
     }
+}
+
+void Pawn::getKnowledge(QVector<Block *> vec_block)
+{
+    step_length_limiter_for_pawn(vec_block);
+
+    if(this->getColor()){
+        if((getPosition().x() - 1 >= 0) && (getPosition().x() - 1 <= 7))
+            left_right.push_back(getBoard()[getPosition().x() - 1][getPosition().y() - 1]);
+        if((getPosition().x() + 1 >= 0) && (getPosition().x() + 1 <= 7))
+            left_right.push_back(getBoard()[getPosition().x() + 1][getPosition().y() - 1]);
+    }
+    else{
+        if((getPosition().x() - 1 >= 0) && (getPosition().x() - 1 <= 7))
+            left_right.push_back(getBoard()[getPosition().x() - 1][getPosition().y() + 1]);
+        if((getPosition().x() + 1 >= 0) && (getPosition().x() + 1 <= 7))
+            left_right.push_back(getBoard()[getPosition().x() + 1][getPosition().y() + 1]);
+    }
+
+    for(auto& elem : left_right){
+        QVector<QGraphicsItem*> vec = elem->getCollidingItemsForMousePressEvent();
+        for(auto& vec_elem : vec){
+            Figure* fig = dynamic_cast<Figure*>(vec_elem);
+            if(fig != nullptr){
+                if((this->getColor() && fig->getColor()) || (!this->getColor() && !fig->getColor()))
+                    elem->setAnotherBrushColor(Qt::green);
+                else
+                    elem->setAnotherBrushColor(Qt::blue);
+            }
+        }
+    }
+}
+
+void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    Figure::mousePressEvent(event);
+
+    getKnowledge(getValidNeighbourPositions());
+}
+
+void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QVector<QPair<Figure*, double>> figure_list;
+    QVector<QPair<Block*, double>> block_list;
+    for(auto& elem_of_item_list : this->collidingItems()){//Вектор пересеченных фигур, которые можно уничтожить
+        Figure* item = dynamic_cast<Figure*>(elem_of_item_list);
+        if((item != nullptr)
+                && ((this->getColor() && !item->getColor()) || (!this->getColor() && item->getColor()))){
+            figure_list.push_back({item, calculatingDistance(
+                                   (int)item->pos().x() + 40,//aviable to delete +40
+                                   (int)item->pos().y() + 40,//aviable to delete +40
+                                   (int)mapToScene(event->pos()).x() + 40,
+                                   (int)mapToScene(event->pos()).y() + 40)});
+        }
+
+        Block* block = dynamic_cast<Block*>(elem_of_item_list);
+        if(block != nullptr && check_on_valid_block(block)
+                && block->check_another_brush_color_on_def_color()){
+            block_list.push_back({block, calculatingDistance(
+                                           (int)block->pos().x() + 40,//aviable to delete +40
+                                           (int)block->pos().y() + 40,//aviable to delete +40
+                                           (int)mapToScene(event->pos()).x() + 40,
+                                           (int)mapToScene(event->pos()).y() + 40)});
+        }
+        for(auto& elem : left_right){
+            block_list.push_back({elem, calculatingDistance(
+                                  (int)elem->pos().x() + 40,//aviable to delete +40
+                                  (int)elem->pos().y() + 40,//aviable to delete +40
+                                  (int)mapToScene(event->pos()).x() + 40,
+                                  (int)mapToScene(event->pos()).y() + 40)});
+        }
+    }
+    find_valid_positions(block_list);
+    set_def_color_for_all_board();
+    left_right.clear();
+}
+
+void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    Figure::mouseMoveEvent(event);
 }
 
