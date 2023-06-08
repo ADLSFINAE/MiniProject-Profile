@@ -3,6 +3,7 @@
 #include <QString>
 #include <QRectF>
 #include <QSize>
+#include <QVector>
 
 namespace GlobVal{
 const static int GlobX = 80;
@@ -41,6 +42,21 @@ const QString pngWhiteRook = ":/whiteFigures/chesscom/whiteFigures/wR.png";
 const QString pngWhiteHorse = ":/whiteFigures/chesscom/whiteFigures/wN.png";
 const QString pngWhiteElephant = ":/whiteFigures/chesscom/whiteFigures/wB.png";
 const QString pngWhitePawn = ":/whiteFigures/chesscom/whiteFigures/wP.png";
+
+const QVector<QString> pngBlackFiguresVec = {
+    pngBlackQueen,
+    pngBlackRook,
+    pngBlackHorse,
+    pngBlackElephant,
+};
+
+
+const QVector<QString> pngWhiteFiguresVec = {
+    pngWhiteQueen,
+    pngWhiteRook,
+    pngWhiteHorse,
+    pngWhiteElephant,
+};
 
 };
 

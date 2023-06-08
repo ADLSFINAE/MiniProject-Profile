@@ -11,8 +11,10 @@ CONFIG += c++17
 SOURCES += \
     boardElems/block.cpp \
     boardElems/board.cpp \
+    coreElems/changepawnwidget.cpp \
     coreElems/customscene.cpp \
     coreElems/customview.cpp \
+    coreElems/figurelabel.cpp \
     figures/elephant.cpp \
     figures/figure.cpp \
     figures/horse.cpp \
@@ -26,8 +28,10 @@ SOURCES += \
 HEADERS += \
     boardElems/block.h \
     boardElems/board.h \
+    coreElems/changepawnwidget.h \
     coreElems/customscene.h \
     coreElems/customview.h \
+    coreElems/figurelabel.h \
     figures/elephant.h \
     figures/figure.h \
     figures/horse.h \
