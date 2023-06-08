@@ -103,7 +103,8 @@ void Figure::set_def_color_for_all_board()
 {
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-            arrWithBoard[i][j]->setDefColor();
+            if(arrWithBoard[i][j]->getAnotherBrushColor() != arrWithBoard[i][j]->getDefColor())
+                arrWithBoard[i][j]->setDefColor();
         }
     }
     qDebug()<<"ALL OKAY? YES";
@@ -234,24 +235,17 @@ void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
 {
     Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
     if(smoke_it != nullptr){
-        if(smoke_it->getAnotherBrushColor() == Qt::yellow){
-            qDebug()<<"yellows";
+        if(smoke_it->getAnotherBrushColor() == Qt::yellow)
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
-        }
         if(smoke_it->getAnotherBrushColor() == Qt::blue){
-            qDebug()<<"blues";
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
             kill_functionality(smoke_it);
         }
-        if(smoke_it->getAnotherBrushColor() == Qt::green){
-            qDebug()<<"green";
+        if(smoke_it->getAnotherBrushColor() == Qt::green)
             this->setPosition(this->getPosition().x(), this->getPosition().y());
-        }
     }
-    else{
-        qDebug()<<"default color";
+    else
         this->setPosition(this->getPosition().x(), this->getPosition().y());
-    }
 
 }
 

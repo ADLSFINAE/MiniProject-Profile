@@ -18,9 +18,8 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
         for(int i = 1; i < 3; i++)
             forward_step(positions, i);
     }
-    else{
+    else
         forward_step(positions, 1);
-    }
 
     return positions;
 }
@@ -41,7 +40,6 @@ void Pawn::forward_step(QVector<Block*>& positions, int offset)
         }
     }
 
-    qDebug()<<positions.size()<<"POS SIZESS";
 }
 
 bool Pawn::leave_from_start_position()
@@ -108,19 +106,25 @@ QVector<Block *> Pawn::getKnowledge()
             }
         }
     }
+
     return left_right;
 }
 
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug()<<"LEAVE FROM START"<<leave_from_start_position()<<isMovedFromStart;
-    Figure::mousePressEvent(event);
-    step_length_limiter_for_pawn(this->getValidNeighbourPositions());
-    getKnowledge();
+    if(!(this->getColor() && this->getPosition().y() == 0)
+            && !(!this->getColor() && this->getPosition().y() == 7)){
+        Figure::mousePressEvent(event);
+
+        step_length_limiter_for_pawn(this->getValidNeighbourPositions());
+        getKnowledge();
+    }
 }
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!(this->getColor() && this->getPosition().y() == 0)
+            && !(!this->getColor() && this->getPosition().y() == 7)){
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
 
@@ -148,6 +152,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     for(auto& block : getKnowledge()){
         for(auto& fig : figure_list){
+            if(block != nullptr && fig.first != nullptr){
             block_list.push_back({block, calculatingDistance(
                                   (int)block->pos().x() + 40,//aviable to delete +40
                                   (int)block->pos().y() + 40,//aviable to delete +40
@@ -157,10 +162,15 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 block->setAnotherBrushColor(Qt::green);
             else
                 block->setAnotherBrushColor(Qt::blue);
+            }
         }
     }
+
     find_valid_positions(block_list);
     set_def_color_for_all_board();
+    }
+    else
+        this->setPosition(this->getPosition().x(), this->getPosition().y());
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

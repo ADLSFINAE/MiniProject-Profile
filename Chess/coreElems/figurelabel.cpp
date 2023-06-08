@@ -1,5 +1,7 @@
 #include "figurelabel.h"
+#include "qevent.h"
 #include <QDebug>
+#include <QScreen>
 FigureLabel::FigureLabel(int x, int y, QPixmap pixmap, QWidget *parent)
 {
     this->setParent(parent);
@@ -24,5 +26,7 @@ void FigureLabel::mouseReleaseEvent(QMouseEvent *ev)
 
 void FigureLabel::mouseMoveEvent(QMouseEvent *ev)
 {
-    qDebug()<<QCursor::pos()<<QLabel::mapFromGlobal(QCursor::pos());;
+    FigureLabel::mousePressEvent(ev);
+    this->setFocus();
+    qDebug()<<QCursor::pos()<<focusWidget()->pos();
 }
