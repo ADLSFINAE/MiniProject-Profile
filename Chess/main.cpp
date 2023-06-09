@@ -3,7 +3,7 @@
 #include "boardElems/board.h"
 #include "coreElems/customscene.h"
 #include "boardElems/board.h"
-#include "coreElems/changepawnwidget.h"
+#include "coreElems/ChangePawnElems/changepawnwidget.h"
 
 int main(int argc, char *argv[])
 {
