@@ -21,6 +21,7 @@ public:
     QVector<Figure*> figures;
 public slots:
     void remove_from_scene(Figure* figure);
+    void createChangePawnWidget(bool color);
 private:
     void figuresPlacing(QGraphicsScene* scene, bool isWhite);
     void buildingBlock(QBrush brush, int rows, int cols);

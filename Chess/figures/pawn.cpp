@@ -169,8 +169,10 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     find_valid_positions(block_list);
     set_def_color_for_all_board();
     }
-    else
-        this->setPosition(this->getPosition().x(), this->getPosition().y());
+    else{
+        emit vahue(this);
+        emit createChangePawnWidget(this->getColor());
+    }
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

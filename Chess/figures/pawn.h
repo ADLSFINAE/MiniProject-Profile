@@ -4,6 +4,7 @@
 
 class Pawn : public Figure
 {
+    Q_OBJECT
 public:
     Pawn(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;
@@ -15,6 +16,8 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+signals:
+    void createChangePawnWidget(bool color);
 private:
     void forward_step(QVector<Block*>& positions, int offset);
     int start_pos_x, start_pos_y;
