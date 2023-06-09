@@ -18,6 +18,7 @@ void FigureLabel::mousePressEvent(QMouseEvent *ev)
 
     this->setAutoFillBackground(true);
     this->setPalette(sample_palette);
+    emit createSelectedFigure(pixmapName, color);
 }
 
 void FigureLabel::mouseReleaseEvent(QMouseEvent *ev)
@@ -27,7 +28,4 @@ void FigureLabel::mouseReleaseEvent(QMouseEvent *ev)
 
 void FigureLabel::mouseMoveEvent(QMouseEvent *ev)
 {
-    FigureLabel::mousePressEvent(ev);
-    this->setFocus();
-    qDebug()<<QCursor::pos()<<focusWidget()->pos();
 }

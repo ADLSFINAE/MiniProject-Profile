@@ -1,17 +1,18 @@
 #include "boardElems/board.h"
 
-#include "coreElems/ChangePawnElems/changepawnwidget.h"
 #include "figures/king.h"
 #include "figures/horse.h"
 #include "figures/queen.h"
 #include "figures/elephant.h"
 #include "figures/pawn.h"
 #include "figures/rook.h"
+#include "coreElems/ChangePawnElems/figurelabel.h"
+#include <QVectorIterator>
 
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
 {
-    //initialization of my array, it's not seems like in pure c++, but it's QVector
+    // initialization of my array, it's not seems like in pure c++, but it's QVector
     // and i used resize method for it
     this->initVectorOfBlocks();
     this->inizialization(scene);
@@ -43,19 +44,45 @@ QVector<QVector<Block *> > Board::getBoard()
 void Board::remove_from_scene(Figure *figure)
 {
     pointer_to_scene->removeItem(figure);
+    int iter = 0;
+    for(auto& elem: figures){//ЗАПОЛНЕНИЕ ОСНОВНОГО
+        if(elem == figure){
+            figures.erase(figures.begin() + iter);
+            qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<"ELEM POSITIONS";
+            break;
+        }
+        iter++;
+    }
 }
 
-void Board::createChangePawnWidget(bool color)
+void Board::createChangePawnWidget(bool color, int posX, int posY)
 {
-    if(color){
-        ChangePawnWidget* changePawnWidget = new ChangePawnWidget(true);
-        changePawnWidget->show();
-        changePawnWidget->setFocus();
+    changePawnWidget = new ChangePawnWidget(color);
+    changePawnWidget->show();
+    if(color)
+        for(auto& label : changePawnWidget->whiteFiguresVec){
+            QObject::connect(label, &FigureLabel::createSelectedFigure, this, &Board::createNewFigure);
     }
     else{
-        ChangePawnWidget* changePawnWidget = new ChangePawnWidget(false);
-        changePawnWidget->show();
-        changePawnWidget->setFocus();
+        for(auto& label : changePawnWidget->blackFiguresVec)
+            QObject::connect(label, &FigureLabel::createSelectedFigure, this, &Board::createNewFigure);
+    }
+    NEWFIGX = posX;
+    NEWFIGY = posY;
+}
+
+void Board::createNewFigure(QString pixmapName, bool color)
+{
+    Figure* newFig = nullptr;
+    for(auto& fig : figures){
+        if(fig->pixmap() == QPixmap(pixmapName) && fig->getColor() == color){
+            newFig = fig;
+            newFig->setPosition(NEWFIGX, NEWFIGY);
+            figures.push_back(newFig);
+            changePawnWidget->hide();
+            changePawnWidget = nullptr;
+            break;
+        }
     }
 }
 

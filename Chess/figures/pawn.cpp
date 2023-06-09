@@ -171,7 +171,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
     else{
         emit vahue(this);
-        emit createChangePawnWidget(this->getColor());
+        emit createChangePawnWidget(this->getColor(), this->getPosition().x(), this->getPosition().y());
     }
 }
 

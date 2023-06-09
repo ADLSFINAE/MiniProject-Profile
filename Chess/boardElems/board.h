@@ -4,6 +4,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QVector>
+#include "coreElems/ChangePawnElems/changepawnwidget.h"
 #include "paramsNdefines.h"
 #include "game.h"
 #include "figures/figure.h"
@@ -21,7 +22,8 @@ public:
     QVector<Figure*> figures;
 public slots:
     void remove_from_scene(Figure* figure);
-    void createChangePawnWidget(bool color);
+    void createChangePawnWidget(bool color, int posX, int posY);
+    void createNewFigure(QString pixmapName, bool color);
 private:
     void figuresPlacing(QGraphicsScene* scene, bool isWhite);
     void buildingBlock(QBrush brush, int rows, int cols);
@@ -29,6 +31,8 @@ private:
     void initVectorOfBlocks();
     bool neededColorChecker(int rows, int cols) const;
     QVector< QVector<Block*> > arrOfBlocks;// to draw a board
+    int NEWFIGX, NEWFIGY;
+    ChangePawnWidget* changePawnWidget{nullptr};
     Game* game{nullptr};
 };
 

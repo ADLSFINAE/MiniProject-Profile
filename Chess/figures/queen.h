@@ -4,6 +4,7 @@
 
 class Queen : public Figure
 {
+    Q_OBJECT
 public:
     Queen(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;

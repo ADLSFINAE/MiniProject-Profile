@@ -17,7 +17,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 signals:
-    void createChangePawnWidget(bool color);
+    void createChangePawnWidget(bool color, int posX, int posY);
 private:
     void forward_step(QVector<Block*>& positions, int offset);
     int start_pos_x, start_pos_y;

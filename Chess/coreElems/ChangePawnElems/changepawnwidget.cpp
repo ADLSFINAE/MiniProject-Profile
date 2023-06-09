@@ -8,20 +8,17 @@ ChangePawnWidget::ChangePawnWidget(bool color, QWidget *parent)
     this->setWindowTitle("Change Pawn");
 
     if(color){
-        qDebug()<<"WHITE FIG SIZE"<<pngWhiteFiguresVec.size();
         for(auto& whiteFig : pngWhiteFiguresVec){
                 whiteFiguresVec.push_back(new FigureLabel(offsetX, 0, whiteFig, true, this));
+
                 offsetX = offsetX + GlobX;
         }
-        qDebug()<<"WHITE FIG VEC SIZE"<<whiteFiguresVec.size();
     }
     else{
-        qDebug()<<"BLACK FIG SIZE"<<pngBlackFiguresVec.size();
         for(auto& blackFig : pngBlackFiguresVec){
                 blackFiguresVec.push_back(new FigureLabel(offsetX, 0, blackFig, false, this));
                 offsetX = offsetX + GlobX;
         }
-        qDebug()<<"BLACK FIG VEC SIZE"<<blackFiguresVec.size();
     }
 }
 

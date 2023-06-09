@@ -4,6 +4,7 @@
 
 class Rook : public Figure
 {
+    Q_OBJECT
 public:
     Rook(int x, int y, bool isWhite);
     QVector<Block*> getValidNeighbourPositions() override;

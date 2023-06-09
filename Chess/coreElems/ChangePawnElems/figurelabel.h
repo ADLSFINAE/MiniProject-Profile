@@ -14,6 +14,8 @@ protected:
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseReleaseEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
+signals:
+    void createSelectedFigure(QString pixmapName, bool color);
 private:
     bool color;
     QString pixmapName;

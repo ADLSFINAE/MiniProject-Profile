@@ -10,10 +10,10 @@ class ChangePawnWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ChangePawnWidget(bool color, QWidget* parent = nullptr);
-private:
+    ChangePawnWidget(bool color, QWidget* parent = nullptr);  
     QVector<FigureLabel*> blackFiguresVec;
     QVector<FigureLabel*> whiteFiguresVec;
+private:
     int offsetX = 0;
 };
 
