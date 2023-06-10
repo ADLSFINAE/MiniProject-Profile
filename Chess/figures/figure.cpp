@@ -18,6 +18,17 @@ Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     }
 }
 
+Figure::Figure(Figure *fig)
+{
+    qDebug()<<"WAS CALLEDDDDDDDDDDDDD";
+    this->x = fig->x;
+    this->y = fig->y;
+    this->isWhite = fig->isWhite;
+    this->sceneBoundingRect();
+
+    this->arrWithBoard = fig->arrWithBoard;
+}
+
 QVector<Block *> Figure::clean_up(QVector<Block *> vec)
 {
     QSet<Block*> set_figures;
@@ -227,6 +238,7 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
         }
         pull_up.first = minElem;
         pull_up.second = checker;
+
     }
     return pull_up;
 }
@@ -241,7 +253,8 @@ void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
             kill_functionality(smoke_it);
         }
-        if(smoke_it->getAnotherBrushColor() == Qt::green)
+        if(smoke_it->getAnotherBrushColor() == Qt::green
+                || smoke_it->getAnotherBrushColor() == Qt::white)
             this->setPosition(this->getPosition().x(), this->getPosition().y());
     }
     else
@@ -256,7 +269,6 @@ double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x,
 
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);
     this->setOldPosition(this->pos().x(), this->pos().y());
     for(auto& block : clean_up(getValidNeighbourPositions()))
         block->setAnotherBrushColor(Qt::yellow);
@@ -273,6 +285,7 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
             }
         }
     }
+
 }
 
 void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

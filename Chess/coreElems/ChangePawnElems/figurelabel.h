@@ -3,6 +3,12 @@
 #include <QLabel>
 #include <QWidget>
 #include <QPixmap>
+#include "figures/king.h"
+#include "figures/horse.h"
+#include "figures/queen.h"
+#include "figures/elephant.h"
+#include "figures/rook.h"
+#include "figures/figure.h"
 #include "paramsNdefines.h"
 using namespace GlobVal;
 
@@ -15,10 +21,11 @@ protected:
     void mouseReleaseEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
 signals:
-    void createSelectedFigure(QString pixmapName, bool color);
+    void createSelectedFigure(Figure* fig);
 private:
     bool color;
     QString pixmapName;
+    Figure* fig;
 };
 
 

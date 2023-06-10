@@ -77,21 +77,16 @@ void Board::createChangePawnWidget(bool color, int posX, int posY)
     NEWFIGY = posY;
 }
 
-void Board::createNewFigure(QString pixmapName, bool color)
+void Board::createNewFigure(Figure* element)
 {
     qDebug()<<"CREATE NEW FIGURE";
-    Figure* newFig = nullptr;
-    for(auto& fig : figures){
-        if(fig->pixmap() == QPixmap(pixmapName) && fig->getColor() == color){
-            newFig = fig;
-            newFig->setPosition(NEWFIGX, NEWFIGY);
-            figures.push_back(newFig);
-            changePawnWidget->hide();
-            changePawnWidget = nullptr;
-            break;
-        }
-    }
+    pointer_to_scene->addItem(element);
+    element->setBoard(arrOfBlocks);
+    element->setPosition(NEWFIGX, NEWFIGY);
+    figures.push_back(element);
     emit initGameVecs(figures);
+    changePawnWidget->hide();
+    delete changePawnWidget;
 }
 
 void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)

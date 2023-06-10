@@ -20,10 +20,11 @@ public:
     QVector< QVector<Block*> > getBoard();
     QGraphicsScene* pointer_to_scene = nullptr;
     QVector<Figure*> figures;
+    Figure* fig = nullptr;
 public slots:
     void remove_from_scene(Figure* figure);
     void createChangePawnWidget(bool color, int posX, int posY);
-    void createNewFigure(QString pixmapName, bool color);
+    void createNewFigure(Figure* element);
 signals:
     void initGameVecs(QVector<Figure*> vecs);
 private:

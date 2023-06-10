@@ -21,6 +21,7 @@ class Figure : public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
 public:
     Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent = nullptr);
+    Figure(Figure *fig);
     QRectF boundingRect()const override;
 
     void set_def_color_for_all_board();

@@ -115,7 +115,10 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(!(this->getColor() && this->getPosition().y() == 0)
             && !(!this->getColor() && this->getPosition().y() == 7)){
         Figure::mousePressEvent(event);
-
+        for(auto& block : getKnowledge()){
+            if(block != nullptr)
+                block->setAnotherBrushColor(Qt::white);
+        }
         step_length_limiter_for_pawn(this->getValidNeighbourPositions());
         getKnowledge();
     }
@@ -123,8 +126,6 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(!(this->getColor() && this->getPosition().y() == 0)
-            && !(!this->getColor() && this->getPosition().y() == 7)){
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
 
@@ -153,23 +154,24 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     for(auto& block : getKnowledge()){
         for(auto& fig : figure_list){
             if(block != nullptr && fig.first != nullptr){
-            block_list.push_back({block, calculatingDistance(
-                                  (int)block->pos().x() + 40,//aviable to delete +40
-                                  (int)block->pos().y() + 40,//aviable to delete +40
-                                  (int)mapToScene(event->pos()).x() + 40,
-                                  (int)mapToScene(event->pos()).y() + 40)});
-            if(this->getColor() == fig.first->getColor())
-                block->setAnotherBrushColor(Qt::green);
-            else
-                block->setAnotherBrushColor(Qt::blue);
+                block_list.push_back({block, calculatingDistance(
+                                      (int)block->pos().x() + 40,//aviable to delete +40
+                                      (int)block->pos().y() + 40,//aviable to delete +40
+                                      (int)mapToScene(event->pos()).x() + 40,
+                                      (int)mapToScene(event->pos()).y() + 40)});
+                if(this->getColor() == fig.first->getColor())
+                    block->setAnotherBrushColor(Qt::green);
+                else
+                    block->setAnotherBrushColor(Qt::blue);
             }
         }
     }
 
     find_valid_positions(block_list);
     set_def_color_for_all_board();
-    }
-    else{
+
+    if(((this->getColor() && this->getPosition().y() == 0))
+            || ((!this->getColor() && this->getPosition().y() == 7))){
         emit vahue(this);
         emit createChangePawnWidget(this->getColor(), this->getPosition().x(), this->getPosition().y());
     }

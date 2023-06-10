@@ -1,5 +1,5 @@
 #include "coreElems/customscene.h"
-
+#include <QDebug>
 CustomScene::CustomScene(QGraphicsScene *scene)
     :QGraphicsScene(scene)
 {
@@ -9,6 +9,9 @@ CustomScene::CustomScene(QGraphicsScene *scene)
 
 void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(board->fig != nullptr){
+        qDebug()<<board->fig->getColor();
+    }
     QGraphicsScene::mousePressEvent(event);
 }
 
