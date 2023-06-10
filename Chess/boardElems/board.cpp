@@ -8,7 +8,7 @@
 #include "figures/rook.h"
 #include "coreElems/ChangePawnElems/figurelabel.h"
 #include <QVectorIterator>
-
+#include <typeinfo>
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
 {
@@ -24,10 +24,15 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     for(auto& elem : figures){
         QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
-        if(pawn != nullptr){
+        if(pawn != nullptr)
             QObject::connect(pawn, &Pawn::createChangePawnWidget, this, &Board::createChangePawnWidget);
-        }
     }
+
+    qDebug()<<figures.size()<<"FIGURES SIZE";
+    for(auto& elem : figures){
+        qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<typeid(elem).name();
+    }
+    QObject::connect(this, &Board::initGameVecs, game, &Game::editVecs);
 
 }
 
@@ -57,14 +62,15 @@ void Board::remove_from_scene(Figure *figure)
 
 void Board::createChangePawnWidget(bool color, int posX, int posY)
 {
+    qDebug()<<"CREATE PAWN WIDGET";
     changePawnWidget = new ChangePawnWidget(color);
     changePawnWidget->show();
     if(color)
-        for(auto& label : changePawnWidget->whiteFiguresVec){
+        for(auto& label : changePawnWidget->getFiguresVec(true)){
             QObject::connect(label, &FigureLabel::createSelectedFigure, this, &Board::createNewFigure);
     }
     else{
-        for(auto& label : changePawnWidget->blackFiguresVec)
+        for(auto& label : changePawnWidget->getFiguresVec(false))
             QObject::connect(label, &FigureLabel::createSelectedFigure, this, &Board::createNewFigure);
     }
     NEWFIGX = posX;
@@ -73,6 +79,7 @@ void Board::createChangePawnWidget(bool color, int posX, int posY)
 
 void Board::createNewFigure(QString pixmapName, bool color)
 {
+    qDebug()<<"CREATE NEW FIGURE";
     Figure* newFig = nullptr;
     for(auto& fig : figures){
         if(fig->pixmap() == QPixmap(pixmapName) && fig->getColor() == color){
@@ -84,6 +91,7 @@ void Board::createNewFigure(QString pixmapName, bool color)
             break;
         }
     }
+    emit initGameVecs(figures);
 }
 
 void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)

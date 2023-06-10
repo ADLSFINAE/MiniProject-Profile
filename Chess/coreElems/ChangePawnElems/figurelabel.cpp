@@ -1,5 +1,6 @@
 #include "coreElems/ChangePawnElems/figurelabel.h"
-#include "qevent.h"
+#include <QEvent>
+#include <QApplication>
 #include <QDebug>
 #include <QScreen>
 FigureLabel::FigureLabel(int x, int y, QString pixmapName, bool color, QWidget *parent)
@@ -28,4 +29,5 @@ void FigureLabel::mouseReleaseEvent(QMouseEvent *ev)
 
 void FigureLabel::mouseMoveEvent(QMouseEvent *ev)
 {
+
 }

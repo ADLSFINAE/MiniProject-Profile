@@ -11,9 +11,10 @@ class ChangePawnWidget : public QWidget
     Q_OBJECT
 public:
     ChangePawnWidget(bool color, QWidget* parent = nullptr);  
+    QVector<FigureLabel*> getFiguresVec(bool color);
+private:
     QVector<FigureLabel*> blackFiguresVec;
     QVector<FigureLabel*> whiteFiguresVec;
-private:
     int offsetX = 0;
 };
 

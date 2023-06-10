@@ -3,6 +3,7 @@
 #include <QVector>
 #include <QPair>
 #include "figures/figure.h"
+#include "figures/pawn.h"
 #include <QObject>
 
 class Game : public QObject
@@ -12,8 +13,14 @@ public:
     Game();
     void initOfVecs(Figure* figure, bool isWhite);
     void giveInfo();
+
     QVector< QPair <Figure*, QPointF> > vecOfBlackFigures;
     QVector< QPair <Figure*, QPointF> > vecOfWhiteFigures;
+
+    QVector< QPair <Figure*, QPointF> > vecOfBlackPawnFigures;
+    QVector< QPair <Figure*, QPointF> > vecOfWhitePawnFigures;
+public slots:
+    void editVecs(QVector<Figure*> vecs);
 };
 
 #endif // GAME_H

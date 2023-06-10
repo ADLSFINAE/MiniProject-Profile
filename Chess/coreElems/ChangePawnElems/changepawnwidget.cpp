@@ -10,7 +10,6 @@ ChangePawnWidget::ChangePawnWidget(bool color, QWidget *parent)
     if(color){
         for(auto& whiteFig : pngWhiteFiguresVec){
                 whiteFiguresVec.push_back(new FigureLabel(offsetX, 0, whiteFig, true, this));
-
                 offsetX = offsetX + GlobX;
         }
     }
@@ -20,6 +19,14 @@ ChangePawnWidget::ChangePawnWidget(bool color, QWidget *parent)
                 offsetX = offsetX + GlobX;
         }
     }
+}
+
+QVector<FigureLabel *> ChangePawnWidget::getFiguresVec(bool color)
+{
+    if(color)
+        return whiteFiguresVec;
+    else
+        return blackFiguresVec;
 }
 
 
