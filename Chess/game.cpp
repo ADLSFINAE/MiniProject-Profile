@@ -33,16 +33,14 @@ void Game::editVecs(QVector<Figure *> vecs)
         if(elem->getColor()){
             vecOfWhiteFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
-            if(pawn != nullptr){
+            if(pawn != nullptr)
                 vecOfWhitePawnFigures.push_back({elem, elem->getPosition()});
-            }
         }
         else{
             vecOfBlackFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
-            if(pawn != nullptr){
+            if(pawn != nullptr)
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
-            }
         }
     }
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";
