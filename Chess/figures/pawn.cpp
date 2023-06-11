@@ -200,6 +200,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if(posX != this->getPosition()){
         if(passagePos != nullptr){
+            emit vahue(passagePawn);
             passagePos = nullptr;
         }
         isMovedFromStart = true;
@@ -221,44 +222,39 @@ void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     Figure::mouseMoveEvent(event);
 }
 
-void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> > collection)
+void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> > collection, bool color)
 {
-    QVector< QPair <Figure*, QPointF> > vec = collection;
-    for(auto& pawn : collection){
-        if(this->getPosition().y() == 3 && pawn.first->getPosition().y() == 3){
-            if(this->getPosition().x() + 1 == pawn.first->getPosition().x()
-                    || this->getPosition().x() - 1 == pawn.first->getPosition().x()){
-                qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
-                emit signalOnAddPassageElem(QPointF(pawn.first->getPosition().x(), pawn.first->getPosition().y() - 1));
+
+    qDebug()<<Qt::endl;
+    if(this->getColor()){
+        qDebug()<<color<<"COLOR ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
+        for(auto& pawn : collection){
+            if(this->getPosition().y() == 3 && pawn.first->getPosition().y() == 3 && !pawn.first->getColor()){
+                if(this->getPosition().x() + 1 == pawn.first->getPosition().x()
+                        || this->getPosition().x() - 1 == pawn.first->getPosition().x()){
+                    qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
+                    passagePawn = pawn.first;
+                    emit signalOnAddPassageElem(QPointF(pawn.first->getPosition().x(), pawn.first->getPosition().y() - 1));
+                    break;
+                }
             }
         }
     }
-    /*qDebug()<<"EGOISM";
-    if(this->getColor() && this->getColor() != collection[0].first->getColor()){
-            for(auto& pawn : collection){
-                Pawn* item = dynamic_cast<Pawn*>(pawn.first);
-                if(item != nullptr && this->getPosition().y() == 3 && item->getPosition().y() == 3){
-                    if(this->getPosition().x() + 1 == item->getPosition().x()
-                            || this->getPosition().x() - 1 == item->getPosition().x()){
-                        qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
-                        this->setPosition(3, 3);
-                    }
+    else{
+        qDebug()<<color<<"COLOR ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
+        for(auto& pawn : collection){
+            if(this->getPosition().y() == 4 && pawn.first->getPosition().y() == 4 && pawn.first->getColor()){
+                if(this->getPosition().x() + 1 == pawn.first->getPosition().x()
+                        || this->getPosition().x() - 1 == pawn.first->getPosition().x()){
+                    qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
+                    passagePawn = pawn.first;
+                    emit signalOnAddPassageElem(QPointF(pawn.first->getPosition().x(), pawn.first->getPosition().y() + 1));
+                    break;
                 }
             }
+        }
     }
-
-    if(!this->getColor() && !this->getColor() != collection[0].first->getColor()){
-            for(auto& pawn : collection){
-                Pawn* item = dynamic_cast<Pawn*>(pawn.first);
-                if(item != nullptr && this->getPosition().y() == 5 && item->getPosition().y() == 5){
-                    if(this->getPosition().x() + 1 == item->getPosition().x()
-                            || this->getPosition().x() - 1 == item->getPosition().x()){
-                        qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
-                        this->getBoard()[item->getPosition().x()][item->getPosition().y() + 1]->setAnotherBrushColor(Qt::red);
-                    }
-                }
-            }
-    }*/
+    qDebug()<<"HERE IS END";
 
 }
 

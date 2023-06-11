@@ -18,13 +18,14 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 public slots:
-    void slotPawnCollection(QVector< QPair <Figure*, QPointF> > collection);
+    void slotPawnCollection(QVector< QPair <Figure*, QPointF> > collection, bool color);
     void slotOnAddPassageElem(QPointF passageBlockPos);
 signals:
     void createChangePawnWidget(bool color, int posX, int posY);
     void signalOnAddPassageElem(QPointF passageBlockPos);
 private:
     QPointF* passagePos{nullptr};
+    Figure* passagePawn{nullptr};
     void forward_step(QVector<Block*>& positions, int offset);
     int start_pos_x, start_pos_y;
     bool isMovedFromStart;
