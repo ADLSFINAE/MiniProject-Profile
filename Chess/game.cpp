@@ -43,6 +43,10 @@ void Game::editVecs(QVector<Figure *> vecs)
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
         }
     }
+    emit getPawnCollection(vecOfWhitePawnFigures);
+    qDebug()<<Qt::endl;
+    emit getPawnCollection(vecOfBlackPawnFigures);
+
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";
     qDebug()<<vecOfBlackPawnFigures.size()<<"VEC OF BLACK PAWN FIGURES SIZE";
 }

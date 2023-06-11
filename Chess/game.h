@@ -21,6 +21,8 @@ public:
     QVector< QPair <Figure*, QPointF> > vecOfWhitePawnFigures;
 public slots:
     void editVecs(QVector<Figure*> vecs);
+signals:
+    void getPawnCollection(QVector< QPair <Figure*, QPointF> > collection);
 };
 
 #endif // GAME_H

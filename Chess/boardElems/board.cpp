@@ -24,8 +24,10 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     for(auto& elem : figures){
         QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
-        if(pawn != nullptr)
+        if(pawn != nullptr){
             QObject::connect(pawn, &Pawn::createChangePawnWidget, this, &Board::createChangePawnWidget);
+            QObject::connect(game, &Game::getPawnCollection, pawn, &Pawn::slotPawnCollection);
+        }
     }
 
     qDebug()<<figures.size()<<"FIGURES SIZE";
@@ -53,6 +55,7 @@ void Board::remove_from_scene(Figure *figure)
     for(auto& elem: figures){//ЗАПОЛНЕНИЕ ОСНОВНОГО
         if(elem == figure){
             figures.erase(figures.begin() + iter);
+            emit initGameVecs(figures);
             qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<"ELEM POSITIONS";
             break;
         }
