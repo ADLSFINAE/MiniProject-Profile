@@ -15,6 +15,8 @@
 #include <QVector>
 #include <QList>
 #include <QSet>
+#include <QtMath>
+#include <QPainter>
 using namespace GlobVal;
 
 class Figure : public QObject, public QGraphicsPixmapItem{
@@ -60,6 +62,7 @@ public:
     double calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y);
 signals:
     void vahue(Figure* figure);
+    void updateFiguresPositions(Figure* figure);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

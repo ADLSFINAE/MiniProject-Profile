@@ -1,6 +1,5 @@
 #include "figures/figure.h"
-#include "qmath.h"
-#include <QPainter>
+
 Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     :QGraphicsPixmapItem(parent)
 {
@@ -313,7 +312,10 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                            (int)mapToScene(event->pos()).y() + 40)});
         }
     }
+    QPointF positionInMoment = this->getPosition();
     find_valid_positions(block_list);
+    if(positionInMoment != this->getPosition())
+        emit updateFiguresPositions(this);
     set_def_color_for_all_board();
 }
 

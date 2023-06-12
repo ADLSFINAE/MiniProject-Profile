@@ -20,9 +20,9 @@ public:
     QVector< QPair <Figure*, QPointF> > vecOfBlackPawnFigures;
     QVector< QPair <Figure*, QPointF> > vecOfWhitePawnFigures;
 public slots:
-    void editVecs(QVector<Figure*> vecs);
+    void editVecs(QVector<Figure*>& vecs);
 signals:
-    void getPawnCollection(QVector< QPair <Figure*, QPointF> > collection, bool color);
+    void getPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, bool color);
 };
 
 #endif // GAME_H

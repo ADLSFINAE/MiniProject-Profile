@@ -27,6 +27,10 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
         if(pawn != nullptr){
             QObject::connect(pawn, &Pawn::createChangePawnWidget, this, &Board::createChangePawnWidget);
             QObject::connect(game, &Game::getPawnCollection, pawn, &Pawn::slotPawnCollection);
+            QObject::connect(pawn, &Pawn::updateFiguresPositionsFromPawn, this, &Board::updateFiguresVec);
+        }
+        else{
+            QObject::connect(elem, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
         }
     }
 
@@ -46,6 +50,18 @@ QRectF Board::boundingRect() const
 QVector<QVector<Block *> > Board::getBoard()
 {
     return arrOfBlocks;
+}
+
+void Board::updateFiguresVec(Figure *fig)
+{
+    for(auto& elem : figures){
+        if(elem == fig){
+            qDebug()<<"PRIKOL WAS CALLEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
+            elem->setPosition(fig->getPosition().x(), fig->getPosition().y());
+            emit initGameVecs(figures);
+            break;
+        }
+    }
 }
 
 void Board::remove_from_scene(Figure *figure)

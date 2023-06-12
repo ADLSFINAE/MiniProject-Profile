@@ -21,7 +21,7 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
     }
     else{
         forward_step(positions, 1);
-        if(passagePos != nullptr)
+        if(passagePos != nullptr && !isMovedFromStart)
             positions.push_back(PASSAGEBLOCK);
     }
 
@@ -128,8 +128,14 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
         for(auto& block : getKnowledge()){
             if(block != nullptr)
                 block->setAnotherBrushColor(Qt::white);
-            if(passagePos != nullptr){
+            if(passagePos != nullptr && !isMovedFromStart){
                 PASSAGEBLOCK->setAnotherBrushColor(Qt::yellow);
+                if(this->getColor() && passagePawn->getPosition().y() != 3){
+                    PASSAGEBLOCK->setAnotherBrushColor(Qt::white);
+                }
+                if(!this->getColor() && passagePawn->getPosition().y() != 4){
+                    PASSAGEBLOCK->setAnotherBrushColor(Qt::white);
+                }
             }
         }
         step_length_limiter_for_pawn(this->getValidNeighbourPositions());
@@ -180,7 +186,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
-    QPointF posX = this->getPosition();
+    QPointF positionInMoment = this->getPosition();
     qDebug()<<"BLOCK LIST SIZE 1"<<block_list.size();
     if(passagePos != nullptr){
         for(auto& elem : PASSAGEBLOCK->collidingItems()){
@@ -198,12 +204,23 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     qDebug()<<"BLOCK LIST SIZE 14"<<block_list.size();
     find_valid_positions(block_list);
 
-    if(posX != this->getPosition()){
+    if((passagePos != nullptr && positionInMoment.y() < this->getPosition().y() && this->getColor())
+            || (passagePos != nullptr && positionInMoment.y() > this->getPosition().y() && !this->getColor())){
+        emit updateFiguresPositionsFromPawn(this);
+    }
+    else if(passagePos != nullptr && this->getPosition().x() == passagePos->x()
+            && this->getPosition().y() == passagePos->y()){
+        emit updateFiguresPositionsFromPawn(this);
         if(passagePos != nullptr){
+            isMovedFromStart = true;
             emit vahue(passagePawn);
             passagePos = nullptr;
         }
-        isMovedFromStart = true;
+    }
+
+    else{
+        emit updateFiguresPositionsFromPawn(this);
+        isMovedFromStart = false;
     }
 
     set_def_color_for_all_board();
@@ -222,7 +239,7 @@ void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     Figure::mouseMoveEvent(event);
 }
 
-void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> > collection, bool color)
+void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, bool color)
 {
 
     qDebug()<<Qt::endl;

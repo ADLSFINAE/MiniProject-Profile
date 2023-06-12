@@ -25,8 +25,9 @@ public slots:
     void remove_from_scene(Figure* figure);
     void createChangePawnWidget(bool color, int posX, int posY);
     void createNewFigure(Figure* element);
+    void updateFiguresVec(Figure* fig);
 signals:
-    void initGameVecs(QVector<Figure*> vecs);
+    void initGameVecs(QVector<Figure*>& vecs);
 private:
     void figuresPlacing(QGraphicsScene* scene, bool isWhite);
     void buildingBlock(QBrush brush, int rows, int cols);

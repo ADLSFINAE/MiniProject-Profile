@@ -25,10 +25,12 @@ void Game::giveInfo()
     }
 }
 
-void Game::editVecs(QVector<Figure *> vecs)
+void Game::editVecs(QVector<Figure *>& vecs)
 {
     vecOfWhiteFigures.clear();
     vecOfBlackFigures.clear();
+    vecOfWhitePawnFigures.clear();
+    vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
         if(elem->getColor()){
             vecOfWhiteFigures.push_back({elem, elem->getPosition()});
