@@ -1,5 +1,4 @@
 #include "figures/queen.h"
-#include <stdio.h>
 
 Queen::Queen(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {

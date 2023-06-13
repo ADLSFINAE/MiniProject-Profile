@@ -1,14 +1,5 @@
 #include "boardElems/board.h"
 
-#include "figures/king.h"
-#include "figures/horse.h"
-#include "figures/queen.h"
-#include "figures/elephant.h"
-#include "figures/pawn.h"
-#include "figures/rook.h"
-#include "coreElems/ChangePawnElems/figurelabel.h"
-#include <QVectorIterator>
-#include <typeinfo>
 Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     :QGraphicsRectItem(parent)
 {
@@ -34,7 +25,6 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
         }
     }
 
-    qDebug()<<figures.size()<<"FIGURES SIZE";
     for(auto& elem : figures){
         qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<typeid(elem).name();
     }
@@ -71,7 +61,6 @@ void Board::remove_from_scene(Figure *figure)
         if(elem == figure){
             figures.erase(figures.begin() + iter);
             emit initGameVecs(figures);
-            qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<"ELEM POSITIONS";
             break;
         }
         iter++;
@@ -80,7 +69,6 @@ void Board::remove_from_scene(Figure *figure)
 
 void Board::createChangePawnWidget(bool color, int posX, int posY)
 {
-    qDebug()<<"CREATE PAWN WIDGET";
     changePawnWidget = new ChangePawnWidget(color);
     changePawnWidget->show();
     if(color)
@@ -97,7 +85,6 @@ void Board::createChangePawnWidget(bool color, int posX, int posY)
 
 void Board::createNewFigure(Figure* element)
 {
-    qDebug()<<"CREATE NEW FIGURE";
     pointer_to_scene->addItem(element);
     element->setBoard(arrOfBlocks);
     element->setPosition(NEWFIGX, NEWFIGY);
@@ -135,8 +122,6 @@ void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
     for(auto& elem: figures_50){//ЗАПОЛНЕНИЕ ОСНОВНОГО
         figures.push_back(elem);
     }
-    qDebug()<<game->vecOfWhiteFigures.size()<<"DSADASDASDAS";
-    qDebug()<<game->vecOfBlackFigures.size()<<"DSADASDASDAS";
 }
 
 void Board::inizialization(QGraphicsScene *scene)

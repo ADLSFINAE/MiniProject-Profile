@@ -7,7 +7,6 @@ Game::Game()
 
 void Game::initOfVecs(Figure* figure, bool isWhite)
 {
-    qDebug()<<"GOVNO HAPPENINGS";
     if(isWhite)
         vecOfWhiteFigures.push_back({figure, figure->getPosition()});
     else
@@ -16,7 +15,6 @@ void Game::initOfVecs(Figure* figure, bool isWhite)
 
 void Game::giveInfo()
 {
-    qDebug()<<"GAME GET INFO";
     for(auto& elem : vecOfWhiteFigures){
         qDebug()<<elem.second.x()<<elem.second.y();
     }

@@ -8,7 +8,6 @@ Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     this->isWhite = isWhite;
     this->setPos(x * GlobX, y * GlobY);
     this->sceneBoundingRect();
-    qDebug()<<"Figures was included";
 
     arrWithBoard.resize(LongByX);
 
@@ -19,7 +18,6 @@ Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
 
 Figure::Figure(Figure *fig)
 {
-    qDebug()<<"WAS CALLEDDDDDDDDDDDDD";
     this->x = fig->x;
     this->y = fig->y;
     this->isWhite = fig->isWhite;
@@ -117,7 +115,6 @@ void Figure::set_def_color_for_all_board()
                 arrWithBoard[i][j]->setDefColor();
         }
     }
-    qDebug()<<"ALL OKAY? YES";
 }
 
 bool Figure::check_on_valid_block(Block *block)

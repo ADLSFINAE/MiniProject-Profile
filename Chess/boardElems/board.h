@@ -1,13 +1,21 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "boardElems/block.h"
-#include <QGraphicsRectItem>
-#include <QGraphicsScene>
-#include <QVector>
 #include "coreElems/ChangePawnElems/changepawnwidget.h"
 #include "paramsNdefines.h"
 #include "game.h"
 #include "figures/figure.h"
+#include "figures/king.h"
+#include "figures/horse.h"
+#include "figures/queen.h"
+#include "figures/elephant.h"
+#include "figures/pawn.h"
+#include "figures/rook.h"
+#include "coreElems/ChangePawnElems/figurelabel.h"
+
+#include <QGraphicsRectItem>
+#include <QGraphicsScene>
+#include <QVector>
 using namespace GlobVal;
 
 class Board : public QObject, public QGraphicsRectItem

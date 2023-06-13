@@ -182,7 +182,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 
     QPointF positionInMoment = this->getPosition();
-    qDebug()<<"BLOCK LIST SIZE 1"<<block_list.size();
+
     if(passagePos != nullptr){
         for(auto& elem : PASSAGEBLOCK->collidingItems()){
             if(elem == this){
@@ -196,7 +196,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
     }
-    qDebug()<<"BLOCK LIST SIZE 14"<<block_list.size();
+
     find_valid_positions(block_list);
 
     if((passagePos != nullptr && positionInMoment.y() < this->getPosition().y() && this->getColor())
@@ -226,7 +226,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         emit createChangePawnWidget(this->getColor(), this->getPosition().x(), this->getPosition().y());
     }
 
-    qDebug()<<isMovedFromStart<<"IS MOVED FROM START";
+
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -267,6 +267,5 @@ void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, b
 void Pawn::slotOnAddPassageElem(QPointF passageBlockPos)
 {
     passagePos = new QPointF(passageBlockPos);
-    qDebug()<<"PASSAGE BLOCK POS"<<passagePos->x()<<passagePos->y();
 }
 
