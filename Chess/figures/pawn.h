@@ -12,7 +12,6 @@ public:
     bool leave_from_start_position();
     void step_length_limiter_for_pawn(QVector<Block *> vec_block);
     QVector<Block *> getKnowledge();
-    QPointF passageBehindThePawn(QPointF pos);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

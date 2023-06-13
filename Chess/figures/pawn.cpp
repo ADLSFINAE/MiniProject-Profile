@@ -114,11 +114,6 @@ QVector<Block *> Pawn::getKnowledge()
     return left_right;
 }
 
-QPointF Pawn::passageBehindThePawn(QPointF pos)
-{
-
-}
-
 
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -244,12 +239,10 @@ void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, b
 
     qDebug()<<Qt::endl;
     if(this->getColor()){
-        qDebug()<<color<<"COLOR ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
         for(auto& pawn : collection){
             if(this->getPosition().y() == 3 && pawn.first->getPosition().y() == 3 && !pawn.first->getColor()){
                 if(this->getPosition().x() + 1 == pawn.first->getPosition().x()
                         || this->getPosition().x() - 1 == pawn.first->getPosition().x()){
-                    qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
                     passagePawn = pawn.first;
                     emit signalOnAddPassageElem(QPointF(pawn.first->getPosition().x(), pawn.first->getPosition().y() - 1));
                     break;
@@ -258,12 +251,10 @@ void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, b
         }
     }
     else{
-        qDebug()<<color<<"COLOR ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
         for(auto& pawn : collection){
             if(this->getPosition().y() == 4 && pawn.first->getPosition().y() == 4 && pawn.first->getColor()){
                 if(this->getPosition().x() + 1 == pawn.first->getPosition().x()
                         || this->getPosition().x() - 1 == pawn.first->getPosition().x()){
-                    qDebug()<<"SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT WAS CALLED";
                     passagePawn = pawn.first;
                     emit signalOnAddPassageElem(QPointF(pawn.first->getPosition().x(), pawn.first->getPosition().y() + 1));
                     break;
@@ -271,8 +262,6 @@ void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, b
             }
         }
     }
-    qDebug()<<"HERE IS END";
-
 }
 
 void Pawn::slotOnAddPassageElem(QPointF passageBlockPos)

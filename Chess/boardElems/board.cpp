@@ -56,7 +56,6 @@ void Board::updateFiguresVec(Figure *fig)
 {
     for(auto& elem : figures){
         if(elem == fig){
-            qDebug()<<"PRIKOL WAS CALLEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
             elem->setPosition(fig->getPosition().x(), fig->getPosition().y());
             emit initGameVecs(figures);
             break;
