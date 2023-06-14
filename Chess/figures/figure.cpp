@@ -196,6 +196,7 @@ void Figure::step_length_limiter(QVector<Block *> &vec_block)
             for(int j = i + 1; j < vec_block.size(); j++){
                 vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
             }
+            vec_block.erase(vec_block.begin() + i + 1, vec_block.end());
             break;
         }
     }

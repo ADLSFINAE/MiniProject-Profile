@@ -34,12 +34,15 @@ QVector<Block*> Horse::getValidNeighbourPositions()
 
 void Horse::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
+    vecFromGetKnowledge = getValidNeighbourPositions();
 }
 
 void Horse::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mouseReleaseEvent(event);
+    emit updateFiguresPositions(this);
 }
 
 void Horse::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

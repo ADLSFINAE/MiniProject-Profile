@@ -100,10 +100,13 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
+
+    vecFromGetKnowledge = forward + back + left + right + upper_left + upper_right + down_left + down_right;
 }
 
 void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
     getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
@@ -111,6 +114,7 @@ void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Queen::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mouseReleaseEvent(event);
+    emit updateFiguresPositions(this);
 }
 
 void Queen::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

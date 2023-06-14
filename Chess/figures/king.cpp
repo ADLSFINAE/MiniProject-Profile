@@ -21,14 +21,27 @@ QVector<Block*> King::getValidNeighbourPositions()
     return positions;
 }
 
+void King::getCEELO(QSet<Block*>CEELO)
+{
+    this->CEELO.clear();
+    this->CEELO = CEELO;
+}
+
 void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
+    for(auto& elem : CEELO){
+        qDebug()<<"CEELO WAS CALLED";
+        if(elem->getAnotherBrushColor() == Qt::yellow)
+            elem->setAnotherBrushColor(Qt::red);
+    }
 }
 
 void King::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mouseReleaseEvent(event);
+    emit updateFiguresPositions(this);
 }
 
 void King::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

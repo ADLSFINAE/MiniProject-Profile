@@ -57,10 +57,13 @@ void Rook::getKnowledge(QVector<Block *> vec_block)
     step_length_limiter(back);
     step_length_limiter(left);
     step_length_limiter(right);
+
+    vecFromGetKnowledge = forward + back + left + right;
 }
 
 void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
     getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
@@ -68,6 +71,7 @@ void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Rook::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mouseReleaseEvent(event);
+    emit updateFiguresPositions(this);
 }
 
 void Rook::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

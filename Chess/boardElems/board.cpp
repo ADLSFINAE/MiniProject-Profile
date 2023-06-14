@@ -23,11 +23,13 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
         else{
             QObject::connect(elem, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
         }
+
+        King* king = dynamic_cast<King*>(elem);
+        if(king != nullptr && !king->getColor()){
+            QObject::connect(game, &Game::exportCEELOToKing, king, &King::getCEELO);
+        }
     }
 
-    for(auto& elem : figures){
-        qDebug()<<elem->getPosition().x()<<elem->getPosition().y()<<typeid(elem).name();
-    }
     QObject::connect(this, &Board::initGameVecs, game, &Game::editVecs);
 
 }

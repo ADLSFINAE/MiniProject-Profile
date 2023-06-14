@@ -2,7 +2,7 @@
 #include <QDebug>
 Game::Game()
 {
-
+    QObject::connect(this, &Game::signalStartCalculatingCheckMate, this, &Game::calculateCheckMateFunc);
 }
 
 void Game::initOfVecs(Figure* figure, bool isWhite)
@@ -23,6 +23,39 @@ void Game::giveInfo()
     }
 }
 
+void Game::afterUs(QVector<Block*>queenVec, QVector<Block*>blackKingVec, QSet<Block*>& CEELO)
+{
+    for(auto& block : queenVec){
+        for(auto& blackKingBlock : blackKingVec)
+            if(block->getBlockPos() == blackKingBlock->getBlockPos()){
+                qDebug()<<"BLOCK"<<block->getBlockPos();
+                CEELO.insert(block);
+            }
+    }
+}
+
+void Game::calculateCheckMateFunc()
+{
+    QSet<Block*>CEELO;
+    qDebug()<<"CALCULATE WAS STARTED";
+    for(auto& elem : vecOfWhiteFigures){
+            if(elem.first != whiteKing){
+                Queen* queen = dynamic_cast<Queen*>(elem.first);
+                if(queen != nullptr){
+                    qDebug()<<"QUEEN.SIZE()"<<queen->vecFromGetKnowledge.size();
+                    for(auto& block : queen->vecFromGetKnowledge){
+                        if(block->getBlockPos() == blackKing->getPosition()){
+                            afterUs(queen->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
+                        }
+                    }
+                }
+        }
+    }
+    qDebug()<<blackKing->getValidNeighbourPositions().size();
+    qDebug()<<"CEELO SIZE"<<CEELO.size();
+    emit exportCEELOToKing(CEELO);
+}
+
 void Game::editVecs(QVector<Figure *>& vecs)
 {
     vecOfWhiteFigures.clear();
@@ -35,17 +68,36 @@ void Game::editVecs(QVector<Figure *>& vecs)
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr)
                 vecOfWhitePawnFigures.push_back({elem, elem->getPosition()});
+
+            King* king = dynamic_cast<King*>(elem);
+            if(king != nullptr && king->getColor()){
+                whiteKing = king;
+                qDebug()<<"white king was finded"<<whiteKing->getPosition();
+            }
+            if(king != nullptr && !king->getColor()){
+                blackKing = king;
+                qDebug()<<"black king was finded"<<blackKing->getPosition();
+            }
         }
         else{
             vecOfBlackFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr)
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
+            King* king = dynamic_cast<King*>(elem);
+            if(king != nullptr && king->getColor()){
+                whiteKing = king;
+                qDebug()<<"white king was finded"<<whiteKing->getPosition();
+            }
+            if(king != nullptr && !king->getColor()){
+                blackKing = king;
+                qDebug()<<"black king was finded"<<blackKing->getPosition();
+            }
         }
     }
     emit getPawnCollection(vecOfWhitePawnFigures, true);
-    qDebug()<<Qt::endl;
     emit getPawnCollection(vecOfBlackPawnFigures, false);
+    emit signalStartCalculatingCheckMate();
 
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";
     qDebug()<<vecOfBlackPawnFigures.size()<<"VEC OF BLACK PAWN FIGURES SIZE";

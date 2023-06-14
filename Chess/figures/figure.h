@@ -60,6 +60,9 @@ public:
     QVector< QVector<Block*> > getBoard();
     void setBoard(QVector< QVector<Block*> > arrWithBoard);
     double calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y);
+
+    //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
+    QVector<Block*> vecFromGetKnowledge;
 signals:
     void vahue(Figure* figure);
     void updateFiguresPositions(Figure* figure);

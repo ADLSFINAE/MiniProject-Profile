@@ -59,11 +59,13 @@ void Elephant::getKnowledge(QVector<Block *> vec_block)
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
+    vecFromGetKnowledge = upper_left + upper_right + down_left + down_right;
 
 }
 
 void Elephant::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
     getKnowledge(this->clean_up(getValidNeighbourPositions()));
 }
@@ -71,6 +73,7 @@ void Elephant::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Elephant::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Figure::mouseReleaseEvent(event);
+    emit updateFiguresPositions(this);
 }
 
 void Elephant::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

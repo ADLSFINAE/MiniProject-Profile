@@ -62,7 +62,6 @@ void Pawn::step_length_limiter_for_pawn(QVector<Block *> vec_block)
         this->setPosition(this->getPosition().x(), this->getPosition().y());
     }
     else{
-        qDebug()<<vec_block.size();
         for(int i = 0; i < vec_block.size(); i++){
             if(vec_block[i]->getAnotherBrushColor() == Qt::green
                     || vec_block[i]->getAnotherBrushColor() == Qt::blue){
@@ -107,6 +106,7 @@ QVector<Block *> Pawn::getKnowledge()
                         elem->setAnotherBrushColor(Qt::blue);
 
                 }
+
             }
         }
     }
@@ -117,6 +117,7 @@ QVector<Block *> Pawn::getKnowledge()
 
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    emit updateFiguresPositions(this);
     if(!(this->getColor() && this->getPosition().y() == 0)
             && !(!this->getColor() && this->getPosition().y() == 7)){
         Figure::mousePressEvent(event);
@@ -226,7 +227,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         emit createChangePawnWidget(this->getColor(), this->getPosition().x(), this->getPosition().y());
     }
 
-
+    emit updateFiguresPositions(this);
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -237,7 +238,6 @@ void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, bool color)
 {
 
-    qDebug()<<Qt::endl;
     if(this->getColor()){
         for(auto& pawn : collection){
             if(this->getPosition().y() == 3 && pawn.first->getPosition().y() == 3 && !pawn.first->getColor()){
