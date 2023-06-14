@@ -30,7 +30,7 @@ void King::getCEELO(QSet<Block*>CEELO)
         for(auto& fig : elem->getCollidingItemsForMousePressEvent()){
             Figure* figure = dynamic_cast<Figure*>(fig);
             if(figure != nullptr){
-                figure->setEnabled(false);
+
             }
         }
     }

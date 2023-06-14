@@ -43,11 +43,12 @@ void Game::calculateCheckMateFunc()
                 Queen* queen = dynamic_cast<Queen*>(elem.first);
                 if(queen != nullptr){
                     qDebug()<<"QUEEN.SIZE()"<<queen->vecFromGetKnowledge.size();
-                    for(auto& block : queen->vecFromGetKnowledge){
+                    afterUs(queen->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
+                    /*for(auto& block : queen->vecFromGetKnowledge){
                         if(block->getBlockPos() == blackKing->getPosition()){
                             afterUs(queen->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
                         }
-                    }
+                    }*/
                 }
         }
     }
@@ -64,6 +65,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
     vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
         elem->clean_up(elem->getValidNeighbourPositions());
+        //ХУЕВАЯ ИДЕЯ И НУЖНА ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ПРОВЕРКИ, ТАК КАК ТУТ МАССИВЫ ЧИСТИТЬСЯ НЕ БУДУТ
+        //ЛУЧШЕ СДЕЛАТЬ ПРОВЕРКУ НА ФИГУРУ, А НЕ НА ЦВЕТ
+        //В step_length_limiter
         Queen* queen = dynamic_cast<Queen*>(elem);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
         Rook* rook = dynamic_cast<Rook*>(elem);

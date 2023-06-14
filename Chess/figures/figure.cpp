@@ -188,15 +188,30 @@ QVector<Block *> Figure::reverse_vector(QVector<Block *> vec_for_reverse)
     return vec;
 }
 
+bool Figure::getIterPos(Block *block)
+{
+    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
+        Figure* figure = dynamic_cast<Figure*>(elem);
+        if(figure != nullptr){
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
 void Figure::step_length_limiter(QVector<Block *> &vec_block)
 {
+    int shizellow = 0;
     for(int i = 0; i < vec_block.size(); i++){
-        if(vec_block[i]->getAnotherBrushColor() == Qt::green
-                || vec_block[i]->getAnotherBrushColor() == Qt::blue){
+        if(getIterPos(vec_block[i])){
+            shizellow = i + 1;
             for(int j = i + 1; j < vec_block.size(); j++){
                 vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
             }
-            vec_block.erase(vec_block.begin() + i + 1, vec_block.end());
+            qDebug()<<"DO"<<vec_block.size();
+            vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
+            qDebug()<<"POSLE"<<vec_block.size();
             break;
         }
     }

@@ -92,8 +92,12 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     upper_right = reverse_vector(upper_right);
     down_right = reverse_vector(down_right);
 
+    qDebug()<<"FORWARD 1"<<forward.size();
     step_length_limiter(forward);
+    qDebug()<<"FORWARD 14"<<forward.size();
+    qDebug()<<"BACK 1"<<back.size();
     step_length_limiter(back);
+    qDebug()<<"BACK 14"<<back.size();
     step_length_limiter(left);
     step_length_limiter(right);
     step_length_limiter(upper_left);
