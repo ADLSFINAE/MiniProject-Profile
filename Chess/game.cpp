@@ -119,10 +119,11 @@ void Game::editVecs(QVector<Figure *>& vecs)
         }
 
     }
-    blackKing->set_def_color_for_all_board();
+
     emit getPawnCollection(vecOfWhitePawnFigures, true);
     emit getPawnCollection(vecOfBlackPawnFigures, false);
     emit signalStartCalculatingCheckMate();
+    blackKing->set_def_color_for_all_board();
 
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";
     qDebug()<<vecOfBlackPawnFigures.size()<<"VEC OF BLACK PAWN FIGURES SIZE";
