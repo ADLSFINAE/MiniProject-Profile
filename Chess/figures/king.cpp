@@ -17,7 +17,7 @@ QVector<Block*> King::getValidNeighbourPositions()
                 positions.push_back(getBoard()[getPosition().x() + i][getPosition().y() + j]);
         }
     }
-
+    vecFromGetKnowledge = positions;
     return positions;
 }
 

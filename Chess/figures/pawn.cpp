@@ -93,6 +93,8 @@ QVector<Block *> Pawn::getKnowledge()
                 && (getPosition().y() + 1 >= 0) && (getPosition().y() + 1 <= 7))
             left_right.push_back(getBoard()[getPosition().x() + 1][getPosition().y() + 1]);
     }
+    //Заполнение для блокировки атаки короля
+    vecFromGetKnowledge = left_right;
 
     for(auto& elem : left_right){
         if(elem != nullptr){

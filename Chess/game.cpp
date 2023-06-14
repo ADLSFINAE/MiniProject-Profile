@@ -39,18 +39,7 @@ void Game::calculateCheckMateFunc()
     QSet<Block*>CEELO;
     qDebug()<<"CALCULATE WAS STARTED";
     for(auto& elem : vecOfWhiteFigures){
-            if(elem.first != whiteKing){
-                Queen* queen = dynamic_cast<Queen*>(elem.first);
-                if(queen != nullptr){
-                    qDebug()<<"QUEEN.SIZE()"<<queen->vecFromGetKnowledge.size();
-                    afterUs(queen->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
-                    /*for(auto& block : queen->vecFromGetKnowledge){
-                        if(block->getBlockPos() == blackKing->getPosition()){
-                            afterUs(queen->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
-                        }
-                    }*/
-                }
-        }
+        afterUs(elem.first->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
     }
     qDebug()<<blackKing->getValidNeighbourPositions().size();
     qDebug()<<"CEELO SIZE"<<CEELO.size();
@@ -68,10 +57,14 @@ void Game::editVecs(QVector<Figure *>& vecs)
         //ХУЕВАЯ ИДЕЯ И НУЖНА ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ПРОВЕРКИ, ТАК КАК ТУТ МАССИВЫ ЧИСТИТЬСЯ НЕ БУДУТ
         //ЛУЧШЕ СДЕЛАТЬ ПРОВЕРКУ НА ФИГУРУ, А НЕ НА ЦВЕТ
         //В step_length_limiter
+        Horse* horse = dynamic_cast<Horse*>(elem);
         Queen* queen = dynamic_cast<Queen*>(elem);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
         Rook* rook = dynamic_cast<Rook*>(elem);
         Elephant* elephant = dynamic_cast<Elephant*>(elem);
+        if(horse != nullptr){
+            horse->getValidNeighbourPositions();
+        }
         if(elephant != nullptr){
             elephant->getKnowledge(elephant->clean_up(elephant->getValidNeighbourPositions()));
         }
@@ -105,8 +98,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
         else{
             vecOfBlackFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
-            if(pawn != nullptr)
+            if(pawn != nullptr){
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
+            }
             King* king = dynamic_cast<King*>(elem);
             if(king != nullptr && king->getColor()){
                 whiteKing = king;
@@ -119,6 +113,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
         }
 
     }
+
+    whiteKing->getValidNeighbourPositions();
+    blackKing->getValidNeighbourPositions();
 
     emit getPawnCollection(vecOfWhitePawnFigures, true);
     emit getPawnCollection(vecOfBlackPawnFigures, false);

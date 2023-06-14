@@ -28,7 +28,7 @@ QVector<Block*> Horse::getValidNeighbourPositions()
             positions.push_back(getBoard()[elem.first][elem.second]);
         }
     }
-
+    vecFromGetKnowledge = positions;
     return positions;
 }
 
@@ -36,7 +36,6 @@ void Horse::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
-    vecFromGetKnowledge = getValidNeighbourPositions();
 }
 
 void Horse::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
