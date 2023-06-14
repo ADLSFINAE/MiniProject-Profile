@@ -63,11 +63,30 @@ void Game::editVecs(QVector<Figure *>& vecs)
     vecOfWhitePawnFigures.clear();
     vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
+        elem->clean_up(elem->getValidNeighbourPositions());
+        Queen* queen = dynamic_cast<Queen*>(elem);
+        Pawn* pawn = dynamic_cast<Pawn*>(elem);
+        Rook* rook = dynamic_cast<Rook*>(elem);
+        Elephant* elephant = dynamic_cast<Elephant*>(elem);
+        if(elephant != nullptr){
+            elephant->getKnowledge(elephant->clean_up(elephant->getValidNeighbourPositions()));
+        }
+        if(queen != nullptr){
+            queen->getKnowledge(queen->clean_up(queen->getValidNeighbourPositions()));
+        }
+        if(pawn != nullptr){
+            pawn->getKnowledge();
+        }
+        if(rook != nullptr){
+            rook->getKnowledge(rook->clean_up(rook->getValidNeighbourPositions()));
+        }
+
         if(elem->getColor()){
             vecOfWhiteFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
-            if(pawn != nullptr)
+            if(pawn != nullptr){
                 vecOfWhitePawnFigures.push_back({elem, elem->getPosition()});
+            }
 
             King* king = dynamic_cast<King*>(elem);
             if(king != nullptr && king->getColor()){
@@ -94,7 +113,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
                 qDebug()<<"black king was finded"<<blackKing->getPosition();
             }
         }
+
     }
+    blackKing->set_def_color_for_all_board();
     emit getPawnCollection(vecOfWhitePawnFigures, true);
     emit getPawnCollection(vecOfBlackPawnFigures, false);
     emit signalStartCalculatingCheckMate();

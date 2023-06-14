@@ -23,7 +23,7 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
         else{
             QObject::connect(elem, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
         }
-
+        //ВРЕМЕННОЕ РЕШЕНИЕ
         King* king = dynamic_cast<King*>(elem);
         if(king != nullptr && !king->getColor()){
             QObject::connect(game, &Game::exportCEELOToKing, king, &King::getCEELO);

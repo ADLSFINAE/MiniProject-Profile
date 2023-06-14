@@ -25,13 +25,22 @@ void King::getCEELO(QSet<Block*>CEELO)
 {
     this->CEELO.clear();
     this->CEELO = CEELO;
+
+    for(auto& elem : qAsConst(CEELO)){
+        for(auto& fig : elem->getCollidingItemsForMousePressEvent()){
+            Figure* figure = dynamic_cast<Figure*>(fig);
+            if(figure != nullptr){
+                figure->setEnabled(false);
+            }
+        }
+    }
 }
 
 void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
-    for(auto& elem : CEELO){
+    for(auto& elem : qAsConst(CEELO)){
         qDebug()<<"CEELO WAS CALLED";
         if(elem->getAnotherBrushColor() == Qt::yellow)
             elem->setAnotherBrushColor(Qt::red);
