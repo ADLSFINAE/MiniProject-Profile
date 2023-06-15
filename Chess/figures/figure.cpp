@@ -1,4 +1,5 @@
 #include "figures/figure.h"
+#include "figures/king.h"
 
 Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     :QGraphicsPixmapItem(parent)
@@ -192,7 +193,8 @@ bool Figure::getIterPos(Block *block)
 {
     for(auto& elem : block->getCollidingItemsForMousePressEvent()){
         Figure* figure = dynamic_cast<Figure*>(elem);
-        if(figure != nullptr){
+        King* king = dynamic_cast<King*>(elem);
+        if((figure != nullptr && king == nullptr)){
             return true;
             break;
         }
@@ -209,9 +211,7 @@ void Figure::step_length_limiter(QVector<Block *> &vec_block)
             for(int j = i + 1; j < vec_block.size(); j++){
                 vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
             }
-            qDebug()<<"DO"<<vec_block.size();
             vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
-            qDebug()<<"POSLE"<<vec_block.size();
             break;
         }
     }

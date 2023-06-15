@@ -25,8 +25,15 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
         }
         //ВРЕМЕННОЕ РЕШЕНИЕ
         King* king = dynamic_cast<King*>(elem);
-        if(king != nullptr && !king->getColor()){
-            QObject::connect(game, &Game::exportCEELOToKing, king, &King::getCEELO);
+        if(king != nullptr){
+            if(king->getColor()){
+                qDebug()<<"WHITE CONNECT";
+                QObject::connect(game, &Game::exportCEELOToKingFromWhite, king, &King::getCEELO);
+            }
+            else{
+                qDebug()<<"BLACK CONNECT";
+                QObject::connect(game, &Game::exportCEELOToKingFromBlack, king, &King::getCEELO);
+            }
         }
     }
 

@@ -2,7 +2,8 @@
 #include <QDebug>
 Game::Game()
 {
-    QObject::connect(this, &Game::signalStartCalculatingCheckMate, this, &Game::calculateCheckMateFunc);
+    QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMWHITE, this, &Game::calculateCheckMateFunc);
+    QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMBLACK, this, &Game::calculateCheckMateFunc);
 }
 
 void Game::initOfVecs(Figure* figure, bool isWhite)
@@ -23,27 +24,32 @@ void Game::giveInfo()
     }
 }
 
-void Game::afterUs(QVector<Block*>queenVec, QVector<Block*>blackKingVec, QSet<Block*>& CEELO)
+void Game::afterUs(QVector<Block*>anotherVec, QVector<Block*>kingBlockVec, QSet<Block*>& CEELO)
 {
-    for(auto& block : queenVec){
-        for(auto& blackKingBlock : blackKingVec)
-            if(block->getBlockPos() == blackKingBlock->getBlockPos()){
-                qDebug()<<"BLOCK"<<block->getBlockPos();
+    for(auto& block : anotherVec){
+        for(auto& kingBlock : kingBlockVec)
+            if(block->getBlockPos() == kingBlock->getBlockPos()){
                 CEELO.insert(block);
             }
     }
 }
 
-void Game::calculateCheckMateFunc()
+void Game::calculateCheckMateFunc(bool colorOfTheKing)
 {
     QSet<Block*>CEELO;
-    qDebug()<<"CALCULATE WAS STARTED";
-    for(auto& elem : vecOfWhiteFigures){
-        afterUs(elem.first->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
+    if(colorOfTheKing){
+        for(auto& elem : vecOfBlackFigures)
+            afterUs(elem.first->vecFromGetKnowledge, whiteKing->getValidNeighbourPositions(), CEELO);
+        qDebug()<<"FOR WHITE KING"<<CEELO.size();
+        emit exportCEELOToKingFromWhite(CEELO);
     }
-    qDebug()<<blackKing->getValidNeighbourPositions().size();
-    qDebug()<<"CEELO SIZE"<<CEELO.size();
-    emit exportCEELOToKing(CEELO);
+
+    else{
+        for(auto& elem : vecOfWhiteFigures)
+            afterUs(elem.first->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
+        qDebug()<<"FOR BLACK KING"<<CEELO.size();
+        emit exportCEELOToKingFromBlack(CEELO);
+    }
 }
 
 void Game::editVecs(QVector<Figure *>& vecs)
@@ -54,9 +60,6 @@ void Game::editVecs(QVector<Figure *>& vecs)
     vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
         elem->clean_up(elem->getValidNeighbourPositions());
-        //ХУЕВАЯ ИДЕЯ И НУЖНА ДОПОЛНИТЕЛЬНАЯ ФУНКЦИЯ ПРОВЕРКИ, ТАК КАК ТУТ МАССИВЫ ЧИСТИТЬСЯ НЕ БУДУТ
-        //ЛУЧШЕ СДЕЛАТЬ ПРОВЕРКУ НА ФИГУРУ, А НЕ НА ЦВЕТ
-        //В step_length_limiter
         Horse* horse = dynamic_cast<Horse*>(elem);
         Queen* queen = dynamic_cast<Queen*>(elem);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
@@ -69,6 +72,7 @@ void Game::editVecs(QVector<Figure *>& vecs)
             elephant->getKnowledge(elephant->clean_up(elephant->getValidNeighbourPositions()));
         }
         if(queen != nullptr){
+            qDebug()<<"QUEEN WAS CALLED";
             queen->getKnowledge(queen->clean_up(queen->getValidNeighbourPositions()));
         }
         if(pawn != nullptr){
@@ -119,7 +123,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
 
     emit getPawnCollection(vecOfWhitePawnFigures, true);
     emit getPawnCollection(vecOfBlackPawnFigures, false);
-    emit signalStartCalculatingCheckMate();
+    emit signalStartCalculatingCheckMateFROMWHITE(whiteKing->getColor());
+    emit signalStartCalculatingCheckMateFROMBLACK(blackKing->getColor());
+    whiteKing->set_def_color_for_all_board();
     blackKing->set_def_color_for_all_board();
 
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";

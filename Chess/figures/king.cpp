@@ -25,15 +25,11 @@ void King::getCEELO(QSet<Block*>CEELO)
 {
     this->CEELO.clear();
     this->CEELO = CEELO;
+    qDebug()<<"CEELO SIZE IN GET"<<CEELO.size();
 
-    for(auto& elem : qAsConst(CEELO)){
-        for(auto& fig : elem->getCollidingItemsForMousePressEvent()){
-            Figure* figure = dynamic_cast<Figure*>(fig);
-            if(figure != nullptr){
-
-            }
-        }
-    }
+    //ОТСЮДА НУЖНО БУДЕТ СДЕЛАТЬ СИГНАЛ И СВЕРКУ ПОЗИЦИЙ КАК РАЗ ТАКИ ПО ЦВЕТАМ, ЧТОБЫ ЗАБЛОЧИТЬ ЗАСКОК ЗА КОРОЛЯ
+    //ЛИБО CEELO ПРИДЕТСЯ ВОЗВРАЩАТЬ ИЗ GAME
+    //ИЗ КЛАССА GAME
 }
 
 void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -41,9 +37,10 @@ void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
     emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
     for(auto& elem : qAsConst(CEELO)){
-        qDebug()<<"CEELO WAS CALLED";
-        if(elem->getAnotherBrushColor() == Qt::yellow)
+        qDebug()<<"CEELO WAS CALLED"<<CEELO.size();
+        if(elem->getAnotherBrushColor() == Qt::yellow){
             elem->setAnotherBrushColor(Qt::red);
+        }
     }
 }
 

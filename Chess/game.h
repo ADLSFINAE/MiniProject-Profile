@@ -33,11 +33,13 @@ public:
     void afterUs(QVector<Block*>queenVec, QVector<Block*>blackKingVec, QSet<Block*>& CEELO);
 public slots:
     void editVecs(QVector<Figure*>& vecs);
-    void calculateCheckMateFunc();
+    void calculateCheckMateFunc(bool colorOfTheKing);
 signals:
     void getPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, bool color);
-    void signalStartCalculatingCheckMate();
-    void exportCEELOToKing(QSet<Block*> block);
+    void signalStartCalculatingCheckMateFROMWHITE(bool colorOfTheKing);
+    void signalStartCalculatingCheckMateFROMBLACK(bool colorOfTheKing);
+    void exportCEELOToKingFromWhite(QSet<Block*> block);
+    void exportCEELOToKingFromBlack(QSet<Block*> block);
 };
 
 #endif // GAME_H
