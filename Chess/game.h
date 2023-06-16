@@ -17,7 +17,6 @@ class Game : public QObject
 {
     Q_OBJECT
 public:
-    int count = 0;
     Game();
     void initOfVecs(Figure* figure, bool isWhite);
     void giveInfo();

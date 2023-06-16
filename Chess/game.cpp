@@ -54,16 +54,11 @@ void Game::calculateCheckMateFunc(bool colorOfTheKing)
 
 void Game::editVecs(QVector<Figure *>& vecs)
 {
-    auto whiteFigVec = vecOfWhiteFigures;
-    auto blackFigVec = vecOfBlackFigures;
-
-
     vecOfWhiteFigures.clear();
     vecOfBlackFigures.clear();
     vecOfWhitePawnFigures.clear();
     vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
-        //elem->clean_up(elem->getValidNeighbourPositions());
         Horse* horse = dynamic_cast<Horse*>(elem);
         Queen* queen = dynamic_cast<Queen*>(elem);
         Rook* rook = dynamic_cast<Rook*>(elem);
@@ -129,46 +124,6 @@ void Game::editVecs(QVector<Figure *>& vecs)
     emit signalStartCalculatingCheckMateFROMBLACK(blackKing->getColor());
     whiteKing->set_def_color_for_all_board();
     blackKing->set_def_color_for_all_board();
-
-    int countWhite = 0;
-    for(auto& whFig : whiteFigVec){
-        for(auto& elem : vecOfWhiteFigures){
-            if(whFig.first->getPosition() == elem.first->getPosition()){
-                countWhite++;
-                break;
-            }
-        }
-    }
-    if(countWhite == 16){
-        for(auto& elem : vecOfWhiteFigures){
-            elem.first->setEnabled(false);
-        }
-        for(auto& elem : vecOfBlackFigures){
-            elem.first->setEnabled(true);
-        }
-    }
-
-    int countBlack = 0;
-    for(auto& blFig : blackFigVec){
-        for(auto& elem : vecOfBlackFigures){
-            if(blFig.first->getPosition() != elem.first->getPosition()){
-                countBlack++;
-                break;
-            }
-        }
-    }
-
-    if(countBlack == 16){
-        for(auto& elem : vecOfWhiteFigures){
-            elem.first->setEnabled(true);
-        }
-        for(auto& elem : vecOfBlackFigures){
-            elem.first->setEnabled(false);
-        }
-    }
-
-
-    qDebug()<<"GAME STEPS"<<countWhite<<countBlack;
 
     qDebug()<<vecOfWhitePawnFigures.size()<<"VEC OF WHITE PAWN FIGURES SIZE";
     qDebug()<<vecOfBlackPawnFigures.size()<<"VEC OF BLACK PAWN FIGURES SIZE";
