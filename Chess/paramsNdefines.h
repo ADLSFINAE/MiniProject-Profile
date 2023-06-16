@@ -22,7 +22,6 @@ const static int ViewLongX = SceneLongX + LongByX;
 const static int ViewLongY = SceneLongY + LongByY;
 
 const static QRectF blockSizeRect(0, 0, GlobX, GlobY);
-const static QRectF figureSizeRect(0, 0, GlobX, GlobY);
 const static QSize viewSizeSquare(ViewLongX, ViewLongY);
 const static QRectF sceneSizeRect(0, 0, SceneLongX, SceneLongY);
 const static QRectF boardSizeRect(0, 0, SceneLongX, SceneLongY);

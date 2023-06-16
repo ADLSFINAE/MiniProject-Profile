@@ -8,13 +8,15 @@ Figure::Figure(int x, int y, bool isWhite, QGraphicsPixmapItem* parent)
     this->y = y;
     this->isWhite = isWhite;
     this->setPos(x * GlobX, y * GlobY);
-    this->sceneBoundingRect();
 
     arrWithBoard.resize(LongByX);
 
     for (int i = 0; i < LongByY; i++) {
         arrWithBoard[i].resize(LongByY);
     }
+
+    this->setFlag(QGraphicsPixmapItem::ItemIsMovable, true);
+    this->setOffset(0, 0);
 }
 
 Figure::Figure(Figure *fig)
@@ -105,7 +107,14 @@ QVector<QVector<Block *> > Figure::getBoard()
 
 QRectF Figure::boundingRect() const
 {
-    return figureSizeRect;
+    if(this->offset() == QPointF(-40, -40)){
+        qDebug()<<"IT WAS CALLEDS";
+        return QRectF(-40, -40, 80, 80);
+    }
+    if(this->offset() == QPointF(0, 0)){
+        qDebug()<<"WAS CA";
+        return QRectF(0, 0, 80, 80);
+    }
 }
 
 void Figure::set_def_color_for_all_board()
@@ -281,6 +290,7 @@ double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x,
 
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->setOffset(0, 0);
     this->setOldPosition(this->pos().x(), this->pos().y());
     for(auto& block : clean_up(getValidNeighbourPositions()))
         block->setAnotherBrushColor(Qt::yellow);
@@ -302,6 +312,7 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->setOffset(0, 0);
     QVector<QPair<Figure*, double>> figure_list;
     QVector<QPair<Block*, double>> block_list;
     for(auto& elem_of_item_list : this->collidingItems()){//Вектор пересеченных фигур, которые можно уничтожить
@@ -311,8 +322,8 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             figure_list.push_back({item, calculatingDistance(
                                    (int)item->pos().x() + 40,//aviable to delete +40
                                    (int)item->pos().y() + 40,//aviable to delete +40
-                                   (int)mapToScene(event->pos()).x() + 40,
-                                   (int)mapToScene(event->pos()).y() + 40)});
+                                   (int)mapToScene(event->pos()).x(),
+                                   (int)mapToScene(event->pos()).y())});
         }
 
         Block* block = dynamic_cast<Block*>(elem_of_item_list);
@@ -321,8 +332,8 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             block_list.push_back({block, calculatingDistance(
                                            (int)block->pos().x() + 40,//aviable to delete +40
                                            (int)block->pos().y() + 40,//aviable to delete +40
-                                           (int)mapToScene(event->pos()).x() + 40,
-                                           (int)mapToScene(event->pos()).y() + 40)});
+                                           (int)mapToScene(event->pos()).x(),
+                                           (int)mapToScene(event->pos()).y())});
         }
     }
     QPointF positionInMoment = this->getPosition();
@@ -336,6 +347,8 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Figure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->setOffset(-40, -40);
+    qDebug()<<this->offset();
     this->setPos(mapToScene(event->pos()));
 }
 

@@ -119,6 +119,7 @@ QVector<Block *> Pawn::getKnowledge()
 
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->setOffset(0, 0);
     emit updateFiguresPositions(this);
     if(!(this->getColor() && this->getPosition().y() == 0)
             && !(!this->getColor() && this->getPosition().y() == 7)){
@@ -143,6 +144,7 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->setOffset(0, 0);
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
 
@@ -174,8 +176,8 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 block_list.push_back({block, calculatingDistance(
                                       (int)block->pos().x() + 40,//aviable to delete +40
                                       (int)block->pos().y() + 40,//aviable to delete +40
-                                      (int)mapToScene(event->pos()).x() + 40,
-                                      (int)mapToScene(event->pos()).y() + 40)});
+                                      (int)mapToScene(event->pos()).x(),
+                                      (int)mapToScene(event->pos()).y())});
                 if(this->getColor() == fig.first->getColor())
                     block->setAnotherBrushColor(Qt::green);
                 else
@@ -192,8 +194,8 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 block_list.push_back({PASSAGEBLOCK, calculatingDistance(
                                       (int)PASSAGEBLOCK->pos().x() + 40,//aviable to delete +40
                                       (int)PASSAGEBLOCK->pos().y() + 40,//aviable to delete +40
-                                      (int)mapToScene(event->pos()).x() + 40,
-                                      (int)mapToScene(event->pos()).y() + 40)});
+                                      (int)mapToScene(event->pos()).x(),
+                                      (int)mapToScene(event->pos()).y())});
                 PASSAGEBLOCK->setAnotherBrushColor(Qt::yellow);
                 break;
             }

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "qapplication.h"
 #include <QDebug>
 Game::Game()
 {
