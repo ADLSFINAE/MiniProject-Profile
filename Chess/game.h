@@ -17,6 +17,7 @@ class Game : public QObject
 {
     Q_OBJECT
 public:
+    int count = 0;
     Game();
     void initOfVecs(Figure* figure, bool isWhite);
     void giveInfo();
@@ -29,6 +30,7 @@ public:
 
     King* whiteKing{nullptr};
     King* blackKing{nullptr};
+
 
     void afterUs(QVector<Block*>queenVec, QVector<Block*>blackKingVec, QSet<Block*>& CEELO);
 public slots:

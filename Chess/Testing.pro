@@ -23,7 +23,8 @@ SOURCES += \
     figures/queen.cpp \
     figures/rook.cpp \
     game.cpp \
-    main.cpp
+    main.cpp \
+    players/player.cpp
 
 HEADERS += \
     boardElems/block.h \
@@ -40,7 +41,8 @@ HEADERS += \
     figures/queen.h \
     figures/rook.h \
     game.h \
-    paramsNdefines.h
+    paramsNdefines.h \
+    players/player.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
