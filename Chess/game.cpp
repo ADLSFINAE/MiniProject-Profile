@@ -2,6 +2,8 @@
 #include <QDebug>
 Game::Game()
 {
+    player1 = new Player("Schoolboy", true);
+    player2 = new Player("Quantum", false);
     QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMWHITE, this, &Game::calculateCheckMateFunc);
     QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMBLACK, this, &Game::calculateCheckMateFunc);
 }
@@ -31,6 +33,25 @@ void Game::afterUs(QVector<Block*>anotherVec, QVector<Block*>kingBlockVec, QSet<
             if(block->getBlockPos() == kingBlock->getBlockPos()){
                 CEELO.insert(block);
             }
+    }
+}
+
+void Game::countOfSteps()
+{
+    count++;
+    if(count % 2 == 1){
+        for(auto& elem : vecOfWhiteFigures)
+            elem.first->setEnabled(false);
+
+        for(auto& elem : vecOfBlackFigures)
+            elem.first->setEnabled(true);
+    }
+    else{
+        for(auto& elem : vecOfWhiteFigures)
+            elem.first->setEnabled(true);
+
+        for(auto& elem : vecOfBlackFigures)
+            elem.first->setEnabled(false);
     }
 }
 

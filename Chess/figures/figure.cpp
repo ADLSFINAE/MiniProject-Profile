@@ -327,8 +327,10 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
     QPointF positionInMoment = this->getPosition();
     find_valid_positions(block_list);
-    if(positionInMoment != this->getPosition())
+    if(positionInMoment != this->getPosition()){
         emit updateFiguresPositions(this);
+        emit signalAboutMoving();
+    }
     set_def_color_for_all_board();
 }
 

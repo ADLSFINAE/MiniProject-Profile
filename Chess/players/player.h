@@ -10,8 +10,9 @@ class Player : public QObject
     Q_OBJECT
 public:
     Player(QString nameOfPlayer, bool color);
+    void getVecOfFigures(QVector<Figure*>& vec);
 public slots:
-    void getVecOfFigures(QVector<Figure*> vec);
+    void workWithVec(int number);
 private:
     QString nameOfPlayer;
     bool color;

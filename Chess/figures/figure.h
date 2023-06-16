@@ -68,6 +68,7 @@ public:
 signals:
     void vahue(Figure* figure);
     void updateFiguresPositions(Figure* figure);
+    void signalAboutMoving();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

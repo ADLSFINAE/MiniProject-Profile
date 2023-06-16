@@ -10,6 +10,7 @@
 #include "figures/queen.h"
 #include "figures/elephant.h"
 #include "figures/rook.h"
+#include "players/player.h"
 
 #include <QObject>
 
@@ -29,10 +30,10 @@ public:
 
     King* whiteKing{nullptr};
     King* blackKing{nullptr};
-
-
+    int count = 0;
     void afterUs(QVector<Block*>queenVec, QVector<Block*>blackKingVec, QSet<Block*>& CEELO);
 public slots:
+    void countOfSteps();
     void editVecs(QVector<Figure*>& vecs);
     void calculateCheckMateFunc(bool colorOfTheKing);
 signals:
@@ -41,6 +42,10 @@ signals:
     void signalStartCalculatingCheckMateFROMBLACK(bool colorOfTheKing);
     void exportCEELOToKingFromWhite(QSet<Block*> block);
     void exportCEELOToKingFromBlack(QSet<Block*> block);
+
+private:
+    Player* player1;
+    Player* player2;
 };
 
 #endif // GAME_H
