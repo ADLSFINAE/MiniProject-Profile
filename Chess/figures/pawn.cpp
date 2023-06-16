@@ -200,7 +200,9 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
+    qDebug()<<"ITS YOUR FAULT";
     find_valid_positions(block_list);
+    qDebug()<<"AAAAAAAAAAAAAAAAAAAAAA";
 
     if((passagePos != nullptr && positionInMoment.y() < this->getPosition().y() && this->getColor())
             || (passagePos != nullptr && positionInMoment.y() > this->getPosition().y() && !this->getColor())){
@@ -215,11 +217,12 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             passagePos = nullptr;
         }
     }
-
     else{
         emit updateFiguresPositionsFromPawn(this);
         isMovedFromStart = false;
     }
+
+    qDebug()<<"SSSSSSSSSSSSSSS";
 
     set_def_color_for_all_board();
 

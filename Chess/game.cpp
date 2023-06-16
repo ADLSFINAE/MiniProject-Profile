@@ -59,10 +59,9 @@ void Game::editVecs(QVector<Figure *>& vecs)
     vecOfWhitePawnFigures.clear();
     vecOfBlackPawnFigures.clear();
     for(auto& elem : vecs){
-        elem->clean_up(elem->getValidNeighbourPositions());
+        //elem->clean_up(elem->getValidNeighbourPositions());
         Horse* horse = dynamic_cast<Horse*>(elem);
         Queen* queen = dynamic_cast<Queen*>(elem);
-        Pawn* pawn = dynamic_cast<Pawn*>(elem);
         Rook* rook = dynamic_cast<Rook*>(elem);
         Elephant* elephant = dynamic_cast<Elephant*>(elem);
         if(horse != nullptr){
@@ -75,9 +74,6 @@ void Game::editVecs(QVector<Figure *>& vecs)
             qDebug()<<"QUEEN WAS CALLED";
             queen->getKnowledge(queen->clean_up(queen->getValidNeighbourPositions()));
         }
-        if(pawn != nullptr){
-            pawn->getKnowledge();
-        }
         if(rook != nullptr){
             rook->getKnowledge(rook->clean_up(rook->getValidNeighbourPositions()));
         }
@@ -87,6 +83,7 @@ void Game::editVecs(QVector<Figure *>& vecs)
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr){
                 vecOfWhitePawnFigures.push_back({elem, elem->getPosition()});
+                pawn->getKnowledge();
             }
 
             King* king = dynamic_cast<King*>(elem);
@@ -104,6 +101,7 @@ void Game::editVecs(QVector<Figure *>& vecs)
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr){
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
+                pawn->getKnowledge();
             }
             King* king = dynamic_cast<King*>(elem);
             if(king != nullptr && king->getColor()){
