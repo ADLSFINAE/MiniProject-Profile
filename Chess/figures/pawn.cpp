@@ -144,7 +144,7 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setOffset(0, 0);
+    this->setOffset(-FigureCenterX, -FigureCenterY);
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
 
@@ -155,8 +155,8 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             figure_list.push_back({item, calculatingDistance(
                                    (int)item->pos().x() + 40,//aviable to delete +40
                                    (int)item->pos().y() + 40,//aviable to delete +40
-                                   (int)mapToScene(event->pos()).x() + 40,
-                                   (int)mapToScene(event->pos()).y() + 40)});
+                                   (int)mapToScene(event->pos()).x(),
+                                   (int)mapToScene(event->pos()).y())});
         }
 
         Block* block = dynamic_cast<Block*>(elem_of_item_list);
@@ -165,8 +165,8 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             block_list.push_back({block, calculatingDistance(
                                   (int)block->pos().x() + 40,//aviable to delete +40
                                   (int)block->pos().y() + 40,//aviable to delete +40
-                                  (int)mapToScene(event->pos()).x() + 40,
-                                  (int)mapToScene(event->pos()).y() + 40)});
+                                  (int)mapToScene(event->pos()).x(),
+                                  (int)mapToScene(event->pos()).y())});
         }
     }
 
@@ -235,6 +235,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 
     emit updateFiguresPositions(this);
+    this->setOffset(0, 0);
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

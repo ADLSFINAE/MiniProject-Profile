@@ -92,6 +92,15 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     upper_right = reverse_vector(upper_right);
     down_right = reverse_vector(down_right);
 
+    vecFromGetKnowledge = step_length_limiter_2(forward) +
+            step_length_limiter_2(back)
+            + step_length_limiter_2(left)
+            + step_length_limiter_2(right) +
+            step_length_limiter_2(upper_left) +
+            step_length_limiter_2(upper_right) +
+            step_length_limiter_2(down_left) +
+            step_length_limiter_2(down_right);
+
     step_length_limiter(forward);
     step_length_limiter(back);
     step_length_limiter(left);
@@ -100,8 +109,6 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
-
-    vecFromGetKnowledge = forward + back + left + right + upper_left + upper_right + down_left + down_right;
 }
 
 void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -65,6 +65,8 @@ public:
 
     //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
     QVector<Block*> vecFromGetKnowledge;
+    bool getIterPos_2(Block *block);
+    QVector<Block *> step_length_limiter_2(QVector<Block *> vec_block);
 signals:
     void vahue(Figure* figure);
     void updateFiguresPositions(Figure* figure);
