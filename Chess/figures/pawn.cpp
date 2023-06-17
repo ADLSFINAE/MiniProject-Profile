@@ -138,19 +138,19 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         step_length_limiter_for_pawn(this->getValidNeighbourPositions());
-        getKnowledge();
+        this->getKnowledge();
     }
 }
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setOffset(-FigureCenterX, -FigureCenterY);
+    this->setOffset(0, 0);
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
 
     for(auto& elem_of_item_list : this->collidingItems()){//Вектор пересеченных фигур, которые можно уничтожить
         Figure* item = dynamic_cast<Figure*>(elem_of_item_list);
-        if((item != nullptr)
+        if((item != nullptr && item != this)
                 && ((this->getColor() && !item->getColor()) || (!this->getColor() && item->getColor()))){
             figure_list.push_back({item, calculatingDistance(
                                    (int)item->pos().x() + 40,//aviable to delete +40
@@ -178,9 +178,9 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                       (int)block->pos().y() + 40,//aviable to delete +40
                                       (int)mapToScene(event->pos()).x(),
                                       (int)mapToScene(event->pos()).y())});
-                if(this->getColor() == fig.first->getColor())
+                if(this->getColor() && fig.first->getColor())
                     block->setAnotherBrushColor(Qt::green);
-                else
+                if(this->getColor() && !fig.first->getColor())
                     block->setAnotherBrushColor(Qt::blue);
             }
         }
@@ -235,7 +235,6 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 
     emit updateFiguresPositions(this);
-    this->setOffset(0, 0);
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

@@ -13,8 +13,8 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
     pointer_to_scene = scene;
 
     for(auto& elem : figures){
-        if(!elem->getColor())
-            elem->setEnabled(false);
+        /*if(!elem->getColor())
+            elem->setEnabled(false);*/
         QObject::connect(elem, &Figure::vahue, this, &Board::remove_from_scene);
         Pawn* pawn = dynamic_cast<Pawn*>(elem);
         if(pawn != nullptr){

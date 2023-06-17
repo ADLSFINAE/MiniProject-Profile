@@ -293,15 +293,20 @@ void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
 {
     Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
     if(smoke_it != nullptr){
-        if(smoke_it->getAnotherBrushColor() == Qt::yellow)
+        if(smoke_it->getAnotherBrushColor() == Qt::yellow){
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
+            qDebug()<<"yellow was called";
+        }
         if(smoke_it->getAnotherBrushColor() == Qt::blue){
             this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
             kill_functionality(smoke_it);
+            qDebug()<<"blue was called";
         }
         if(smoke_it->getAnotherBrushColor() == Qt::green
-                || smoke_it->getAnotherBrushColor() == Qt::white)
+                || smoke_it->getAnotherBrushColor() == Qt::white){
             this->setPosition(this->getPosition().x(), this->getPosition().y());
+            qDebug()<<"white was called";
+        }
     }
     else
         this->setPosition(this->getPosition().x(), this->getPosition().y());
@@ -337,7 +342,7 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setOffset(-FigureCenterX, -FigureCenterY);
+    this->setOffset(0, 0);
     QVector<QPair<Figure*, double>> figure_list;
     QVector<QPair<Block*, double>> block_list;
     for(auto& elem_of_item_list : this->collidingItems()){//Вектор пересеченных фигур, которые можно уничтожить
@@ -377,7 +382,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         emit signalAboutMoving();
     }
     set_def_color_for_all_board();
-    this->setOffset(0, 0);
 }
 
 void Figure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

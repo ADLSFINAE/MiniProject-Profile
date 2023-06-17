@@ -41,6 +41,9 @@ void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
         if(elem->getAnotherBrushColor() == Qt::yellow){
             elem->setAnotherBrushColor(Qt::red);
         }
+        if(elem->getBlockPos() == this->getPosition()){
+            elem->setAnotherBrushColor(Qt::red);
+        }
     }
 }
 

@@ -55,11 +55,15 @@ void Elephant::getKnowledge(QVector<Block *> vec_block)
     upper_right = reverse_vector(upper_right);
     down_right = reverse_vector(down_right);
 
+    vecFromGetKnowledge = step_length_limiter_2(upper_left) +
+            step_length_limiter_2(upper_right) +
+            step_length_limiter_2(down_left) +
+            step_length_limiter_2(down_right);
+
     step_length_limiter(upper_left);
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
-    vecFromGetKnowledge = upper_left + upper_right + down_left + down_right;
 
 }
 

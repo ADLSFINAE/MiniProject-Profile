@@ -53,12 +53,15 @@ void Rook::getKnowledge(QVector<Block *> vec_block)
     forward = reverse_vector(forward);
     right = reverse_vector(right);
 
+    vecFromGetKnowledge = step_length_limiter_2(forward) +
+            step_length_limiter_2(back) +
+            step_length_limiter_2(left) +
+            step_length_limiter_2(right);
+
     step_length_limiter(forward);
     step_length_limiter(back);
     step_length_limiter(left);
     step_length_limiter(right);
-
-    vecFromGetKnowledge = forward + back + left + right;
 }
 
 void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)

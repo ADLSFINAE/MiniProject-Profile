@@ -27,10 +27,13 @@ void Game::giveInfo()
     }
 }
 
-void Game::afterUs(QVector<Block*>anotherVec, QVector<Block*>kingBlockVec, QSet<Block*>& CEELO)
+void Game::afterUs(QVector<Block*>anotherVec, King *king, QSet<Block*>& CEELO)
 {
+    QVector<Block*> vec = king->getValidNeighbourPositions();
+    vec.push_back(king->getBoard()[king->getPosition().x()][king->getPosition().y()]);
+
     for(auto& block : anotherVec){
-        for(auto& kingBlock : kingBlockVec)
+        for(auto& kingBlock : vec)
             if(block->getBlockPos() == kingBlock->getBlockPos()){
                 CEELO.insert(block);
             }
@@ -39,7 +42,7 @@ void Game::afterUs(QVector<Block*>anotherVec, QVector<Block*>kingBlockVec, QSet<
 
 void Game::countOfSteps()
 {
-    count++;
+    /*count++;
     if(count % 2 == 1){
         for(auto& elem : vecOfWhiteFigures)
             elem.first->setEnabled(false);
@@ -53,7 +56,7 @@ void Game::countOfSteps()
 
         for(auto& elem : vecOfBlackFigures)
             elem.first->setEnabled(false);
-    }
+    }*/
 }
 
 void Game::calculateCheckMateFunc(bool colorOfTheKing)
@@ -61,14 +64,14 @@ void Game::calculateCheckMateFunc(bool colorOfTheKing)
     QSet<Block*>CEELO;
     if(colorOfTheKing){
         for(auto& elem : vecOfBlackFigures)
-            afterUs(elem.first->vecFromGetKnowledge, whiteKing->getValidNeighbourPositions(), CEELO);
+            afterUs(elem.first->vecFromGetKnowledge, whiteKing, CEELO);
         qDebug()<<"FOR WHITE KING"<<CEELO.size();
         emit exportCEELOToKingFromWhite(CEELO);
     }
 
     else{
         for(auto& elem : vecOfWhiteFigures)
-            afterUs(elem.first->vecFromGetKnowledge, blackKing->getValidNeighbourPositions(), CEELO);
+            afterUs(elem.first->vecFromGetKnowledge, blackKing, CEELO);
         qDebug()<<"FOR BLACK KING"<<CEELO.size();
         emit exportCEELOToKingFromBlack(CEELO);
     }
