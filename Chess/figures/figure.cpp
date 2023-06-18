@@ -387,7 +387,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void Figure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     this->setOffset(-FigureCenterX, -FigureCenterY);
-    qDebug()<<this->offset();
     this->setPos(mapToScene(event->pos()));
 }
 

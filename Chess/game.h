@@ -31,7 +31,7 @@ public:
     King* whiteKing{nullptr};
     King* blackKing{nullptr};
     int count = 0;
-    void afterUs(QVector<Block*>anotherVec, King *king, QSet<Block*>& CEELO);
+    void afterUs(Figure* figure, King *king, QSet<Block*>& CEELO);
 public slots:
     void countOfSteps();
     void editVecs(QVector<Figure*>& vecs);

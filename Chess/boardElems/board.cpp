@@ -78,6 +78,7 @@ void Board::remove_from_scene(Figure *figure)
         }
         iter++;
     }
+    delete figure;
 }
 
 void Board::createChangePawnWidget(bool color, int posX, int posY)
