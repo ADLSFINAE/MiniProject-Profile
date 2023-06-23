@@ -20,7 +20,7 @@ FigureLabel::FigureLabel(int x, int y, QString pixmapName, bool color, QWidget *
     else{fig = new Queen(x, y, false);}
 }
 
-void FigureLabel::mousePressEvent(QMouseEvent *ev)
+void FigureLabel::mousePressEvent(QMouseEvent *event)
 {
     QPalette sample_palette;
     sample_palette.setColor(QPalette::Window, Qt::yellow);
@@ -30,12 +30,12 @@ void FigureLabel::mousePressEvent(QMouseEvent *ev)
     emit createSelectedFigure(fig);
 }
 
-void FigureLabel::mouseReleaseEvent(QMouseEvent *ev)
+void FigureLabel::mouseReleaseEvent(QMouseEvent *event)
 {
 
 }
 
-void FigureLabel::mouseMoveEvent(QMouseEvent *ev)
+void FigureLabel::mouseMoveEvent(QMouseEvent *event)
 {
 
 }

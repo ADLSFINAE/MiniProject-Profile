@@ -78,7 +78,6 @@ void Board::remove_from_scene(Figure *figure)
         }
         iter++;
     }
-    delete figure;
 }
 
 void Board::createChangePawnWidget(bool color, int posX, int posY)
@@ -101,11 +100,14 @@ void Board::createNewFigure(Figure* element)
 {
     pointer_to_scene->addItem(element);
     element->setBoard(arrOfBlocks);
+    game->initOfVecs(element, element->getColor());
     element->setPosition(NEWFIGX, NEWFIGY);
     figures.push_back(element);
     emit initGameVecs(figures);
     changePawnWidget->hide();
-    delete changePawnWidget;
+    QObject::connect(element, &Figure::vahue, this, &Board::remove_from_scene);
+    QObject::connect(element, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
+    QObject::connect(element, &Figure::signalAboutMoving, game, &Game::countOfSteps);
 }
 
 void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)

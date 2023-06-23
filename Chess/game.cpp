@@ -1,10 +1,7 @@
 #include "game.h"
-#include "qapplication.h"
-#include <QDebug>
+
 Game::Game()
 {
-    player1 = new Player("Schoolboy", true);
-    player2 = new Player("Quantum", false);
     QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMWHITE, this, &Game::calculateCheckMateFunc);
     QObject::connect(this, &Game::signalStartCalculatingCheckMateFROMBLACK, this, &Game::calculateCheckMateFunc);
 }
@@ -15,16 +12,6 @@ void Game::initOfVecs(Figure* figure, bool isWhite)
         vecOfWhiteFigures.push_back({figure, figure->getPosition()});
     else
         vecOfBlackFigures.push_back({figure, figure->getPosition()});
-}
-
-void Game::giveInfo()
-{
-    for(auto& elem : vecOfWhiteFigures){
-        qDebug()<<elem.second.x()<<elem.second.y();
-    }
-    for(auto& elem : vecOfBlackFigures){
-        qDebug()<<elem.second.x()<<elem.second.y();
-    }
 }
 
 void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO)

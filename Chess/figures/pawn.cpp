@@ -232,6 +232,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             || ((!this->getColor() && this->getPosition().y() == 7))){
         emit vahue(this);
         emit createChangePawnWidget(this->getColor(), this->getPosition().x(), this->getPosition().y());
+        qDebug()<<"CHANGE PAWN WIDGET WAS CALLED";
     }
 
     emit updateFiguresPositions(this);

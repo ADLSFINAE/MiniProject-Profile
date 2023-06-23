@@ -17,9 +17,9 @@ class FigureLabel : public QLabel{
 public:
     FigureLabel(int x, int y, QString pixmap, bool color, QWidget *parent);
 protected:
-    void mousePressEvent(QMouseEvent *ev) override;
-    void mouseReleaseEvent(QMouseEvent *ev) override;
-    void mouseMoveEvent(QMouseEvent *ev) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 signals:
     void createSelectedFigure(Figure* fig);
 private:
