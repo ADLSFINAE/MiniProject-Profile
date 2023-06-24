@@ -40,6 +40,7 @@ public:
     QVector<Block*> clean_up(QVector<Block*> vec);
 
     //for set position
+    void setPosition(QPoint position);
     void setPosition(int x, int y);
     QPoint getPosition() const;
 

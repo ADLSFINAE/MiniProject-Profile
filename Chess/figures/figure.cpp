@@ -52,6 +52,13 @@ void Figure::setPosition(int x, int y)
     this->y = y;
 }
 
+void Figure::setPosition(QPoint position)
+{
+    this->setPos(position.x() * GlobX, position.y() * GlobY);
+    this->x = position.x();
+    this->y = position.y();
+}
+
 void Figure::setOldPosition(int start_x, int start_y)
 {
     this->start_x = start_x;
@@ -291,25 +298,23 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
 
 void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
 {
-    Block* smoke_it = find_min_dist_for_blocks(block_vec).first;
-    if(smoke_it != nullptr){
-        if(smoke_it->getAnotherBrushColor() == Qt::yellow){
-            this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
-            qDebug()<<"yellow was called";
+    Block* validBlock = find_min_dist_for_blocks(block_vec).first;
+    if(validBlock != nullptr){
+        if(validBlock->getAnotherBrushColor() == Qt::yellow){
+            this->setPosition(validBlock->getBlockPos());
         }
-        if(smoke_it->getAnotherBrushColor() == Qt::blue){
-            this->setPosition(smoke_it->getBlockPos().x(), smoke_it->getBlockPos().y());
-            kill_functionality(smoke_it);
-            qDebug()<<"blue was called";
+        if(validBlock->getAnotherBrushColor() == Qt::blue){
+            this->setPosition(validBlock->getBlockPos());
+            kill_functionality(validBlock);
         }
-        if(smoke_it->getAnotherBrushColor() == Qt::green
-                || smoke_it->getAnotherBrushColor() == Qt::white){
-            this->setPosition(this->getPosition().x(), this->getPosition().y());
-            qDebug()<<"white was called";
+        if(validBlock->getAnotherBrushColor() == Qt::green
+                || validBlock->getAnotherBrushColor() == Qt::white
+                || validBlock->getAnotherBrushColor() == Qt::red){
+            this->setPosition(getPosition());
         }
     }
     else
-        this->setPosition(this->getPosition().x(), this->getPosition().y());
+        this->setPosition(getPosition());
 
 }
 
