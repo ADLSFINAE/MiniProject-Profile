@@ -44,6 +44,18 @@ QVector<Block *> Figure::clean_up(QVector<Block *> vec)
     return vec_figures;
 }
 
+void Figure::bubbleSortX(QVector<Block *>& vec)
+{
+    std::sort(vec.begin(), vec.end(),
+              [&] (Block* block1, Block* block2) {return block1->getBlockPos().x() > block2->getBlockPos().x();});
+}
+
+void Figure::bubbleSortY(QVector<Block *>& vec)
+{
+    std::sort(vec.begin(), vec.end(),
+              [&] (Block* block1, Block* block2) {return block1->getBlockPos().y() > block2->getBlockPos().y();});
+}
+
 
 void Figure::setPosition(int x, int y)
 {
@@ -150,46 +162,6 @@ void Figure::kill_functionality(Block *block)
             item->hide();
             break;
         }
-    }
-}
-
-QVector<Block *> Figure::sort_min_to_max_x(QVector<Block *> vec_for_sort)
-{
-    if(vec_for_sort.size() == 0){
-        return vec_for_sort;
-    }
-
-    else{
-        for (int i = 0; i < vec_for_sort.size(); i++) {
-            for (int j = 0; j < vec_for_sort.size() - 1; j++) {
-              if (vec_for_sort[j]->getBlockPos().x() < vec_for_sort[j + 1]->getBlockPos().x()) {
-                auto b = vec_for_sort[j];
-                vec_for_sort[j] = vec_for_sort[j + 1];
-                vec_for_sort[j + 1] = b;
-              }
-            }
-          }
-        return vec_for_sort;
-    }
-}
-
-QVector<Block *> Figure::sort_min_to_max_y(QVector<Block *> vec_for_sort)
-{
-    if(vec_for_sort.size() == 0){
-        return vec_for_sort;
-    }
-
-    else{
-        for (int i = 0; i < vec_for_sort.size(); i++) {
-            for (int j = 0; j < vec_for_sort.size() - 1; j++) {
-              if (vec_for_sort[j]->getBlockPos().y() < vec_for_sort[j + 1]->getBlockPos().y()) {
-                auto b = vec_for_sort[j];
-                vec_for_sort[j] = vec_for_sort[j + 1];
-                vec_for_sort[j + 1] = b;
-              }
-            }
-          }
-        return vec_for_sort;
     }
 }
 

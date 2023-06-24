@@ -77,15 +77,14 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
         if(ELEM_X > current_figure_x && ELEM_Y > current_figure_y)
             down_right.push_back(elem);
     }
-
-    forward = sort_min_to_max_y(forward);
-    back = sort_min_to_max_y(back);
-    left = sort_min_to_max_x(left);
-    right = sort_min_to_max_x(right);
-    upper_left = sort_min_to_max_x(upper_left);
-    upper_right = sort_min_to_max_x(upper_right);
-    down_left = sort_min_to_max_x(down_left);
-    down_right = sort_min_to_max_x(down_right);
+    bubbleSortY(forward);
+    bubbleSortY(back);
+    bubbleSortX(left);
+    bubbleSortX(right);
+    bubbleSortX(upper_left);
+    bubbleSortX(upper_right);
+    bubbleSortX(down_left);
+    bubbleSortX(down_right);
 
     forward = reverse_vector(forward);
     right = reverse_vector(right);

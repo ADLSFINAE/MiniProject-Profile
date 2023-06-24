@@ -31,13 +31,15 @@ public:
     void kill_functionality(Block* block);
 
     //step length limiter logic
-    QVector<Block*> sort_min_to_max_x(QVector<Block*> vec_for_sort);
-    QVector<Block*> sort_min_to_max_y(QVector<Block*> vec_for_sort);
     QVector<Block*> reverse_vector(QVector<Block *> vec_for_reverse);
     void step_length_limiter(QVector<Block*>& vec_block);
 
     //cleaning for 300$ bucks
     QVector<Block*> clean_up(QVector<Block*> vec);
+
+    //Сортировки здесь, упаковал потому что с лябдами слишком длинно, а вызывать их нужно много
+    void bubbleSortX(QVector<Block*>& vec);
+    void bubbleSortY(QVector<Block*>& vec);
 
     //for set position
     void setPosition(QPoint position);
