@@ -44,16 +44,28 @@ QVector<Block *> Figure::clean_up(QVector<Block *> vec)
     return vec_figures;
 }
 
-void Figure::bubbleSortX(QVector<Block *>& vec)
+void Figure::bubbleSortMinToMaxX(QVector<Block *>& vec)
 {
     std::sort(vec.begin(), vec.end(),
               [&] (Block* block1, Block* block2) {return block1->getBlockPos().x() > block2->getBlockPos().x();});
 }
 
-void Figure::bubbleSortY(QVector<Block *>& vec)
+void Figure::bubbleSortMaxToMinX(QVector<Block *>& vec)
+{
+    std::sort(vec.begin(), vec.end(),
+              [&] (Block* block1, Block* block2) {return block1->getBlockPos().x() < block2->getBlockPos().x();});
+}
+
+void Figure::bubbleSortMinToMaxY(QVector<Block *>& vec)
 {
     std::sort(vec.begin(), vec.end(),
               [&] (Block* block1, Block* block2) {return block1->getBlockPos().y() > block2->getBlockPos().y();});
+}
+
+void Figure::bubbleSortMaxToMinY(QVector<Block *>& vec)
+{
+    std::sort(vec.begin(), vec.end(),
+              [&] (Block* block1, Block* block2) {return block1->getBlockPos().y() < block2->getBlockPos().y();});
 }
 
 
@@ -163,14 +175,6 @@ void Figure::kill_functionality(Block *block)
             break;
         }
     }
-}
-
-QVector<Block *> Figure::reverse_vector(QVector<Block *> vec_for_reverse)
-{
-    QVector<Block*> vec;
-    for(int i = vec_for_reverse.size() - 1; i >= 0; i--)
-        vec.push_back(vec_for_reverse[i]);
-    return vec;
 }
 
 bool Figure::getIterPos(Block *block)

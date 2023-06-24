@@ -47,13 +47,10 @@ void Elephant::getKnowledge(QVector<Block *> vec_block)
             down_right.push_back(elem);
     }
 
-    bubbleSortX(upper_left);
-    bubbleSortX(upper_right);
-    bubbleSortX(down_left);
-    bubbleSortX(down_right);
-
-    upper_right = reverse_vector(upper_right);
-    down_right = reverse_vector(down_right);
+    bubbleSortMinToMaxX(upper_left);
+    bubbleSortMaxToMinX(upper_right);
+    bubbleSortMinToMaxX(down_left);
+    bubbleSortMaxToMinX(down_right);
 
     vecFromGetKnowledge = step_length_limiter_2(upper_left) +
             step_length_limiter_2(upper_right) +

@@ -45,13 +45,10 @@ void Rook::getKnowledge(QVector<Block *> vec_block)
             right.push_back(elem);
     }
 
-    bubbleSortY(forward);
-    bubbleSortY(back);
-    bubbleSortX(left);
-    bubbleSortX(right);
-
-    forward = reverse_vector(forward);
-    right = reverse_vector(right);
+    bubbleSortMaxToMinY(forward);
+    bubbleSortMinToMaxY(back);
+    bubbleSortMinToMaxX(left);
+    bubbleSortMaxToMinX(right);
 
     vecFromGetKnowledge = step_length_limiter_2(forward) +
             step_length_limiter_2(back) +
