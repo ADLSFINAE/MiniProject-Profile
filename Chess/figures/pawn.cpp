@@ -25,6 +25,18 @@ QVector<Block*> Pawn::getValidNeighbourPositions()
             positions.push_back(PASSAGEBLOCK);
     }
 
+    QSet<Block*> set_figures;
+    for(auto& figures : positions){
+        if(figures->getBlockPos() != this->getPosition())
+            set_figures.insert(figures);
+    }
+
+    positions.clear();
+
+    for(auto& elem : set_figures){
+        positions.push_back(elem);
+    }
+
     return positions;
 }
 

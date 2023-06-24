@@ -20,6 +20,18 @@ QVector<Block*> Rook::getValidNeighbourPositions()
         }
     }
 
+    QSet<Block*> set_figures;
+    for(auto& figures : positions){
+        if(figures->getBlockPos() != this->getPosition())
+            set_figures.insert(figures);
+    }
+
+    positions.clear();
+
+    for(auto& elem : set_figures){
+        positions.push_back(elem);
+    }
+
     return positions;
 }
 
@@ -65,7 +77,7 @@ void Rook::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
-    getKnowledge(this->clean_up(getValidNeighbourPositions()));
+    getKnowledge(getValidNeighbourPositions());
 }
 
 void Rook::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

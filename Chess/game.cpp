@@ -79,14 +79,14 @@ void Game::editVecs(QVector<Figure *>& vecs)
             horse->getValidNeighbourPositions();
         }
         if(elephant != nullptr){
-            elephant->getKnowledge(elephant->clean_up(elephant->getValidNeighbourPositions()));
+            elephant->getKnowledge(elephant->getValidNeighbourPositions());
         }
         if(queen != nullptr){
             qDebug()<<"QUEEN WAS CALLED";
-            queen->getKnowledge(queen->clean_up(queen->getValidNeighbourPositions()));
+            queen->getKnowledge(queen->getValidNeighbourPositions());
         }
         if(rook != nullptr){
-            rook->getKnowledge(rook->clean_up(rook->getValidNeighbourPositions()));
+            rook->getKnowledge(rook->getValidNeighbourPositions());
         }
 
         if(elem->getColor()){

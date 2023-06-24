@@ -30,9 +30,6 @@ public:
     bool check_on_valid_block(Block* block);
     void kill_functionality(Block* block);
 
-    //cleaning for 300$ bucks
-    QVector<Block*> clean_up(QVector<Block*> vec);
-
     //Внутренние сортировки векторов константных ходов фигуры
     void bubbleSortMinToMaxX(QVector<Block*>& vec);
     void bubbleSortMaxToMinX(QVector<Block*>& vec);

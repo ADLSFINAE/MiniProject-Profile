@@ -29,21 +29,6 @@ Figure::Figure(Figure *fig)
     this->arrWithBoard = fig->arrWithBoard;
 }
 
-QVector<Block *> Figure::clean_up(QVector<Block *> vec)
-{
-    QSet<Block*> set_figures;
-    QVector<Block*> vec_figures;
-    for(auto& figures : vec){
-        if(figures->getBlockPos() != this->getPosition())
-            set_figures.insert(figures);
-    }
-
-    for(auto& elem : set_figures){
-        vec_figures.push_back(elem);
-    }
-    return vec_figures;
-}
-
 ////////////////////////Внутренние сортировки векторов константных ходов фигуры///////////////////////
 
 void Figure::bubbleSortMinToMaxX(QVector<Block *>& vec)
@@ -232,7 +217,7 @@ void Figure::set_def_color_for_all_board()
 
 bool Figure::check_on_valid_block(Block *block)
 {
-    for(auto& elem : clean_up(getValidNeighbourPositions())){
+    for(auto& elem : getValidNeighbourPositions()){
         if(elem->getBlockPos() == block->getBlockPos())
             return true;
     }
@@ -313,12 +298,13 @@ double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x,
 
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     this->setOffset(0, 0);
     this->setOldPosition(this->pos().x(), this->pos().y());
-    for(auto& block : clean_up(getValidNeighbourPositions()))
+    for(auto& block : getValidNeighbourPositions())
         block->setAnotherBrushColor(Qt::yellow);
 
-    for(auto& elem : clean_up(getValidNeighbourPositions())){
+    for(auto& elem : getValidNeighbourPositions()){
         QVector<QGraphicsItem*> vec = elem->getCollidingItemsForMousePressEvent();
         for(auto& vec_elem : vec){
             Figure* fig = dynamic_cast<Figure*>(vec_elem);
