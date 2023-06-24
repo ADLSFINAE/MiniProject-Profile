@@ -30,25 +30,26 @@ public:
     bool check_on_valid_block(Block* block);
     void kill_functionality(Block* block);
 
-    //step length limiter logic
-    void step_length_limiter(QVector<Block*>& vec_block);
-
     //cleaning for 300$ bucks
     QVector<Block*> clean_up(QVector<Block*> vec);
 
-    //Сортировки здесь, упаковал потому что с лябдами слишком длинно, а вызывать их нужно много
+    //Внутренние сортировки векторов константных ходов фигуры
     void bubbleSortMinToMaxX(QVector<Block*>& vec);
     void bubbleSortMaxToMinX(QVector<Block*>& vec);
     void bubbleSortMinToMaxY(QVector<Block*>& vec);
     void bubbleSortMaxToMinY(QVector<Block*>& vec);
 
-    //for set position
+    //Ограничение длины хода
+    bool getIterPos(Block* block);
+    void step_length_limiter(QVector<Block*>& vec_block);
+    bool getIterPos_2(Block *block);
+    QVector<Block *> step_length_limiter_2(QVector<Block *> vec_block);
+
+    //Установка позиции фигуры и получение этой позиции
     void setPosition(QPoint position);
     void setPosition(int x, int y);
-    QPoint getPosition() const;
-
-    //get position for mouse events
     void setOldPosition(int start_x, int start_y);
+    QPoint getPosition() const;
     QPair<int, int> getOldPosition() const;
 
     //bool checkers
@@ -65,12 +66,8 @@ public:
     void setBoard(QVector< QVector<Block*> > arrWithBoard);
     double calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y);
 
-    bool getIterPos(Block* block);
-
     //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
     QVector<Block*> vecFromGetKnowledge;
-    bool getIterPos_2(Block *block);
-    QVector<Block *> step_length_limiter_2(QVector<Block *> vec_block);
     bool isHaveKing = false;
 signals:
     void vahue(Figure* figure);

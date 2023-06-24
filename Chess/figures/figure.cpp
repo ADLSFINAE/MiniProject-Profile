@@ -44,6 +44,8 @@ QVector<Block *> Figure::clean_up(QVector<Block *> vec)
     return vec_figures;
 }
 
+////////////////////////Внутренние сортировки векторов константных ходов фигуры///////////////////////
+
 void Figure::bubbleSortMinToMaxX(QVector<Block *>& vec)
 {
     std::sort(vec.begin(), vec.end(),
@@ -68,7 +70,72 @@ void Figure::bubbleSortMaxToMinY(QVector<Block *>& vec)
               [&] (Block* block1, Block* block2) {return block1->getBlockPos().y() < block2->getBlockPos().y();});
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+/////////////////////////////////Ограничение длины хода////////////////////////////////////////////
+bool Figure::getIterPos(Block *block)
+{
+    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
+        Figure* figure = dynamic_cast<Figure*>(elem);
+        if((figure != nullptr)){
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
+void Figure::step_length_limiter(QVector<Block *> &vec_block)
+{
+    int shizellow = 0;
+    for(int i = 0; i < vec_block.size(); i++){
+        if(getIterPos(vec_block[i])){
+            shizellow = i + 1;
+            for(int j = i + 1; j < vec_block.size(); j++){
+                vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
+            }
+            vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
+            break;
+        }
+    }
+}
+
+bool Figure::getIterPos_2(Block *block)
+{
+    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
+        Figure* figure = dynamic_cast<Figure*>(elem);
+        King* king = dynamic_cast<King*>(elem);
+        if((figure != nullptr && king == nullptr)){
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
+QVector<Block *> Figure::step_length_limiter_2(QVector<Block *> vec_block)
+{
+    int shizellow = 0;
+    for(int i = 0; i < vec_block.size(); i++){
+        if(getIterPos_2(vec_block[i])){
+            shizellow = i + 1;
+            for(int j = i + 1; j < vec_block.size(); j++){
+                vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
+            }
+            vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
+            break;
+        }
+    }
+    return vec_block;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////Установка позиции фигуры и получение этой позиции/////////////////////////////
 void Figure::setPosition(int x, int y)
 {
     this->setPos(x * GlobX, y * GlobY);
@@ -89,6 +156,10 @@ void Figure::setOldPosition(int start_x, int start_y)
     this->start_y = start_y;
 }
 
+QPoint Figure::getPosition() const
+{
+    return QPoint(x, y);
+}
 
 QPair<int, int> Figure::getOldPosition() const
 {
@@ -97,6 +168,11 @@ QPair<int, int> Figure::getOldPosition() const
     oldPos.second = this->start_y;
     return oldPos;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool Figure::checkOnOut(int rows, int cols) const
 {
@@ -146,8 +222,8 @@ QRectF Figure::boundingRect() const
 
 void Figure::set_def_color_for_all_board()
 {
-    for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
+    for(int i = 0; i < LongByX; i++){
+        for(int j = 0; j < LongByY; j++){
             if(arrWithBoard[i][j]->getAnotherBrushColor() != arrWithBoard[i][j]->getDefColor())
                 arrWithBoard[i][j]->setDefColor();
         }
@@ -157,10 +233,8 @@ void Figure::set_def_color_for_all_board()
 bool Figure::check_on_valid_block(Block *block)
 {
     for(auto& elem : clean_up(getValidNeighbourPositions())){
-        if(elem->getBlockPos().x() == block->getBlockPos().x() &&
-                elem->getBlockPos().y() == block->getBlockPos().y()){
+        if(elem->getBlockPos() == block->getBlockPos())
             return true;
-        }
     }
     return false;
 }
@@ -175,68 +249,6 @@ void Figure::kill_functionality(Block *block)
             break;
         }
     }
-}
-
-bool Figure::getIterPos(Block *block)
-{
-    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
-        Figure* figure = dynamic_cast<Figure*>(elem);
-        //King* king = dynamic_cast<King*>(elem);
-        if((figure != nullptr/* && king == nullptr*/)){
-            return true;
-            break;
-        }
-    }
-    return false;
-}
-
-bool Figure::getIterPos_2(Block *block)
-{
-    for(auto& elem : block->getCollidingItemsForMousePressEvent()){
-        Figure* figure = dynamic_cast<Figure*>(elem);
-        King* king = dynamic_cast<King*>(elem);
-        if((figure != nullptr && king == nullptr)){
-            return true;
-            break;
-        }
-    }
-    return false;
-}
-
-QVector<Block *> Figure::step_length_limiter_2(QVector<Block *> vec_block)
-{
-    int shizellow = 0;
-    for(int i = 0; i < vec_block.size(); i++){
-        if(getIterPos_2(vec_block[i])){
-            shizellow = i + 1;
-            for(int j = i + 1; j < vec_block.size(); j++){
-                vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
-            }
-            vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
-            break;
-        }
-    }
-    return vec_block;
-}
-
-void Figure::step_length_limiter(QVector<Block *> &vec_block)
-{
-    int shizellow = 0;
-    for(int i = 0; i < vec_block.size(); i++){
-        if(getIterPos(vec_block[i])){
-            shizellow = i + 1;
-            for(int j = i + 1; j < vec_block.size(); j++){
-                vec_block[j]->setAnotherBrushColor(vec_block[j]->getDefColor());
-            }
-            vec_block.erase((vec_block.begin() + shizellow), vec_block.end());
-            break;
-        }
-    }
-}
-
-QPoint Figure::getPosition() const
-{
-    return QPoint(x, y);
 }
 
 void Figure::setBoard(QVector< QVector<Block*> > arrWithBoard)
