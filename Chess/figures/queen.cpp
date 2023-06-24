@@ -67,26 +67,24 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     QVector<Block*>down_left;
     QVector<Block*>down_right;
 
-    int current_figure_x = this->getPosition().x();
-    int current_figure_y = this->getPosition().y();
     for(auto& elem : vec_block){
 #define ELEM_X elem->getBlockPos().x()
 #define ELEM_Y elem->getBlockPos().y()
-        if(ELEM_X == current_figure_x && ELEM_Y >= current_figure_y)
+        if(ELEM_X == getPosition().x() && ELEM_Y >= getPosition().y())
             forward.push_back(elem);
-        if(ELEM_X == current_figure_x && ELEM_Y <= current_figure_y)
+        if(ELEM_X == getPosition().x() && ELEM_Y <= getPosition().y())
             back.push_back(elem);
-        if(ELEM_X < current_figure_x && ELEM_Y == current_figure_y)
+        if(ELEM_X < getPosition().x() && ELEM_Y == getPosition().y())
             left.push_back(elem);
-        if(ELEM_X > current_figure_x && ELEM_Y == current_figure_y)
+        if(ELEM_X > getPosition().x() && ELEM_Y == getPosition().y())
             right.push_back(elem);
-        if(ELEM_X < current_figure_x && ELEM_Y < current_figure_y)
+        if(ELEM_X < getPosition().x() && ELEM_Y < getPosition().y())
             upper_left.push_back(elem);
-        if(ELEM_X > current_figure_x && ELEM_Y < current_figure_y)
+        if(ELEM_X > getPosition().x() && ELEM_Y < getPosition().y())
             upper_right.push_back(elem);
-        if(ELEM_X < current_figure_x && ELEM_Y > current_figure_y)
+        if(ELEM_X < getPosition().x() && ELEM_Y > getPosition().y())
             down_left.push_back(elem);
-        if(ELEM_X > current_figure_x && ELEM_Y > current_figure_y)
+        if(ELEM_X > getPosition().x() && ELEM_Y > getPosition().y())
             down_right.push_back(elem);
     }
     bubbleSortMaxToMinY(forward);

@@ -130,8 +130,8 @@ void Game::editVecs(QVector<Figure *>& vecs)
     whiteKing->getValidNeighbourPositions();
     blackKing->getValidNeighbourPositions();
 
-    emit getPawnCollection(vecOfWhitePawnFigures, true);
-    emit getPawnCollection(vecOfBlackPawnFigures, false);
+    emit getPawnCollection(vecOfWhitePawnFigures);
+    emit getPawnCollection(vecOfBlackPawnFigures);
     emit signalStartCalculatingCheckMateFROMWHITE(whiteKing->getColor());
     emit signalStartCalculatingCheckMateFROMBLACK(blackKing->getColor());
     whiteKing->set_def_color_for_all_board();

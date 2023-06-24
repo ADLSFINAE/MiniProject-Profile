@@ -255,7 +255,7 @@ void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     Figure::mouseMoveEvent(event);
 }
 
-void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection, bool color)
+void Pawn::slotPawnCollection(QVector< QPair <Figure*, QPointF> >& collection)
 {
 
     if(this->getColor()){

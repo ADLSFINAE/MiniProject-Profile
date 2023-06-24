@@ -250,7 +250,7 @@ QPair<Block*, double> Figure::find_min_dist_for_blocks(QVector<QPair<Block *, do
 {
     QPair<Block*, double> pull_up;
     if(vec.size() == 0){
-        this->setPosition(getPosition().x(), getPosition().y());
+        this->setPosition(getPosition());
     }
     if(vec.size() > 0){
         Block* minElem = nullptr;
@@ -343,8 +343,6 @@ void Figure::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                            (int)block->pos().y() + FigureCenterY,
                                            (int)mapToScene(event->pos()).x(),
                                            (int)mapToScene(event->pos()).y())});
-            qDebug()<<(int)block->pos().x()<<(int)block->pos().y()
-                   <<(int)mapToScene(event->pos()).x()<<(int)mapToScene(event->pos()).y();
         }
 #define FIGURE_BLOCK this->getBoard()[this->getPosition().x()][this->getPosition().y()]
         block_list.push_back({FIGURE_BLOCK, calculatingDistance(
