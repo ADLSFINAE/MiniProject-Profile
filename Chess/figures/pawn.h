@@ -28,7 +28,6 @@ private:
     Figure* passagePawn{nullptr};
     void forward_step(QVector<Block*>& positions, int offset);
     int start_pos_x, start_pos_y;
-    bool isMovedFromStart;
 };
 
 #endif // PAWN_H

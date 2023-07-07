@@ -275,25 +275,46 @@ void Figure::find_valid_positions(QVector<QPair<Block *, double> > block_vec)
     if(validBlock != nullptr){
         if(validBlock->getAnotherBrushColor() == Qt::yellow){
             this->setPosition(validBlock->getBlockPos());
+            qDebug()<<"YELLOW";
         }
         if(validBlock->getAnotherBrushColor() == Qt::blue){
             this->setPosition(validBlock->getBlockPos());
             kill_functionality(validBlock);
+            qDebug()<<"BLUE";
         }
         if(validBlock->getAnotherBrushColor() == Qt::green
                 || validBlock->getAnotherBrushColor() == Qt::white
                 || validBlock->getAnotherBrushColor() == Qt::red){
             this->setPosition(getPosition());
+            qDebug()<<"GREEN"<<"WHITE"<<"RED";
+        }
+        if(validBlock->getAnotherBrushColor() == validBlock->getDefColor()){
+            this->setPosition(getPosition());
+            qDebug()<<"DEF";
         }
     }
-    else
+    else{
         this->setPosition(getPosition());
+        qDebug()<<"ANOTHER VARIANT";
+    }
 
 }
 
 double Figure::calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y)
 {
     return qSqrt(qPow((event_figure_x - block_x), 2) + qPow((event_figure_y - block_y), 2));
+}
+
+bool Figure::getFigOnBlock(Block *block)
+{
+    for(auto& elem : block->collidingItems()){
+        Figure* f = dynamic_cast<Figure*>(elem);
+        if(f != nullptr){
+            qDebug()<<"FIG WAS CALLED";
+            return true;
+        }
+    }
+    return false;
 }
 
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
