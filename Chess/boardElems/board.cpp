@@ -33,10 +33,12 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
             if(king->getColor()){
                 qDebug()<<"WHITE CONNECT";
                 QObject::connect(game, &Game::exportCEELOToKingFromWhite, king, &King::getCEELO);
+                QObject::connect(game, &Game::exportFiguresVec, king, &King::getFiguresVec);
             }
             else{
                 qDebug()<<"BLACK CONNECT";
                 QObject::connect(game, &Game::exportCEELOToKingFromBlack, king, &King::getCEELO);
+                QObject::connect(game, &Game::exportFiguresVec, king, &King::getFiguresVec);
             }
         }
     }

@@ -32,6 +32,13 @@ void King::getCEELO(QSet<Block*>CEELO)
     //ИЗ КЛАССА GAME
 }
 
+void King::getFiguresVec(QVector<Figure *> fig)
+{
+    this->figVec.clear();
+    this->figVec = fig;
+    qDebug()<<"figVec SIZE IN GET"<<figVec.size();
+}
+
 void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit updateFiguresPositions(this);
@@ -44,6 +51,10 @@ void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
         if(elem->getBlockPos() == this->getPosition()){
             elem->setAnotherBrushColor(Qt::red);
         }
+    }
+
+    for(auto& elem : this->figVec){
+        elem->blockForCheckOnDefense();
     }
 }
 

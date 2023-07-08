@@ -14,41 +14,49 @@ Pawn::Pawn(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 QVector<Block*> Pawn::getValidNeighbourPositions()
 {
     QVector<Block*> positions;
-    if(!leave_from_start_position()){
-        for(int i = 1; i < 3; i++)
-            forward_step(positions, i);
+    if(this->getPosition().y() == 0 && this->getColor()){
+        return positions;
+    }
+    else if(this->getPosition().y() == 7 && !this->getColor()){
+        return positions;
     }
     else{
-        forward_step(positions, 1);
-    }
+        if(!leave_from_start_position()){
+            for(int i = 1; i < 3; i++)
+                forward_step(positions, i);
+        }
+        else{
+            forward_step(positions, 1);
+        }
 
-    if(this->getColor() == true && this->getPosition().y() == 3){
-        for(auto& elem : this->getKnowledge()){
+        if(this->getColor() == true && this->getPosition().y() == 3){
+            for(auto& elem : this->getKnowledge()){
 #define BLOCK_WHITE this->getBoard()[elem->getBlockPos().x()][elem->getBlockPos().y() + 1]
-            for(auto item : BLOCK_WHITE->collidingItems()){
-                Pawn* pawn = dynamic_cast<Pawn*>(item);
-                if(pawn != nullptr && pawn->getColor() != this->getColor()){
-                    elem->setAnotherBrushColor(Qt::blue);
+                for(auto item : BLOCK_WHITE->collidingItems()){
+                    Pawn* pawn = dynamic_cast<Pawn*>(item);
+                    if(pawn != nullptr && pawn->getColor() != this->getColor()){
+                        elem->setAnotherBrushColor(Qt::blue);
+                    }
                 }
             }
         }
-    }
 
-    if(this->getColor() == false && this->getPosition().y() == 4){
-        for(auto& elem : this->getKnowledge()){
+        if(this->getColor() == false && this->getPosition().y() == 4){
+            for(auto& elem : this->getKnowledge()){
 #define BLOCK_BLACK this->getBoard()[elem->getBlockPos().x()][elem->getBlockPos().y() - 1]
-            for(auto item : BLOCK_BLACK->collidingItems()){
-                Pawn* pawn = dynamic_cast<Pawn*>(item);
-                if(pawn != nullptr && pawn->getColor() != this->getColor()){
-                    elem->setAnotherBrushColor(Qt::blue);
+                for(auto item : BLOCK_BLACK->collidingItems()){
+                    Pawn* pawn = dynamic_cast<Pawn*>(item);
+                    if(pawn != nullptr && pawn->getColor() != this->getColor()){
+                        elem->setAnotherBrushColor(Qt::blue);
+                    }
                 }
             }
         }
+
+
+
+        return positions;
     }
-
-
-
-    return positions;
 }
 
 void Pawn::forward_step(QVector<Block*>& positions, int offset)
@@ -207,6 +215,7 @@ void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+
     this->setOffset(0, 0);
     QVector<QPair<Figure*, double> > figure_list;
     QVector<QPair<Block*, double> > block_list;
@@ -240,7 +249,6 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                               (int)mapToScene(event->pos()).y())});
     }
 
-    find_valid_positions(block_list);
     QPointF positionInMoment = this->getPosition();
 
     if(passagePos != nullptr){
@@ -280,7 +288,6 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 
     set_def_color_for_all_board();
-
     if(((this->getColor() && this->getPosition().y() == 0))
             || ((!this->getColor() && this->getPosition().y() == 7))){
         emit vahue(this);

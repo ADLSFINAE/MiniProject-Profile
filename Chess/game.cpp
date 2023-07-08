@@ -14,17 +14,24 @@ void Game::initOfVecs(Figure* figure, bool isWhite)
         vecOfBlackFigures.push_back({figure, figure->getPosition()});
 }
 
-void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO)
+void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figure*>& figVec)
 {
     QVector<Block*> vec = king->getValidNeighbourPositions();
-        vec.push_back(king->getBoard()[king->getPosition().x()][king->getPosition().y()]);
+    vec.push_back(king->getBoard()[king->getPosition().x()][king->getPosition().y()]);
 
-        for(auto& block : figure->vecFromGetKnowledge){
-            for(auto& kingBlock : vec)
-                if(block->getBlockPos() == kingBlock->getBlockPos()){
-                    CEELO.insert(block);
-                }
+    for(auto& block : figure->vecFromGetKnowledge){
+        for(auto& kingBlock : vec)
+            if(block->getBlockPos() == kingBlock->getBlockPos()){
+                CEELO.insert(block);
+            }
+    }
+
+    for(auto& kingBlock : king->getValidNeighbourPositions()){
+        if(kingBlock->getBlockPos() == figure->getPosition()){
+            figVec.push_back(figure);
         }
+    }
+    qDebug()<<"FIG VEC SIZE"<<figVec.size();
 }
 
 void Game::countOfSteps()
@@ -49,18 +56,22 @@ void Game::countOfSteps()
 void Game::calculateCheckMateFunc(bool colorOfTheKing)
 {
     QSet<Block*>CEELO;
+    QVector<Figure*> figVec;
+
     if(colorOfTheKing){
         for(auto& elem : vecOfBlackFigures)
-            afterUs(elem.first, whiteKing, CEELO);
+            afterUs(elem.first, whiteKing, CEELO, figVec);
         qDebug()<<"FOR WHITE KING"<<CEELO.size();
         emit exportCEELOToKingFromWhite(CEELO);
+        emit exportFiguresVec(figVec);
     }
 
     else{
         for(auto& elem : vecOfWhiteFigures)
-            afterUs(elem.first, blackKing, CEELO);
+            afterUs(elem.first, blackKing, CEELO, figVec);
         qDebug()<<"FOR BLACK KING"<<CEELO.size();
         emit exportCEELOToKingFromBlack(CEELO);
+        emit exportFiguresVec(figVec);
     }
 }
 

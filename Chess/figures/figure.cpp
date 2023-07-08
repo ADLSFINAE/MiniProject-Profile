@@ -317,6 +317,59 @@ bool Figure::getFigOnBlock(Block *block)
     return false;
 }
 
+void Figure::blockForStepKing()
+{
+    QVector<Figure*> fig_vec;
+    for(auto& elem : vecFromGetKnowledge){
+        for(auto& fig : elem->collidingItems()){
+            Figure* f = dynamic_cast<Figure*>(fig);
+            if(f != nullptr && f->getColor() == this->getColor() && f->getPosition() != this->getPosition()){
+                fig_vec.push_back(f);
+            }
+        }
+    }
+    qDebug()<<Qt::endl;
+    qDebug()<<"FIG VEC INFO";
+    for(auto& fig : fig_vec){
+        qDebug()<<fig->getPosition();
+    }
+    qDebug()<<Qt::endl;
+    for(auto& fig : fig_vec){
+        for(auto& block : fig->vecFromGetKnowledge){
+            if(block->getBlockPos() == this->getPosition()){
+                qDebug()<<"WE FIND A BITCH"<<fig->getPosition();
+            }
+        }
+    }
+}
+
+void Figure::blockForCheckOnDefense()
+{
+    QVector<Figure*> fig_vec;
+    for(auto& elem : this->vecFromGetKnowledge){
+        for(auto& fig : elem->collidingItems()){
+            Figure* f = dynamic_cast<Figure*>(fig);
+            if(f != nullptr && f->getColor() == this->getColor() && f->getPosition() != this->getPosition()){
+                fig_vec.push_back(f);
+            }
+        }
+    }
+
+    qDebug()<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<fig_vec.size();
+
+    for(auto& fig : fig_vec){
+        for(auto& block : fig->vecFromGetKnowledge){
+            if(block->getBlockPos() == this->getPosition()){
+                this->getBoard()[this->getPosition().x()][this->getPosition().y()]->setAnotherBrushColor(Qt::red);
+                qDebug()<<"TRUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+                break;
+            }
+        }
+    }
+}
+
+
+
 void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);

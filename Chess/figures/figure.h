@@ -64,6 +64,8 @@ public:
     double calculatingDistance(int block_x, int block_y, int event_figure_x, int event_figure_y);
     bool getFigOnBlock(Block* block);
 
+    void blockForStepKing();
+    void blockForCheckOnDefense();
     //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
     QVector<Block*> vecFromGetKnowledge;
     bool isHaveKing = false;

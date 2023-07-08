@@ -11,11 +11,13 @@ public:
     QVector<Block*> getValidNeighbourPositions() override;
 public slots:
     void getCEELO(QSet<Block*>CEELO);
+    void getFiguresVec(QVector<Figure*> fig);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    QSet<Block*>CEELO;
+    QSet<Block*> CEELO;
+    QVector<Figure*> figVec;
 
 };
 

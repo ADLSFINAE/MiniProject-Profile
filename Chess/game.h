@@ -40,8 +40,10 @@ signals:
     void exportCEELOToKingFromWhite(QSet<Block*> block);
     void exportCEELOToKingFromBlack(QSet<Block*> block);
 
+    void exportFiguresVec(QVector<Figure*> fig);
+
 private:
-    void afterUs(Figure* figure, King *king, QSet<Block*>& CEELO);
+    void afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figure*>& figVec);
 
 private:
     King* whiteKing{nullptr};
