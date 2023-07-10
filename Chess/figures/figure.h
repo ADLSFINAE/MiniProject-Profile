@@ -69,6 +69,9 @@ public:
     //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
     QVector<Block*> vecFromGetKnowledge;
     bool isHaveKing = false;
+    QVector< QPair <Figure*, QPointF> > allFigures;
+public slots:
+    void getAllFigures(QVector< QPair <Figure*, QPointF> >& collection);
 signals:
     void vahue(Figure* figure);
     void updateFiguresPositions(Figure* figure);

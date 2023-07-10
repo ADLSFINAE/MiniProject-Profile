@@ -27,8 +27,12 @@ void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figu
     }
 
     for(auto& kingBlock : king->getValidNeighbourPositions()){
-        if(kingBlock->getBlockPos() == figure->getPosition()){
-            figVec.push_back(figure);
+        for(auto& figElem : vecOfAllFigures){
+            if(king->getColor() != figElem.first->getColor()){
+                if(kingBlock->getBlockPos() == figure->getPosition()){
+                    figVec.push_back(figure);
+                }
+            }
         }
     }
     qDebug()<<"FIG VEC SIZE"<<figVec.size();
@@ -36,7 +40,7 @@ void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figu
 
 void Game::countOfSteps()
 {
-    /*count++;
+    count++;
     if(count % 2 == 1){
         for(auto& elem : vecOfWhiteFigures)
             elem.first->setEnabled(false);
@@ -50,7 +54,7 @@ void Game::countOfSteps()
 
         for(auto& elem : vecOfBlackFigures)
             elem.first->setEnabled(false);
-    }*/
+    }
 }
 
 void Game::calculateCheckMateFunc(bool colorOfTheKing)
@@ -77,10 +81,14 @@ void Game::calculateCheckMateFunc(bool colorOfTheKing)
 
 void Game::editVecs(QVector<Figure *>& vecs)
 {
+    for(auto& elem : vecOfAllFigures){
+        QObject::disconnect(this, &Game::sendAllFigures, elem.first, &Figure::getAllFigures);
+    }
     vecOfWhiteFigures.clear();
     vecOfBlackFigures.clear();
     vecOfWhitePawnFigures.clear();
     vecOfBlackPawnFigures.clear();
+    vecOfAllFigures.clear();
     for(auto& elem : vecs){
         Horse* horse = dynamic_cast<Horse*>(elem);
         Queen* queen = dynamic_cast<Queen*>(elem);
@@ -102,6 +110,7 @@ void Game::editVecs(QVector<Figure *>& vecs)
 
         if(elem->getColor()){
             vecOfWhiteFigures.push_back({elem, elem->getPosition()});
+            vecOfAllFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr){
                 vecOfWhitePawnFigures.push_back({elem, elem->getPosition()});
@@ -120,6 +129,7 @@ void Game::editVecs(QVector<Figure *>& vecs)
         }
         else{
             vecOfBlackFigures.push_back({elem, elem->getPosition()});
+            vecOfAllFigures.push_back({elem, elem->getPosition()});
             Pawn* pawn = dynamic_cast<Pawn*>(elem);
             if(pawn != nullptr){
                 vecOfBlackPawnFigures.push_back({elem, elem->getPosition()});
@@ -138,12 +148,17 @@ void Game::editVecs(QVector<Figure *>& vecs)
 
     }
 
+    for(auto& elem : vecOfAllFigures){
+        QObject::connect(this, &Game::sendAllFigures, elem.first, &Figure::getAllFigures);
+    }
+
     whiteKing->getValidNeighbourPositions();
     blackKing->getValidNeighbourPositions();
 
     emit getPawnCollection(vecOfWhitePawnFigures);
     emit getPawnCollection(vecOfBlackPawnFigures);
     emit signalStartCalculatingCheckMateFROMWHITE(whiteKing->getColor());
+    emit sendAllFigures(vecOfAllFigures);
     emit signalStartCalculatingCheckMateFROMBLACK(blackKing->getColor());
     whiteKing->set_def_color_for_all_board();
     blackKing->set_def_color_for_all_board();

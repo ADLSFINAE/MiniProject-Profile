@@ -25,6 +25,7 @@ public:
 public:
     QVector< QPair <Figure*, QPointF> > vecOfBlackFigures;
     QVector< QPair <Figure*, QPointF> > vecOfWhiteFigures;
+    QVector< QPair <Figure*, QPointF> > vecOfAllFigures;
     QVector< QPair <Figure*, QPointF> > vecOfBlackPawnFigures;
     QVector< QPair <Figure*, QPointF> > vecOfWhitePawnFigures;
 
@@ -35,6 +36,7 @@ public slots:
 
 signals:
     void getPawnCollection(QVector< QPair <Figure*, QPointF> >& collection);
+    void sendAllFigures(QVector< QPair <Figure*, QPointF> >& collection);
     void signalStartCalculatingCheckMateFROMWHITE(bool colorOfTheKing);
     void signalStartCalculatingCheckMateFROMBLACK(bool colorOfTheKing);
     void exportCEELOToKingFromWhite(QSet<Block*> block);

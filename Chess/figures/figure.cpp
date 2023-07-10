@@ -357,8 +357,8 @@ void Figure::blockForCheckOnDefense()
 
     qDebug()<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<fig_vec.size();
 
-    for(auto& fig : fig_vec){
-        for(auto& block : fig->vecFromGetKnowledge){
+    for(auto& fig : allFigures){
+        for(auto& block : fig.first->vecFromGetKnowledge){
             if(block->getBlockPos() == this->getPosition()){
                 this->getBoard()[this->getPosition().x()][this->getPosition().y()]->setAnotherBrushColor(Qt::red);
                 qDebug()<<"TRUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
@@ -366,6 +366,12 @@ void Figure::blockForCheckOnDefense()
             }
         }
     }
+}
+
+void Figure::getAllFigures(QVector<QPair<Figure *, QPointF> > &collection)
+{
+    allFigures.clear();
+    allFigures = collection;
 }
 
 
