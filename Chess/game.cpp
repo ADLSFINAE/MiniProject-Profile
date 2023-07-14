@@ -30,6 +30,7 @@ void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figu
         for(auto& figElem : vecOfAllFigures){
             if(king->getColor() != figElem.first->getColor()){
                 if(kingBlock->getBlockPos() == figure->getPosition()){
+                    qDebug()<<"FIG VEC ELEM"<<figure->getPosition();
                     figVec.push_back(figure);
                 }
             }
@@ -40,7 +41,7 @@ void Game::afterUs(Figure* figure, King *king, QSet<Block*>& CEELO, QVector<Figu
 
 void Game::countOfSteps()
 {
-    count++;
+    /*count++;
     if(count % 2 == 1){
         for(auto& elem : vecOfWhiteFigures)
             elem.first->setEnabled(false);
@@ -54,7 +55,7 @@ void Game::countOfSteps()
 
         for(auto& elem : vecOfBlackFigures)
             elem.first->setEnabled(false);
-    }
+    }*/
 }
 
 void Game::calculateCheckMateFunc(bool colorOfTheKing)

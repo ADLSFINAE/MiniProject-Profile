@@ -357,8 +357,8 @@ void Figure::blockForCheckOnDefense()
 
     qDebug()<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<fig_vec.size();
 
-    for(auto& fig : allFigures){
-        for(auto& block : fig.first->vecFromGetKnowledge){
+    for(auto& fig : fig_vec){
+        for(auto& block : fig->vecFromGetKnowledge){
             if(block->getBlockPos() == this->getPosition()){
                 this->getBoard()[this->getPosition().x()][this->getPosition().y()]->setAnotherBrushColor(Qt::red);
                 qDebug()<<"TRUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
