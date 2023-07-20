@@ -384,6 +384,8 @@ void Figure::mousePressEvent(QGraphicsSceneMouseEvent *event)
     for(auto& block : getValidNeighbourPositions())
         block->setAnotherBrushColor(Qt::yellow);
 
+    qDebug()<<"getValidNeighbourPositions()"<<getValidNeighbourPositions().size();
+
     for(auto& elem : getValidNeighbourPositions()){
         QVector<QGraphicsItem*> vec = elem->getCollidingItemsForMousePressEvent();
         for(auto& vec_elem : vec){
@@ -446,5 +448,4 @@ void Figure::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     this->setOffset(-FigureCenterX, -FigureCenterY);
     this->setPos(mapToScene(event->pos()));
 }
-
 

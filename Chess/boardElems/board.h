@@ -46,6 +46,8 @@ private:
     int NEWFIGX, NEWFIGY;
     ChangePawnWidget* changePawnWidget{nullptr};
     Game* game{nullptr};
+    King* whiteKing{nullptr};
+    King* blackKing{nullptr};
 };
 
 #endif // BOARD_H

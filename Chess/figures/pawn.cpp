@@ -65,7 +65,7 @@ void Pawn::forward_step(QVector<Block*>& positions, int offset)
         if(((getPosition().x() - offset >= 0) && (getPosition().x() - offset <= 7))
                 || ((getPosition().y() - offset >= 0) && (getPosition().y() - offset <= 7))){
             positions.push_back(getBoard()[getPosition().x()][getPosition().y() - offset]);
-            getBoard()[getPosition().x()][getPosition().y() - offset]->setAnotherBrushColor(Qt::yellow);
+            //getBoard()[getPosition().x()][getPosition().y() - offset]->setAnotherBrushColor(Qt::yellow);
         }
     }
 
@@ -186,7 +186,7 @@ void Pawn::slotOnAddPassageElem(QPointF passageBlockPos)
 void Pawn::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    emit updateFiguresPositions(this);
+    emit updateFiguresPositionsFromPawn(this);
     this->setOffset(0, 0);
     this->setOldPosition(this->pos().x(), this->pos().y());
 
@@ -295,7 +295,7 @@ void Pawn::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         qDebug()<<"CHANGE PAWN WIDGET WAS CALLED";
     }
 
-    emit updateFiguresPositions(this);
+    emit updateFiguresPositionsFromPawn(this);
 }
 
 void Pawn::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

@@ -66,16 +66,21 @@ public:
 
     void blockForStepKing();
     void blockForCheckOnDefense();
+    QVector<Block*> figBlockToGive;
     //ВЕКТОР, О КОТОРОМ КВАНТУМ НИЧЕГО НЕ ЗНАЕТ
     QVector<Block*> vecFromGetKnowledge;
     bool isHaveKing = false;
     QVector< QPair <Figure*, QPointF> > allFigures;
+    QPoint kingPosition;
 public slots:
     void getAllFigures(QVector< QPair <Figure*, QPointF> >& collection);
 signals:
     void vahue(Figure* figure);
     void updateFiguresPositions(Figure* figure);
     void signalAboutMoving();
+signals:
+    void sendSnippetWithKingWHITE(QVector<Block*> vec);
+    void sendSnippetWithKingBLACK(QVector<Block*> vec);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;

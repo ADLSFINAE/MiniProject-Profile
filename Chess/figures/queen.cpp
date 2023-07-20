@@ -113,11 +113,46 @@ void Queen::getKnowledge(QVector<Block *> vec_block)
     step_length_limiter(upper_right);
     step_length_limiter(down_left);
     step_length_limiter(down_right);
+
+////////////////VEC TO SEND FOR KING//////////////////////////////////
+    QVector<QVector<Block*> >sendToCheck;
+    sendToCheck.resize(8);
+
+    for (int i = 0; i < 8; i++) {
+        sendToCheck[i].resize(LongByY);
+    }
+
+    sendToCheck[0] = step_length_limiter_2(forward);
+    sendToCheck[1] = step_length_limiter_2(back);
+    sendToCheck[2] = step_length_limiter_2(left);
+    sendToCheck[3] = step_length_limiter_2(right);
+    sendToCheck[4] = step_length_limiter_2(upper_left);
+    sendToCheck[5] = step_length_limiter_2(upper_right);
+    sendToCheck[6] = step_length_limiter_2(down_left);
+    sendToCheck[7] = step_length_limiter_2(down_right);
+
+    for(int i = 0; i < 8; i++){
+        for(auto& elem : sendToCheck[i]){
+            if(this->kingPosition == elem->getBlockPos()){
+                if(this->getColor()){
+                    emit sendSnippetWithKingBLACK(sendToCheck[i]);
+                    qDebug()<<i<<"sendSnippetWithKingBlack"<<sendToCheck[i].size();
+                    break;
+                }
+                else{
+
+                    emit sendSnippetWithKingWHITE(sendToCheck[i]);
+                    qDebug()<<i<<"sendSnippetWithKingWHITE"<<sendToCheck[i].size();
+                    break;
+                }
+            }
+        }
+    }
+
 }
 
 void Queen::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit updateFiguresPositions(this);
     Figure::mousePressEvent(event);
     getKnowledge(getValidNeighbourPositions());
 }

@@ -1,4 +1,6 @@
 #include "figures/king.h"
+#include "figures/pawn.h"
+#include "figures/queen.h"
 
 King::King(int x, int y, bool isWhite) : Figure(x, y, isWhite)
 {
@@ -18,6 +20,7 @@ QVector<Block*> King::getValidNeighbourPositions()
         }
     }
     vecFromGetKnowledge = positions;
+
     return positions;
 }
 
@@ -39,6 +42,16 @@ void King::getFiguresVec(QVector<Figure *> fig)
     qDebug()<<"figVec SIZE IN GET"<<figVec.size();
 }
 
+void King::getSnippetWithKing(QVector<Block *> vec)
+{
+    figBlock.clear();
+    for(auto& elem : vec){
+        this->figBlock.push_back(elem);
+    }
+
+    qDebug()<<"SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"<<figBlock.size();
+}
+
 void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit updateFiguresPositions(this);
@@ -56,6 +69,43 @@ void King::mousePressEvent(QGraphicsSceneMouseEvent *event)
     for(auto& elem : this->figVec){
         elem->blockForCheckOnDefense();
     }
+
+    for(auto& elem : allFigures){
+        Pawn* pawn = dynamic_cast<Pawn*>(elem.first);
+        if(elem.first->getColor() == this->getColor() && elem.first != this && pawn == nullptr){
+            QVector<Figure*> shitty_vec;
+            for(auto& elem1 : elem.first->vecFromGetKnowledge){
+                for(auto& figBl : figBlock){
+                    if(elem1->getBlockPos() == figBl->getBlockPos() && figBl->getBlockPos() != this->getPosition()){
+                        shitty_vec.push_back(elem.first);
+                        this->getBoard()[elem.first->getPosition().x()][elem.first->getPosition().y()]->setAnotherBrushColor(Qt::cyan);
+                        elem.first->setEnabled(false);
+                    }
+                    else{
+                        elem.first->setEnabled(true);
+                    }
+                }
+            }
+        }
+
+        if(elem.first->getColor() == this->getColor() && pawn != nullptr){
+            for(auto& elem1 : elem.first->getValidNeighbourPositions()){
+                for(auto& figBl : figBlock){
+                    if(elem1->getBlockPos() == figBl->getBlockPos()){
+                        this->getBoard()[elem.first->getPosition().x()][elem.first->getPosition().y()]->setAnotherBrushColor(Qt::cyan);
+                        elem.first->setEnabled(false);
+                    }
+                    else{
+                        elem.first->setEnabled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    qDebug()<<"FIGBLOCK SIZE IS"<<figBlock.size();
+    qDebug()<<"FIGBLOCK SIZE AFTER"<<figBlock.size();
+    figBlock.clear();
 }
 
 void King::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

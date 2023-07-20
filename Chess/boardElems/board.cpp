@@ -22,27 +22,41 @@ Board::Board(QGraphicsScene *scene ,QGraphicsRectItem *parent)
             QObject::connect(game, &Game::getPawnCollection, pawn, &Pawn::slotPawnCollection);
             QObject::connect(pawn, &Pawn::updateFiguresPositionsFromPawn, this, &Board::updateFiguresVec);
             QObject::connect(pawn, &Figure::signalAboutMoving, game, &Game::countOfSteps);
+            QObject::connect(pawn, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
         }
         else{
             QObject::connect(elem, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
             QObject::connect(elem, &Figure::signalAboutMoving, game, &Game::countOfSteps);
         }
         //ВРЕМЕННОЕ РЕШЕНИЕ
+
         King* king = dynamic_cast<King*>(elem);
         if(king != nullptr){
             if(king->getColor()){
                 qDebug()<<"WHITE CONNECT";
                 QObject::connect(game, &Game::exportCEELOToKingFromWhite, king, &King::getCEELO);
                 QObject::connect(game, &Game::exportFiguresVec, king, &King::getFiguresVec);
+                whiteKing = king;
             }
-            else{
+            if(!king->getColor()){
                 qDebug()<<"BLACK CONNECT";
                 QObject::connect(game, &Game::exportCEELOToKingFromBlack, king, &King::getCEELO);
                 QObject::connect(game, &Game::exportFiguresVec, king, &King::getFiguresVec);
+                blackKing = king;
             }
         }
     }
 
+    for(auto& elem : figures){
+        if(elem->getColor()){
+            if(elem != whiteKing)
+                QObject::connect(elem, &Figure::sendSnippetWithKingBLACK, blackKing, &King::getSnippetWithKing);
+        }
+        else{
+            if(elem != blackKing)
+                QObject::connect(elem, &Figure::sendSnippetWithKingWHITE, whiteKing, &King::getSnippetWithKing);
+        }
+    }
     QObject::connect(this, &Board::initGameVecs, game, &Game::editVecs);
 
 }
@@ -107,9 +121,19 @@ void Board::createNewFigure(Figure* element)
     figures.push_back(element);
     emit initGameVecs(figures);
     changePawnWidget->hide();
+
     QObject::connect(element, &Figure::vahue, this, &Board::remove_from_scene);
     QObject::connect(element, &Figure::updateFiguresPositions, this, &Board::updateFiguresVec);
     QObject::connect(element, &Figure::signalAboutMoving, game, &Game::countOfSteps);
+
+    if(element->getColor()){
+        if(element != whiteKing)
+            QObject::connect(element, &Figure::sendSnippetWithKingBLACK, blackKing, &King::getSnippetWithKing);
+    }
+    else{
+        if(element != blackKing)
+            QObject::connect(element, &Figure::sendSnippetWithKingWHITE, whiteKing, &King::getSnippetWithKing);
+    }
 }
 
 void Board::figuresPlacing(QGraphicsScene* scene, bool isWhite)
